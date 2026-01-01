@@ -16,13 +16,15 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # Git ownership issue fix
+            # Git ownership fix
             git config --global --add safe.directory /var/www/myhireshield
             
             cd /var/www/myhireshield
-            git pull origin main
+            # Purane local changes ko force clear karna
+            git fetch origin
+            git reset --hard origin/main
             
-            # Backend Update
+            # Backend update
             cd server
             npm install
             pm2 restart hireshield-api || pm2 start server.js --name "hireshield-api"
@@ -34,7 +36,7 @@ jobs:
             chmod +x node_modules/.bin/vite
             npm run build
             
-            # Final Permissions and Nginx Refresh
+            # Permissions fix
             sudo chown -R www-data:www-data /var/www/myhireshield/client/dist
             sudo chmod -R 755 /var/www/myhireshield/client/dist
             sudo systemctl reload nginx
