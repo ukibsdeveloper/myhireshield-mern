@@ -83,7 +83,7 @@ const LandingPage = () => {
               </h1>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                 Make smarter hiring decisions with verified employee backgrounds, authentic reviews, 
-                and comprehensive verification reports. Like CIBIL score for employ.
+                and comprehensive verification reports. Like CIBIL score for employment.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
