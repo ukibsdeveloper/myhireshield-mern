@@ -7,6 +7,7 @@ const RegisterEmployee = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
+  // ORIGINAL BACKEND INTEGRATED STATE
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -36,19 +37,17 @@ const RegisterEmployee = () => {
     setError('');
     setLoading(true);
 
-    // Client-side validation
+    // ORIGINAL CLIENT-SIDE VALIDATION
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
       return;
     }
-
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
       setLoading(false);
       return;
     }
-
     if (!formData.agreeToTerms) {
       setError('You must agree to the Terms of Service');
       setLoading(false);
@@ -57,7 +56,6 @@ const RegisterEmployee = () => {
 
     try {
       const response = await authAPI.registerEmployee(formData);
-      
       if (response.success) {
         alert('Registration successful! Please check your email to verify your account.');
         navigate('/login');
@@ -65,7 +63,6 @@ const RegisterEmployee = () => {
         setError(response.message || 'Registration failed');
       }
     } catch (err) {
-      console.error('Registration error:', err);
       const errorMessage = err.response?.data?.message || err.response?.data?.errors?.[0]?.msg || 'Registration failed. Please try again.';
       setError(errorMessage);
     } finally {
@@ -73,135 +70,118 @@ const RegisterEmployee = () => {
     }
   };
 
+  const inputClass = "w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#4c8051] focus:border-transparent outline-none transition-all font-medium text-[#496279] shadow-sm";
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <Link to="/" className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="MyHireShield" className="h-10 w-10 object-contain" />
-              <span className="text-xl font-bold bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent">
-                MyHireShield
-              </span>
-            </Link>
-            <Link to="/login" className="text-gray-600 hover:text-green-600">
-              Already have an account? <span className="font-semibold">Sign In</span>
-            </Link>
+    <div className="min-h-screen flex bg-white overflow-hidden selection:bg-[#dd8d88]/30 font-sans antialiased">
+      {/* Sharp Noise Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+      {/* 1. LEFT SIDE: Premium Visual Brand Portal */}
+      <div className="hidden lg:flex w-1/2 relative bg-[#496279] items-center justify-center p-12 overflow-hidden">
+        {/* Same Gradients as Login/Company */}
+        <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-[#4c8051] rounded-full blur-[120px] opacity-30"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#dd8d88] rounded-full blur-[120px] opacity-30"></div>
+
+        <div className="relative z-10 max-w-lg text-center">
+          <Link to="/" className="inline-flex items-center gap-4 mb-12 group transition-transform hover:scale-105">
+            <div className="h-20 w-20 bg-white rounded-[2rem] shadow-2xl flex items-center justify-center p-3">
+              <img src="/logo.jpg" alt="HireShield" className="h-full w-full object-contain" />
+            </div>
+          </Link>
+          <h1 className="text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+            Claim Your <br /> <span className="text-[#dd8d88]">Professional Identity.</span>
+          </h1>
+          <p className="text-white/60 text-lg font-bold uppercase tracking-widest leading-relaxed mb-12">
+            Build your verified profile and access the standard employment credit score.
+          </p>
+
+          <div className="grid grid-cols-2 gap-8 pt-12 border-t border-white/10">
+            <div className="text-left">
+               <i className="fas fa-id-card text-[#4c8051] text-2xl mb-4"></i>
+               <h4 className="text-white font-black uppercase text-xs tracking-widest">Verified Badge</h4>
+               <p className="text-white/40 text-[10px] mt-1 uppercase">ISO Certified Node</p>
+            </div>
+            <div className="text-left">
+               <i className="fas fa-chart-line text-[#dd8d88] text-2xl mb-4"></i>
+               <h4 className="text-white font-black uppercase text-xs tracking-widest">Shield Score™</h4>
+               <p className="text-white/40 text-[10px] mt-1 uppercase">Standard Integrity</p>
+            </div>
           </div>
         </div>
-      </nav>
+      </div>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Employee Registration</h2>
-              <p className="text-gray-600">Create your professional profile</p>
+      {/* 2. RIGHT SIDE: Employee Registration Interface */}
+      <div className="w-full lg:w-1/2 flex flex-col bg-[#fcfaf9] relative overflow-y-auto">
+        {/* Mobile Header */}
+        <div className="lg:hidden p-6 flex justify-between items-center bg-white border-b border-slate-100 sticky top-0 z-50">
+           <Link to="/" className="flex items-center gap-2">
+              <img src="/logo.jpg" className="h-8 w-8 rounded-lg" alt="logo" />
+              <span className="text-sm font-black text-[#496279] uppercase tracking-tighter">HireShield</span>
+           </Link>
+           <Link to="/login" className="text-[10px] font-black uppercase text-[#4c8051]">Sign In</Link>
+        </div>
+
+        <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-20 py-16">
+          <div className="w-full max-w-xl">
+            <div className="mb-10 text-center lg:text-left">
+              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Professional Onboarding</h2>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Deploy your personal audit profile</p>
             </div>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
-                <i className="fas fa-exclamation-circle mr-2"></i>
-                {error}
+              <div className="mb-8 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-[10px] font-black uppercase tracking-widest flex items-center gap-3">
+                <i className="fas fa-user-shield"></i> {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name Row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  />
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">First Name *</label>
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={inputClass} placeholder="John" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  />
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Last Name *</label>
+                  <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={inputClass} placeholder="Doe" required />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  required
-                />
+              {/* Email & Phone */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Email Node *</label>
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="name@domain.com" required />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Phone Node *</label>
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="10 Digits" required maxLength="10" />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Password *</label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  required
-                />
+              {/* Passwords */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Access Key *</label>
+                  <input type="password" name="password" value={formData.password} onChange={handleChange} className={inputClass} placeholder="6+ Characters" required />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Confirm Key *</label>
+                  <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={inputClass} placeholder="Re-type Key" required />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Confirm Password *</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                  maxLength="10"
-                  required
-                />
-              </div>
-
+              {/* DOB & Gender */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth *</label>
-                  <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  />
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Date of Birth *</label>
+                  <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClass} required />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Gender *</label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  >
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Gender *</label>
+                  <select name="gender" value={formData.gender} onChange={handleChange} className={inputClass} required>
                     <option value="">Select</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -210,78 +190,50 @@ const RegisterEmployee = () => {
                 </div>
               </div>
 
+              {/* Address Row */}
               <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">City *</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  />
+                <div className="col-span-1">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">City *</label>
+                  <input type="text" name="city" value={formData.city} onChange={handleChange} className={inputClass} required />
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">State *</label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    required
-                  />
+                <div className="col-span-1">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">State *</label>
+                  <input type="text" name="state" value={formData.state} onChange={handleChange} className={inputClass} required />
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Pincode *</label>
-                  <input
-                    type="text"
-                    name="pincode"
-                    value={formData.pincode}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                    maxLength="6"
-                    required
-                  />
+                <div className="col-span-1">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Zip *</label>
+                  <input type="text" name="pincode" value={formData.pincode} onChange={handleChange} className={inputClass} required maxLength="6" />
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-                <input
-                  type="checkbox"
-                  name="agreeToTerms"
-                  checked={formData.agreeToTerms}
-                  onChange={handleChange}
-                  className="mt-1"
-                  required
-                />
-                <label className="text-sm text-gray-700">
-                  I agree to the <Link to="/legal/terms" className="text-green-600 hover:underline">Terms of Service</Link> and <Link to="/legal/privacy" className="text-green-600 hover:underline">Privacy Policy</Link>
-                </label>
+              {/* Terms */}
+              <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-inner">
+                <div className="flex items-start gap-3">
+                  <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} className="mt-1 w-4 h-4 accent-[#496279] cursor-pointer" required />
+                  <label className="text-[10px] font-black text-slate-500 uppercase leading-relaxed tracking-wider">
+                    I agree to the <Link to="/legal/terms" className="text-[#496279] underline">Terms of Protocol</Link> and <Link to="/legal/privacy" className="text-[#496279] underline">Privacy Policy</Link>
+                  </label>
+                </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all disabled:opacity-50"
-              >
-                {loading ? (
-                  <>
-                    <i className="fas fa-spinner fa-spin mr-2"></i> Creating Account...
-                  </>
-                ) : (
-                  <>
-                    Create Account <i className="fas fa-check ml-2"></i>
-                  </>
-                )}
+              <button type="submit" disabled={loading} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.25em] shadow-xl transition-all active:scale-95 flex items-center justify-center gap-3 ${
+                loading ? 'bg-slate-200 text-slate-400' : 'bg-[#496279] text-white hover:shadow-[#496279]/30'
+              }`}>
+                {loading ? 'Processing Identity...' : 'Initialize Professional Node'}
               </button>
             </form>
-          </div>
 
-          <p className="text-center mt-6 text-gray-600">
-            Already have an account? <Link to="/login" className="text-green-600 font-semibold hover:underline">Sign In</Link>
-          </p>
+            <div className="mt-10 text-center border-t border-slate-100 pt-8">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                Existing Node? <Link to="/login" className="text-[#4c8051] ml-2 hover:underline">Authenticate Access</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Global Minimal Footer */}
+        <div className="p-8 text-center lg:text-left">
+           <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">© 2026 HireShield Enterprise Integration Network</p>
         </div>
       </div>
     </div>

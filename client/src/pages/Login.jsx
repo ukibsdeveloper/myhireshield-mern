@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -7,21 +7,14 @@ const Login = () => {
   const { login } = useAuth();
   
   const [role, setRole] = useState('company');
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false
-  });
+  const [formData, setFormData] = useState({ email: '', password: '', rememberMe: false });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     setError('');
   };
 
@@ -29,207 +22,139 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
       const result = await login(formData.email, formData.password, role);
-      
       if (result.success) {
-        // Redirect based on role
-        if (result.user.role === 'company') {
-          navigate('/dashboard/company');
-        } else if (result.user.role === 'employee') {
-          navigate('/dashboard/employee');
-        } else {
-          navigate('/');
-        }
+        navigate(result.user.role === 'company' ? '/dashboard/company' : '/dashboard/employee');
       } else {
-        setError(result.error || 'Login failed. Please try again.');
+        setError(result.error || 'Invalid credentials');
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
+      setError('Connection failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
+  const inputClass = "w-full px-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#4c8051] focus:border-transparent outline-none transition-all font-medium text-[#496279] shadow-sm";
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="navbar py-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <Link to="/" className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="MyHireShield" className="h-12 w-12 object-contain" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-green-500 to-red-500 bg-clip-text text-transparent">
-                MyHireShield
-              </span>
-            </Link>
-            <Link to="/" className="navbar-link">
-              <i className="fas fa-arrow-left mr-2"></i>Back to Home
-            </Link>
+    <div className="min-h-screen flex bg-white overflow-hidden">
+      {/* 1. LEFT SIDE: Visual Brand Portal (50%) */}
+      <div className="hidden lg:flex w-1/2 relative bg-[#496279] items-center justify-center p-12">
+        {/* Abstract Background Decoration */}
+        <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#4c8051] rounded-full blur-[120px] opacity-30"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#dd8d88] rounded-full blur-[120px] opacity-30"></div>
+
+        <div className="relative z-10 max-w-lg text-center">
+          <Link to="/" className="inline-flex items-center gap-4 mb-12 group transition-transform hover:scale-105">
+            <div className="h-20 w-20 bg-white rounded-[2rem] shadow-2xl flex items-center justify-center p-3">
+              <img src="/logo.jpg" alt="HireShield" className="h-full w-full object-contain" />
+            </div>
+          </Link>
+          <h1 className="text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+            The Gateway to <br /> <span className="text-[#4c8051]">Professional Trust.</span>
+          </h1>
+          <p className="text-white/60 text-lg font-bold uppercase tracking-widest leading-relaxed">
+            Standardizing integrity nodes for the modern enterprise ecosystem.
+          </p>
+          
+          <div className="mt-16 pt-12 border-t border-white/10 flex justify-center gap-12">
+            <div>
+              <p className="text-2xl font-black text-white">100%</p>
+              <p className="text-[9px] font-bold text-white/40 uppercase tracking-[0.2em]">Encrypted</p>
+            </div>
+            <div className="w-px h-10 bg-white/10"></div>
+            <div>
+              <p className="text-2xl font-black text-white">ISO</p>
+              <p className="text-[9px] font-bold text-white/40 uppercase tracking-[0.2em]">Compliant</p>
+            </div>
           </div>
         </div>
-      </nav>
+      </div>
 
-      {/* Login Container */}
-      <div className="flex items-center justify-center py-12 px-4">
-        <div className="max-w-md w-full">
-          <div className="card">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-              <p className="text-gray-600">Sign in to your MyHireShield account</p>
+      {/* 2. RIGHT SIDE: Clean Login Interface (50%) */}
+      <div className="w-full lg:w-1/2 flex flex-col bg-[#fcfaf9] relative">
+        {/* Mobile Header only */}
+        <div className="lg:hidden p-6 flex justify-between items-center bg-white border-b border-slate-100">
+           <Link to="/" className="flex items-center gap-2">
+              <img src="/logo.jpg" className="h-8 w-8 rounded-lg" alt="logo" />
+              <span className="text-sm font-black text-[#496279] uppercase tracking-tighter">HireShield</span>
+           </Link>
+           <Link to="/" className="text-[10px] font-black uppercase text-slate-400">Back</Link>
+        </div>
+
+        <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-24 py-12">
+          <div className="w-full max-w-md">
+            <div className="mb-10 text-center lg:text-left">
+              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Portal Access</h2>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Authorized credentials required</p>
             </div>
 
-            {/* Error Message */}
+            {/* Role Selection Tabs */}
+            <div className="flex p-1 bg-slate-200/50 rounded-2xl mb-8">
+              {['company', 'employee'].map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRole(r)}
+                  className={`flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
+                    role === r ? 'bg-white text-[#496279] shadow-sm' : 'text-slate-500 hover:text-[#496279]'
+                  }`}
+                >
+                  {r === 'company' ? <><i className="fas fa-building mr-2"></i>Enterprise</> : <><i className="fas fa-user-tie mr-2"></i>Professional</>}
+                </button>
+              ))}
+            </div>
+
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 flex items-start gap-3">
-                <i className="fas fa-exclamation-circle text-xl mt-0.5"></i>
-                <span>{error}</span>
+              <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-[10px] font-black uppercase tracking-widest flex items-center gap-3">
+                <i className="fas fa-shield-virus"></i> {error}
               </div>
             )}
 
-            {/* Role Selection */}
-            <div className="mb-6">
-              <label className="form-label">I am a:</label>
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  type="button"
-                  onClick={() => setRole('company')}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    role === 'company'
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-300 hover:border-green-300'
-                  }`}
-                >
-                  <i className={`fas fa-building text-2xl mb-2 ${role === 'company' ? 'text-green-600' : 'text-gray-400'}`}></i>
-                  <div className="font-semibold">Company</div>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setRole('employee')}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    role === 'employee'
-                      ? 'border-red-500 bg-red-50'
-                      : 'border-gray-300 hover:border-red-300'
-                  }`}
-                >
-                  <i className={`fas fa-user text-2xl mb-2 ${role === 'employee' ? 'text-red-600' : 'text-gray-400'}`}></i>
-                  <div className="font-semibold">Employee</div>
-                </button>
-              </div>
-            </div>
-
-            {/* Login Form */}
-            <form onSubmit={handleSubmit}>
-              {/* Email */}
-              <div className="form-group">
-                <label htmlFor="email" className="form-label">Email Address</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  className="form-input"
-                  placeholder="you@company.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Corporate ID / Email</label>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="id@enterprise.com" required />
               </div>
 
-              {/* Password */}
-              <div className="form-group">
-                <label htmlFor="password" className="form-label">Password</label>
+              <div>
+                <div className="flex justify-between items-center mb-2 ml-1">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Access Key</label>
+                  <Link to="/forgot-password" size="sm" className="text-[9px] font-black text-[#4c8051] uppercase tracking-widest hover:text-[#3d6641]">Recovery?</Link>
+                </div>
                 <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    name="password"
-                    className="form-input pr-12"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
+                  <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} className={inputClass} placeholder="••••••••" required />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#496279]">
                     <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
                   </button>
                 </div>
               </div>
 
-              {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between mb-6">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="rememberMe"
-                    checked={formData.rememberMe}
-                    onChange={handleChange}
-                    className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                  />
-                  <span className="text-sm text-gray-700">Remember me</span>
-                </label>
-                <Link to="/forgot-password" className="text-sm text-green-600 hover:text-green-700 font-semibold">
-                  Forgot password?
-                </Link>
+              <div className="flex items-center gap-2 mb-2 ml-1">
+                <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChange} className="w-4 h-4 accent-[#496279] rounded" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Maintain Active Session</span>
               </div>
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn btn-primary w-full text-lg"
-              >
-                {loading ? (
-                  <>
-                    <i className="fas fa-spinner fa-spin mr-2"></i>
-                    Signing in...
-                  </>
-                ) : (
-                  <>
-                    <i className="fas fa-sign-in-alt mr-2"></i>
-                    Sign In
-                  </>
-                )}
+              <button type="submit" disabled={loading} className={`w-full py-4 rounded-2xl font-black text-xs uppercase tracking-[0.25em] shadow-xl transition-all active:scale-95 flex items-center justify-center gap-3 ${
+                loading ? 'bg-slate-200 text-slate-400' : 'bg-[#496279] text-white hover:shadow-[#496279]/20'
+              }`}>
+                {loading ? 'Verifying Node...' : 'Authenticate Access'}
               </button>
             </form>
 
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            {/* Social Login */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <button className="btn btn-outline">
-                <i className="fab fa-google mr-2 text-red-500"></i>
-                Google
-              </button>
-              <button className="btn btn-outline">
-                <i className="fab fa-microsoft mr-2 text-blue-500"></i>
-                Microsoft
-              </button>
-            </div>
-
-            {/* Register Link */}
-            <div className="text-center text-gray-600">
-              Don't have an account?{' '}
-              <Link 
-                to={role === 'company' ? '/register/company' : '/register/employee'} 
-                className="text-green-600 hover:text-green-700 font-semibold"
-              >
-                Register now
-              </Link>
+            <div className="mt-12 text-center border-t border-slate-100 pt-8">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                New User Node? <Link to={role === 'company' ? '/register/company' : '/register/employee'} className="text-[#4c8051] ml-2 hover:underline">Register Hub Account</Link>
+              </p>
             </div>
           </div>
+        </div>
+
+        {/* Global Footer Minimal for Login */}
+        <div className="p-8 text-center lg:text-left">
+           <p className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em]">© 2026 HireShield Intelligence Network</p>
         </div>
       </div>
     </div>

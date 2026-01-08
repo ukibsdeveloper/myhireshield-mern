@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 
 // Pages
-import LandingPage from './pages/LandingPage';
+import Home from './pages/Home';
 import Login from './pages/Login';
 import RegisterCompany from './pages/RegisterCompany';
 import RegisterEmployee from './pages/RegisterEmployee';
@@ -66,7 +66,7 @@ function App() {
     <div className="App">
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route path="/register/company" element={<PublicRoute><RegisterCompany /></PublicRoute>} />
         <Route path="/register/employee" element={<PublicRoute><RegisterEmployee /></PublicRoute>} />
