@@ -23,49 +23,57 @@ const AddEmployee = () => {
   setLoading(true);
   
   try {
-    const cleanDOB = formData.dateOfBirth.replace(/-/g, ""); 
+    // 1. Phone number validation (6-9 se shuru aur exactly 10 digits)
+    if (!/^[6-9]\d{9}$/.test(formData.phone)) {
+        return alert("Error: Indian phone number must start with 6-9 and be exactly 10 digits.");
+    }
+
+    // 2. Age check (Frontend safety)
+    const birthDate = new Date(formData.dateOfBirth);
+    const age = (new Date() - birthDate) / (1000 * 60 * 60 * 24 * 365.25);
+    if (age < 18) {
+        return alert("Error: Employee must be at least 18 years old.");
+    }
+
+    const cleanDOB = formData.dateOfBirth.replace(/-/g, ""); // YYYYMMDD for password
+
     const payload = {
-      firstName: formData.firstName.trim().toUpperCase(),
-      lastName: formData.lastName.trim().toUpperCase(),
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
       email: formData.email.trim().toLowerCase(),
       password: cleanDOB,
       confirmPassword: cleanDOB,
-      dateOfBirth: formData.dateOfBirth,
-      gender: formData.gender,
-      phone: formData.phone,
+      dateOfBirth: formData.dateOfBirth, // YYYY-MM-DD format strictly
+      gender: formData.gender.toLowerCase(), // female/male strictly lowercase
+      phone: String(formData.phone).trim(),
+      // Ye fields schema validation ke liye mandatory ho sakti hain
       address: {
-        street: 'Verified Enterprise Node',
+        street: 'Registered Node',
         city: 'Delhi',
         state: 'Delhi',
         country: 'India',
         pincode: '110001'
       },
-      designation: formData.designation,
-      department: formData.department || 'General'
+      designation: formData.designation || "Executive",
+      department: formData.department || "Operations"
     };
 
-    // Axios call with explicit status validation
-    const res = await axios.post('/api/auth/register/employee', payload, {
-      validateStatus: function (status) {
-        return status >= 200 && status < 300; // Isse 201 bhi success mana jayega
-      }
-    }); 
+    const res = await axios.post('/api/auth/register/employee', payload); 
 
-    // SUCCESS: Agar hum yahan pahunche, toh status 2xx hai
-    alert("Employee Node Created Successfully! ✅\nEmail: " + payload.email);
-    navigate('/dashboard/company');
-
-  } catch (err) {
-    // Agar status 2xx ke bahar hai, tabhi catch chalega
-    if (err.response?.status === 201 || err.response?.status === 200) {
-        // Double safety for Axios strange behaviors
-        alert("Employee Node Created Successfully! ✅");
-        navigate('/dashboard/company');
-        return;
+    // Success check based on status code 201
+    if (res.status === 201 || res.status === 200 || res.data.success) {
+      alert("Employee Node Created Successfully! ✅");
+      navigate('/dashboard/company');
     }
 
-    const errorMessage = err.response?.data?.message || "Registration Failed";
-    alert("Error: " + errorMessage);
+  } catch (err) {
+    const backendErrors = err.response?.data?.errors;
+    if (backendErrors && backendErrors.length > 0) {
+      // Isse alert mein exact field ka naam aur error message dikhega
+      alert(`Validation Failed: ${backendErrors[0].field} - ${backendErrors[0].message}`);
+    } else {
+      alert("Registration Error: " + (err.response?.data?.message || "Check your inputs"));
+    }
   } finally {
     setLoading(false);
   }
