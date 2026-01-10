@@ -18,7 +18,7 @@ const AddEmployee = () => {
     department: 'General'
   });
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     
@@ -45,31 +45,43 @@ const AddEmployee = () => {
         department: formData.department || 'General'
       };
 
+      // DEBUG: Payload check karne ke liye
+      console.log("Attempting Registration with:", payload);
+
       const res = await axios.post('/api/auth/register/employee', payload); 
 
-      // SUCCESS LOGIC: Agar status 200 ya 201 hai, toh iska matlab data save ho gaya hai.
-      if (res.status === 200 || res.status === 201 || res.data.success === true) {
-        console.log("Registration Successful Response:", res.data);
-        alert("Employee Node Created Successfully! ✅\nDefault Password: " + cleanDOB);
+      /**
+       * SUCCESS LOGIC RE-ENGINEERED:
+       * Agar status code 200 ya 201 hai, toh registration success hai.
+       * Database screenshot ne confirm kar diya hai ki user create ho raha hai.
+       */
+      if (res.status === 201 || res.status === 200 || res.data.success) {
+        console.log("Backend Success Response:", res.data);
+        alert("Employee Node Created Successfully! ✅\n\nLogin Email: " + payload.email + "\nDefault Password: " + cleanDOB);
         navigate('/dashboard/company');
       } else {
-        // Yeh tab chalega jab status 200/201 ho par success flag false ho
-        alert(res.data.message || "Unknown error during registration");
+        // Yeh bohot rare case hai jab status success ho par backend mana kare
+        alert(res.data.message || "Unexpected response from server");
       }
 
     } catch (err) {
-      // CATCH BLOCK: Yeh tabhi chalega jab server 4xx ya 5xx status code dega (Asal Error)
-      console.error("Critical Registration Error:", err.response?.data);
-
+      /**
+       * CATCH BLOCK:
+       * Yeh tabhi chalna chahiye jab status code 400, 401, 500 etc ho.
+       */
+      console.error("Full Error Object:", err);
+      
+      // Agar Backend ne Validation list bheji hai
       const backendErrors = err.response?.data?.errors;
-      const errorMessage = err.response?.data?.message;
+      const backendMessage = err.response?.data?.message;
 
       if (backendErrors && backendErrors.length > 0) {
-        alert(`Validation Failed: ${backendErrors[0].field || backendErrors[0].path} - ${backendErrors[0].message || backendErrors[0].msg}`);
-      } else if (errorMessage) {
-        alert("Registration Error: " + errorMessage);
+        alert(`Protocol Validation Failed: ${backendErrors[0].message || backendErrors[0].msg}`);
+      } else if (backendMessage) {
+        alert("Registration Error: " + backendMessage);
       } else {
-        alert("Network Protocol Error. Please check connectivity.");
+        // Agar Axios response hi nahi la paya (Network issues)
+        alert("Connection Timeout or Protocol Mismatch. Check Network Tab.");
       }
     } finally {
       setLoading(false);
