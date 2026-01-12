@@ -1,135 +1,113 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
-// --- CONFIGURATION ---
-dotenv.config();
+const EmployeeDashboard = () => {
+  const [employeeData, setEmployeeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [user] = useState(JSON.parse(localStorage.getItem('user')));
+  const navigate = useNavigate();
 
-// Get __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
 
-// Import database connection
-import connectDB from './config/database.js';
+        // Dashboard ke liye profile API
+        const res = await axios.get('/api/employees/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
 
-// Import routes
-import authRoutes from './routes/auth.routes.js';
-import employeeRoutes from './routes/employee.routes.js';
-import companyRoutes from './routes/company.routes.js';
-import reviewRoutes from './routes/review.routes.js';
-import documentRoutes from './routes/document.routes.js';
-import analyticsRoutes from './routes/analytics.routes.js';
-import notificationRoutes from './routes/notification.routes.js';
-import auditRoutes from './routes/audit.routes.js';
-import consentRoutes from './routes/consent.routes.js';
+        if (res.data.success) {
+          // Backend response structure: res.data.data.employee
+          setEmployeeData(res.data.data.employee);
+        }
+      } catch (err) {
+        console.error("Dashboard Fetch Error:", err.response?.data || err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-// Import middleware
-import { errorHandler } from './middleware/errorHandler.js';
-import { notFound } from './middleware/notFound.js';
+    if (user) fetchDashboardData();
+    else setLoading(false);
+  }, [user, navigate]);
 
-// Handle Uncaught Exceptions (Error in code outside of requests)
-process.on('uncaughtException', (err) => {
-  console.error('❌ UNCAUGHT EXCEPTION! Shutting down...');
-  console.error(err.name, err.message);
-  process.exit(1);
-});
+  const shieldScore = employeeData?.overallScore || 0; 
+  const totalAudits = employeeData?.totalReviews || 0;
 
-// Initialize express app
-const app = express();
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-[#fcfaf9]">
+      <div className="text-[10px] font-black uppercase tracking-[0.5em] animate-pulse text-[#496279]">
+        Scanning Integrity Node...
+      </div>
+    </div>
+  );
 
-// --- MIDDLEWARES ---
+  return (
+    <div className="min-h-screen bg-[#fcfaf9] font-sans">
+      <Navbar scrolled={true} isAuthenticated={true} user={user} />
+      <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
+        
+        {/* SCORE GAUGE */}
+        <div className="bg-white border border-slate-100 rounded-[3rem] p-12 shadow-2xl mb-12 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 flex">
+            <div className="flex-1 bg-red-400"></div>
+            <div className="flex-1 bg-yellow-400"></div>
+            <div className="flex-1 bg-[#4c8051]"></div>
+          </div>
 
-// 1. Security Middleware
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-  contentSecurityPolicy: false // Development mein ease ke liye
-}));
+          <h2 className="text-[11px] font-black text-slate-300 uppercase tracking-[0.4em] mb-10">Professional Integrity Index</h2>
+          
+          <div className="relative inline-block scale-110">
+             <h1 className="text-9xl font-black tracking-tighter text-[#496279]">{shieldScore}%</h1>
+             <p className="text-[10px] font-black uppercase tracking-[0.3em] mt-2" style={{ color: shieldScore >= 75 ? '#4c8051' : '#496279' }}>
+               Status: {shieldScore >= 75 ? 'Verified Elite' : 'Active Node'}
+             </p>
+          </div>
 
-// 2. CORS configuration
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.PRODUCTION_URL 
-    : process.env.FRONTEND_URL,
-  credentials: true,
-  optionsSuccessStatus: 200
+          <div className="mt-12 max-w-md mx-auto border-t border-slate-50 pt-8">
+             <p className="text-slate-400 text-[10px] font-bold uppercase leading-relaxed tracking-wider">
+               Based on <span className="text-[#496279] font-black">{totalAudits} Enterprise Audits</span>. 
+               Last Sync: {new Date().toLocaleDateString('en-GB')}
+             </p>
+          </div>
+        </div>
+
+        {/* ACTIONS */}
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-[#496279] rounded-[3rem] p-10 text-white shadow-xl relative overflow-hidden group">
+            <h3 className="text-2xl font-black uppercase tracking-tight mb-4">Integrity Ledger</h3>
+            <p className="text-white/50 text-[11px] font-bold uppercase leading-relaxed mb-10">View detailed behavioral feedback and company reviews.</p>
+            <Link to="/reputation-report" className="block w-full bg-[#4c8051] text-center py-5 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-transform">
+              Open Full Report
+            </Link>
+          </div>
+
+          <div className="bg-white border border-slate-100 rounded-[3rem] p-10 flex flex-col justify-center shadow-sm">
+             <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-[#496279]"><i className="fas fa-shield-alt text-xl"></i></div>
+                <div>
+                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Verification Status</p>
+                   <p className="text-sm font-black text-[#496279] uppercase">{employeeData?.verified ? 'KYC Verified' : 'KYC Pending'}</p>
+                </div>
+             </div>
+             <p className="text-[10px] font-bold text-slate-400 uppercase leading-relaxed tracking-tight">Your digital footprint is securely anchored on HireShield Bureau nodes.</p>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center opacity-30">
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">Node ID: {user?._id?.toUpperCase()}</p>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
-app.use(cors(corsOptions));
-
-// 3. Body parser
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// 4. Logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-} else {
-  app.use(morgan('combined'));
-}
-
-// 5. Static Files Security
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// --- ROUTES ---
-
-// Health check
-app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'MyHireShield API is active',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV
-  });
-});
-
-// Mount Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/employees', employeeRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/documents', documentRoutes);
-app.use('/api/analytics', analyticsRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/audit', auditRoutes);
-app.use('/api/consent', consentRoutes);
-
-// --- ERROR HANDLING ---
-app.use(notFound);
-app.use(errorHandler);
-
-// --- STARTUP ---
-
-const PORT = process.env.PORT || 5000;
-
-// Connect to DB and then start server
-const startServer = async () => {
-  try {
-    await connectDB();
-    const server = app.listen(PORT, () => {
-      console.log(`
-🚀 MyHireShield Server Running
-📍 Environment: ${process.env.NODE_ENV}
-🌐 Server: http://localhost:${PORT}
-💚 Health: http://localhost:${PORT}/api/health
-      `);
-    });
-
-    // Handle Unhandled Promise Rejections (e.g. DB connection issues)
-    process.on('unhandledRejection', (err) => {
-      console.error('❌ UNHANDLED REJECTION! Shutting down server...');
-      console.error(err.name, err.message);
-      server.close(() => {
-        process.exit(1);
-      });
-    });
-
-  } catch (error) {
-    console.error(`❌ DB Connection failed: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-startServer();
+export default EmployeeDashboard;
