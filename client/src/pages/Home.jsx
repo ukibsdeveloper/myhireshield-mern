@@ -42,6 +42,7 @@ const Home = () => {
 
 {/* Hero Section */}
       <section className="relative pt-16 pb-16 md:pt-24 lg:pt-28 lg:pb-32 overflow-hidden bg-gradient-to-b from-[#fef8f7] to-white">
+        {/* Background Blobs */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
           <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-[#dd8d88]/15 rounded-full blur-[100px]"></div>
           <div className="absolute bottom-[10%] left-[-5%] w-[35%] h-[35%] bg-[#4c8051]/10 rounded-full blur-[100px]"></div>
@@ -49,6 +50,8 @@ const Home = () => {
 
         <div className="container mx-auto px-5 sm:px-6 max-w-7xl">
           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            
+            {/* Left Content */}
             <div className="animate-on-scroll z-10 text-center lg:text-left w-full lg:w-3/5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-[#dd8d88]/20 text-[#dd8d88] text-[10px] md:text-[11px] font-black uppercase tracking-[0.25em] mb-8 shadow-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#dd8d88] animate-pulse"></span>
@@ -67,36 +70,56 @@ const Home = () => {
                 Verify history, measure trustworthiness, and track employment patterns using HR verified data. Gain clarity on candidate credibility and hire responsible talent.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                <Link to="/register/company" className="w-full sm:w-auto px-10 py-4.5 bg-[#496279] text-white rounded-xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-[#3a4e61] transition-all shadow-[0_10px_30px_rgba(73,98,121,0.25)] hover:-translate-y-1">
-                  For Enterprises
-                  <i className="fas fa-arrow-right text-xs"></i>
-                </Link>
-                <Link to="/register/employee" className="w-full sm:w-auto px-10 py-4.5 bg-white text-[#496279] border-2 border-[#496279]/10 rounded-xl font-black text-sm uppercase tracking-widest hover:bg-[#fcfaf9] transition-all">
-                  Claim Profile
-                </Link>
-              </div>
+              {/* New Action Buttons & Stats Wrapper */}
+              <div className="flex flex-col gap-12 mt-10">
+                {/* Updated Action Buttons */}
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
+                  <Link 
+                    to="/register/company" 
+                    className="group w-full sm:w-auto px-10 py-5 bg-[#496279] text-white rounded-2xl font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-[#3a4e61] transition-all shadow-[0_20px_40px_rgba(73,98,121,0.2)] hover:-translate-y-1 active:scale-95"
+                  >
+                    For Enterprises
+                    <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                  </Link>
+                  
+                  <Link 
+                    to="/register/employee" 
+                    className="w-full sm:w-auto px-10 py-5 bg-white text-[#496279] border border-slate-200 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:bg-slate-50 transition-all shadow-sm hover:shadow-md active:scale-95"
+                  >
+                    Claim My Profile
+                  </Link>
+                </div>
 
-              <div className="mt-16 pt-10 border-t border-slate-100 grid grid-cols-3 gap-8 max-w-md mx-auto lg:mx-0">
-                {[
-                  { n: '98%', l: 'Accuracy Rate' },
-                  { n: '<2 Min', l: 'Avg. Check Time' },
-                  { n: '24/7', l: 'Support' }
-                ].map(stat => (
-                  <div key={stat.l}>
-                    <p className="text-2xl font-black text-[#496279] tracking-tight">{stat.n}</p>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">{stat.l}</p>
-                  </div>
-                ))}
+                {/* Updated Structured Stats */}
+                <div className="inline-grid grid-cols-3 gap-4 md:gap-10 py-8 px-2 border-t border-slate-100 max-w-lg mx-auto lg:mx-0">
+                  {[
+                    { n: '98%', l: 'Accuracy Rate', color: '#4c8051' },
+                    { n: '<2 Min', l: 'Check Time', color: '#dd8d88' },
+                    { n: '24/7', l: 'Support', color: '#496279' }
+                  ].map((stat, idx) => (
+                    <div key={stat.l} className={`relative ${idx !== 0 ? 'pl-4 md:pl-8' : ''}`}>
+                      {idx !== 0 && (
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[1px] h-8 bg-slate-200"></div>
+                      )}
+                      <p className="text-2xl md:text-3xl font-black tracking-tighter leading-none" style={{ color: stat.color }}>
+                        {stat.n}
+                      </p>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 whitespace-nowrap">
+                        {stat.l}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
+            {/* Right Side: Dashboard Mockup */}
             <div className="relative animate-on-scroll w-full lg:w-2/5 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[460px] group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#4c8051]/20 to-[#dd8d88]/20 rounded-[2rem] blur-xl opacity-50"></div>
-                <div className="relative bg-white border border-slate-200 rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02] flex flex-col items-center">
+                <div className="relative bg-white border border-slate-200 rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02] flex flex-col items-center">
                   
-                  {/* Top: Logo (Doubled Size) */}
+                  {/* Top: Logo (w-64 h-64 - Dugni Size) */}
                   <div className="w-64 h-64 rounded-3xl overflow-hidden border-2 border-slate-50 shadow-xl mb-8 transition-transform duration-500 group-hover:rotate-3 bg-white">
                     <img 
                       src="/logo.jpg" 
@@ -133,6 +156,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from './context/AuthContext';
+import ScrollToTop from './components/ScrollToTop'; // Isse import karein
 
 // Pages
 import Home from './pages/Home';
@@ -80,6 +81,7 @@ const PublicRoute = ({ children }) => {
 function App() {
   return (
     <div className="App">
+    <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
