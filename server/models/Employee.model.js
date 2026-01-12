@@ -121,6 +121,11 @@ const employeeSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  consentType: {
+    type: String,
+    enum: ['marketing', 'analytics', 'third_party', 'all']
+  },
+  consentDate: Date,
   consentGivenAt: Date,
   dataRetentionConsent: {
     type: Boolean,

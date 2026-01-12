@@ -86,4 +86,83 @@ router.put('/profile', protect, authorize('company'), async (req, res) => {
   }
 });
 
+/**
+ * @desc    Get company statistics
+ * @route   GET /api/companies/stats
+ * @access  Private (Company only)
+ */
+router.get('/stats', apiLimiter, protect, authorize('company'), async (req, res) => {
+  try {
+    const company = await Company.findOne({ userId: req.user._id });
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: 'Company profile not found.'
+      });
+    }
+
+    // Get company statistics
+    const totalReviews = await Review.countDocuments({ companyId: company._id });
+    const totalEmployees = await Employee.countDocuments({ createdBy: company._id });
+    const verifiedDocuments = await Document.countDocuments({ 
+      employeeId: { $in: await Employee.find({ createdBy: company._id }).distinct('_id') },
+      status: 'verified'
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalReviews,
+        totalEmployees,
+        verifiedDocuments,
+        companyInfo: {
+          name: company.companyName,
+          industry: company.industry,
+          companySize: company.companySize
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching company stats.',
+      error: error.message
+    });
+  }
+});
+
+/**
+ * @desc    Get employees created by company
+ * @route   GET /api/companies/employees
+ * @access  Private (Company only)
+ */
+router.get('/employees', apiLimiter, protect, authorize('company'), async (req, res) => {
+  try {
+    const company = await Company.findOne({ userId: req.user._id });
+
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: 'Company profile not found.'
+      });
+    }
+
+    const employees = await Employee.find({ createdBy: company._id })
+      .select('firstName lastName email phoneNumber createdAt')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: employees
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching employees.',
+      error: error.message
+    });
+  }
+});
+
 export default router;

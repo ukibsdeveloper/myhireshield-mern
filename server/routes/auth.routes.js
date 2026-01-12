@@ -8,7 +8,10 @@ import {
   verifyEmail,
   forgotPassword,
   resetPassword,
-  changePassword
+  changePassword,
+  enable2FA,
+  verify2FA,
+  disable2FA
 } from '../controllers/auth.controller.js';
 import { protect } from '../middleware/auth.middleware.js';
 import {
@@ -52,5 +55,10 @@ router.post('/logout', protect, logout);
 
 // Change Password (Auth required)
 router.put('/change-password', protect, changePassword);
+
+// 2FA Routes
+router.post('/2fa/enable', protect, enable2FA);
+router.post('/2fa/verify', protect, verify2FA);
+router.post('/2fa/disable', protect, disable2FA);
 
 export default router;

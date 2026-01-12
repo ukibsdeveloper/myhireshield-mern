@@ -78,8 +78,7 @@ const auditLogSchema = new mongoose.Schema({
   errorMessage: String,
   timestamp: {
     type: Date,
-    default: Date.now,
-    index: true
+    default: Date.now
   }
 }, {
   timestamps: true

@@ -237,3 +237,88 @@ export const changePassword = async (req, res) => {
   await user.save();
   res.status(200).json({ success: true, message: 'Password changed' });
 };
+
+// @desc    Enable 2FA
+export const enable2FA = async (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    const user = await User.findById(req.user._id);
+
+    if (!phoneNumber) {
+      return res.status(400).json({ success: false, message: 'Phone number is required' });
+    }
+
+    // In a real implementation, you would integrate with an SMS service
+    // For now, we'll just set a mock secret
+    user.twoFactorEnabled = true;
+    user.phoneNumber = phoneNumber;
+    user.twoFactorSecret = 'mock-2fa-secret-' + Date.now();
+    await user.save();
+
+    await AuditLog.createLog({
+      userId: user._id,
+      userEmail: user.email,
+      userRole: user.role,
+      eventType: 'two_factor_enabled',
+      ipAddress: req.ip,
+      userAgent: req.headers['user-agent'],
+      status: 'success'
+    });
+
+    res.status(200).json({
+      success: true,
+      message: '2FA enabled successfully',
+      data: { phoneNumber: user.phoneNumber }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error enabling 2FA' });
+  }
+};
+
+// @desc    Verify 2FA
+export const verify2FA = async (req, res) => {
+  try {
+    const { code } = req.body;
+    const user = await User.findById(req.user._id);
+
+    if (!user.twoFactorEnabled) {
+      return res.status(400).json({ success: false, message: '2FA not enabled' });
+    }
+
+    // In a real implementation, verify the TOTP code
+    // For now, accept any 6-digit code
+    if (!code || code.length !== 6 || !/^\d{6}$/.test(code)) {
+      return res.status(400).json({ success: false, message: 'Invalid 2FA code' });
+    }
+
+    res.status(200).json({ success: true, message: '2FA verified successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error verifying 2FA' });
+  }
+};
+
+// @desc    Disable 2FA
+export const disable2FA = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    user.twoFactorEnabled = false;
+    user.twoFactorSecret = undefined;
+    user.phoneNumber = undefined;
+    await user.save();
+
+    await AuditLog.createLog({
+      userId: user._id,
+      userEmail: user.email,
+      userRole: user.role,
+      eventType: 'two_factor_disabled',
+      ipAddress: req.ip,
+      userAgent: req.headers['user-agent'],
+      status: 'success'
+    });
+
+    res.status(200).json({ success: true, message: '2FA disabled successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error disabling 2FA' });
+  }
+};

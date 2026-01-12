@@ -1,4 +1,6 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
 import {
   uploadDocument,
   getEmployeeDocuments,
@@ -51,6 +53,73 @@ router.delete(
   protect,
   authorize('employee'),
   deleteDocument
+);
+
+// 5. Get My Documents (Employee Only)
+router.get(
+  '/my',
+  protect,
+  authorize('employee'),
+  async (req, res) => {
+    try {
+      const documents = await Document.find({ employeeId: req.user.profileId })
+        .sort({ createdAt: -1 });
+
+      res.status(200).json({
+        success: true,
+        data: documents
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Error fetching documents',
+        error: error.message
+      });
+    }
+  }
+);
+
+// 6. Download Document
+router.get(
+  '/:id/download',
+  protect,
+  async (req, res) => {
+    try {
+      const document = await Document.findById(req.params.id);
+      
+      if (!document) {
+        return res.status(404).json({
+          success: false,
+          message: 'Document not found'
+        });
+      }
+
+      // Check if user owns the document or is a company
+      if (req.user.role === 'employee' && document.employeeId.toString() !== req.user.profileId.toString()) {
+        return res.status(403).json({
+          success: false,
+          message: 'Access denied'
+        });
+      }
+
+      const filePath = path.join(__dirname, '..', 'uploads', 'documents', document.fileName);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({
+          success: false,
+          message: 'File not found on server'
+        });
+      }
+
+      res.download(filePath, document.originalName);
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Error downloading document',
+        error: error.message
+      });
+    }
+  }
 );
 
 export default router;

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   // 1. Axios Security: Token Injection & Auto-Logout Logic
   useEffect(() => {
     // Request Interceptor: Token automatically attach karna
-    const requestInterceptor = axios.interceptors.request.use((config) => {
+    const requestInterceptor = api.interceptors.request.use((config) => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     // Response Interceptor: Agar token expire ho jaye (401) toh logout karna
-    const responseInterceptor = axios.interceptors.response.use(
+    const responseInterceptor = api.interceptors.response.use(
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }) => {
     );
 
     return () => {
-      axios.interceptors.request.eject(requestInterceptor);
-      axios.interceptors.response.eject(responseInterceptor);
+      api.interceptors.request.eject(requestInterceptor);
+      api.interceptors.response.eject(responseInterceptor);
     };
   }, [token]);
 
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     const checkAuth = async () => {
       if (token) {
         try {
-          const response = await axios.get('/api/auth/me');
+          const response = await api.get('/auth/me');
           if (response.data.success) {
             setUser(response.data.user);
           }
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials, role) => {
     try {
       // Backend expects: { email, password, role } OR { firstName, dateOfBirth, role }
-      const response = await axios.post('/api/auth/login', {
+      const response = await api.post('/auth/login', {
         ...credentials,
         role
       });
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
   // Other functions remain robust but synced with backend paths
   const registerCompany = async (companyData) => {
     try {
-      const response = await axios.post('/api/auth/register/company', companyData);
+      const response = await api.post('/auth/register/company', companyData);
       return { success: true, message: response.data.message };
     } catch (error) {
       return { success: false, error: error.response?.data?.message || 'Registration failed' };
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
   const registerEmployee = async (employeeData) => {
     try {
-      const response = await axios.post('/api/auth/register/employee', employeeData);
+      const response = await api.post('/auth/register/employee', employeeData);
       return { success: true, message: response.data.message };
     } catch (error) {
       return { success: false, error: error.response?.data?.message || 'Registration failed' };

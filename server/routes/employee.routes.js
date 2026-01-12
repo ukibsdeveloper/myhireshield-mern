@@ -36,7 +36,7 @@ router.get('/:id/stats', getEmployeeStats);
  */
 
 // Get Logged-in Employee's own profile
-router.get('/profile/me', protect, authorize('employee'), getMyProfile);
+router.get('/profile', protect, authorize('employee'), getMyProfile);
 
 // Update Profile Details
 router.put('/profile', protect, authorize('employee'), updateProfile);
@@ -48,9 +48,9 @@ router.put('/visibility', protect, authorize('employee'), updateVisibility);
 router.post('/consent', protect, authorize('employee'), giveConsent);
 
 // GDPR: Download all personal data
-router.get('/export/data', protect, authorize('employee'), exportData);
+router.get('/export', protect, authorize('employee'), exportData);
 
 // GDPR: Deactivate/Delete Account
-router.delete('/account', protect, authorize('employee'), deleteAccount);
+router.delete('/profile', protect, authorize('employee'), deleteAccount);
 
 export default router;

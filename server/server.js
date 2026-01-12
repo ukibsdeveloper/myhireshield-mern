@@ -23,6 +23,9 @@ import companyRoutes from './routes/company.routes.js';
 import reviewRoutes from './routes/review.routes.js';
 import documentRoutes from './routes/document.routes.js';
 import analyticsRoutes from './routes/analytics.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
+import auditRoutes from './routes/audit.routes.js';
+import consentRoutes from './routes/consent.routes.js';
 
 // Import middleware
 import { errorHandler } from './middleware/errorHandler.js';
@@ -89,6 +92,9 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/audit', auditRoutes);
+app.use('/api/consent', consentRoutes);
 
 // --- ERROR HANDLING ---
 app.use(notFound);
