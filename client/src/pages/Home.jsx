@@ -40,7 +40,7 @@ const Home = () => {
       
       <Navbar scrolled={scrolled} isAuthenticated={isAuthenticated} user={user} />
 
-      {/* Hero Section */}
+{/* Hero Section */}
       <section className="relative pt-16 pb-16 md:pt-24 lg:pt-28 lg:pb-32 overflow-hidden bg-gradient-to-b from-[#fef8f7] to-white">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
           <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-[#dd8d88]/15 rounded-full blur-[100px]"></div>
@@ -58,7 +58,7 @@ const Home = () => {
               <h1 className="text-[36px] sm:text-6xl lg:text-[76px] font-black text-[#496279] mb-8 leading-[1.1] tracking-[-0.03em]">
                 Smarter Hiring Starts with <br className="hidden md:block" />
                 <span className="text-[#4c8051] relative">
-                   Verified Employees.
+                    Verified Employees.
                   <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#4c8051]/20" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="currentColor" strokeWidth="4" fill="none" /></svg>
                 </span>
               </h1>
@@ -94,37 +94,36 @@ const Home = () => {
             <div className="relative animate-on-scroll w-full lg:w-2/5 flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[460px] group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#4c8051]/20 to-[#dd8d88]/20 rounded-[2rem] blur-xl opacity-50"></div>
-                <div className="relative bg-white border border-slate-200 rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden p-7 md:p-9 transition-transform duration-700 group-hover:scale-[1.02]">
-                  <div className="flex justify-between items-center mb-10">
-                    <div className="flex gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
-                    </div>
-                    <span className="text-[10px] font-black text-[#4c8051] bg-[#4c8051]/5 px-3 py-1 rounded-full border border-[#4c8051]/10 tracking-widest uppercase">Verified System</span>
+                <div className="relative bg-white border border-slate-200 rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02] flex flex-col items-center">
+                  
+                  {/* Top: Logo (Doubled Size) */}
+                  <div className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-slate-50 shadow-xl mb-8 transition-transform duration-500 group-hover:rotate-3 bg-white">
+                    <img 
+                      src="/logo.jpg" 
+                      alt="HireShield Logo" 
+                      className="w-full h-full object-cover" 
+                    />
                   </div>
-                  <div className="flex items-center gap-5 mb-10">
-                    <div className="w-24 h-24 rounded-2xl overflow-hidden border border-slate-100 shadow-lg shadow-[#496279]/10 bg-white">
-                        <img 
-                          src="/logo.jpg" 
-                          alt="HireShield Logo" 
-                          className="w-full h-full object-cover" 
-                        />
-                      </div>
-                    <div>
-                      <h4 className="text-xl font-black text-[#496279] tracking-tight">Trust Score™</h4>
-                      <p className="text-xs font-bold text-[#4c8051] tracking-[0.1em] uppercase">Status: Credible</p>
-                    </div>
+
+                  {/* Header Content */}
+                  <div className="text-center mb-8">
+                    <span className="text-[10px] font-black text-[#4c8051] bg-[#4c8051]/5 px-4 py-1.5 rounded-full border border-[#4c8051]/10 tracking-widest uppercase mb-4 inline-block">Verified System</span>
+                    <h4 className="text-2xl font-black text-[#496279] tracking-tight">Trust Score™</h4>
+                    <p className="text-sm font-bold text-[#4c8051] tracking-[0.1em] uppercase">Status: Credible</p>
                   </div>
-                  <div className="grid grid-cols-3 gap-4 mb-8">
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-3 gap-4 mb-8 w-full">
                     {[98, 85, 92].map((v, i) => (
-                      <div key={i} className="bg-[#fcfaf9] border border-slate-100 p-4 rounded-2xl text-center">
+                      <div key={i} className="bg-[#fcfaf9] border border-slate-100 p-4 rounded-2xl text-center shadow-sm">
                         <p className="text-xl font-black text-[#496279]">{v}</p>
                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Check</p>
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-[#496279] rounded-2xl text-white shadow-lg shadow-[#496279]/30">
+
+                  {/* Bottom Indicator */}
+                  <div className="flex items-center justify-between p-4 bg-[#496279] rounded-2xl text-white shadow-lg shadow-[#496279]/30 w-full">
                     <div className="flex items-center gap-3">
                       <i className="fas fa-fingerprint text-sm text-[#dd8d88]"></i>
                       <span className="text-xs font-black uppercase tracking-wider">HR-Verified</span>

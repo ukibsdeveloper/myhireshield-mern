@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = ({ scrolled }) => {
-  const { isAuthenticated, user, logout } = useAuth(); // Context se values li hain
+  const { isAuthenticated, user, logout } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,10 +37,14 @@ const Navbar = ({ scrolled }) => {
             : 'bg-transparent py-5 md:py-6 px-4'
         }`}>
           <div className="flex justify-between items-center">
-            {/* Logo */}
+            {/* Logo Section Updated with Actual Logo */}
             <Link to="/" className="flex items-center gap-2 md:gap-3 z-[120]">
-              <div className="h-8 w-8 md:h-10 md:w-10 bg-[#496279] rounded-xl flex items-center justify-center shadow-lg transition-transform hover:rotate-6">
-                <i className="fas fa-shield-halved text-white text-lg"></i>
+              <div className="h-8 w-8 md:h-10 md:w-10 overflow-hidden rounded-xl bg-white shadow-lg transition-transform hover:rotate-6 border border-slate-100">
+                <img 
+                  src="/logo.jpg" 
+                  alt="HireShield Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex flex-col leading-none">
                 <span className={`text-lg md:text-xl font-black transition-colors duration-500 ${isMobileMenuOpen ? 'text-white' : 'text-[#496279]'}`}>
@@ -50,15 +54,16 @@ const Navbar = ({ scrolled }) => {
               </div>
             </Link>
 
-            {/* Desktop Nav - SMART LOGIC */}
+            {/* Desktop Nav */}
             <div className="hidden md:flex items-center bg-[#496279]/5 rounded-full px-1.5 py-1 border border-[#496279]/5">
               {isHomePage ? (
                 <>
-                  {['Features', 'Process'].map((item) => (
-                    <a key={item} href={`#${item.toLowerCase().replace(/\s+/g, '-')}`} className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-[#496279]/70 hover:text-[#496279] transition-all hover:bg-white rounded-full">
-                      {item}
-                    </a>
-                  ))}
+                  <a href="#features" className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-[#496279]/70 hover:text-[#496279] transition-all hover:bg-white rounded-full">
+                    Features
+                  </a>
+                  <a href="#process" className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-[#496279]/70 hover:text-[#496279] transition-all hover:bg-white rounded-full">
+                    Process
+                  </a>
                 </>
               ) : (
                 <Link to="/" className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-[#496279]/70 hover:text-[#496279] transition-all hover:bg-white rounded-full">
@@ -67,7 +72,7 @@ const Navbar = ({ scrolled }) => {
               )}
             </div>
 
-            {/* Right Side Buttons - Role Based Logic */}
+            {/* Right Side Buttons */}
             <div className="flex items-center gap-3">
               <div className="hidden md:flex items-center gap-4">
                 {isAuthenticated ? (
@@ -93,7 +98,6 @@ const Navbar = ({ scrolled }) => {
                 )}
               </div>
               
-              {/* Mobile Burger */}
               <button onClick={toggleMenu} className="md:hidden relative z-[120] w-10 h-10 flex items-center justify-center bg-white/80 rounded-lg border border-slate-200 shadow-sm">
                 <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-[#496279]`}></i>
               </button>
@@ -102,7 +106,7 @@ const Navbar = ({ scrolled }) => {
         </nav>
       </div>
 
-      {/* MOBILE BOTTOM TAB BAR - Dynamic for Auth User */}
+      {/* MOBILE BOTTOM TAB BAR */}
       <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] z-[110]">
         <div className="bg-[#496279]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] px-6 py-3 flex justify-between items-center text-white">
           <Link to="/" className={`flex flex-col items-center gap-1 ${isHomePage ? 'text-[#4c8051]' : 'opacity-60'}`}>
