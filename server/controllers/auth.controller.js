@@ -28,45 +28,57 @@ const getDeviceInfo = (req) => {
 // @desc    Register company
 export const registerCompany = async (req, res) => {
   try {
-    const { companyName, email, password, website, industry, companySize, address, contactPerson, gstin, cin } = req.body;
+    console.log('Registration request received');
+    console.log('Request body keys:', Object.keys(req.body));
+    
+    const { companyName, email, password, contactPerson } = req.body;
 
+    // Minimal validation
+    if (!companyName || !email || !password) {
+      return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
+
+    // Check if user exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ success: false, message: 'Email already registered' });
     }
 
-    const user = await User.create({ email, password, role: 'company' });
-    const company = await Company.create({
-      userId: user._id,
-      companyName, email, website, industry, companySize, address, contactPerson, gstin, cin
+    // Create user
+    const user = new User({ 
+      email, 
+      password, 
+      role: 'company',
+      isActive: true,
+      emailVerified: true
     });
+    await user.save();
+    console.log('User created:', user._id);
+
+    // Create minimal company
+    const company = new Company({
+      userId: user._id,
+      companyName,
+      email,
+      industry: req.body.industry || 'Other',
+      companySize: req.body.companySize || '1-10',
+      contactPerson: {
+        name: contactPerson?.name || 'Contact',
+        designation: contactPerson?.designation || 'Manager',
+        phone: contactPerson?.phone || '0000000000',
+        email: contactPerson?.email || email
+      }
+    });
+    await company.save();
+    console.log('Company created:', company._id);
 
     user.profileId = company._id;
     await user.save();
 
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    user.emailVerificationToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
-    user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000;
-    await user.save();
-
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
-    try {
-      await sendEmail({
-        to: email,
-        subject: 'Verify Your Email - MyHireShield',
-        template: 'emailVerification',
-        data: { name: companyName, verificationUrl }
-      });
-    } catch (err) { console.error('Email failed'); }
-
-    await AuditLog.createLog({
-      userId: user._id, userEmail: email, userRole: 'company',
-      eventType: 'user_registration', ...getDeviceInfo(req), status: 'success'
-    });
-
-    res.status(201).json({ success: true, message: 'Company registered. Check email.' });
+    res.status(201).json({ success: true, message: 'Company registered successfully!' });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error registering company' });
+    console.error('Registration error:', error);
+    res.status(500).json({ success: false, message: `Registration failed: ${error.message}` });
   }
 };
 
