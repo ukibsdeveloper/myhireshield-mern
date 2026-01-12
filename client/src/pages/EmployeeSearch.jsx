@@ -12,19 +12,16 @@ const EmployeeSearch = () => {
   const [searched, setSearched] = useState(false);
 
   const handleSearch = async () => {
-    // Backend requires at least a name for the regex search
+    // Backend validation sync
     if (!fullName.trim()) return alert("Node verification requires at least a Name.");
 
     setLoading(true);
     setSearched(true);
     try {
-      // Logic: Axios automatically uses baseURL from App.jsx
-      // Backend controller uses req.query.name and req.query.dob
-      // EmployeeSearch.jsx mein handleSearch function ke andar line 27-30 badlein:
+      // API call with standardized query and dob
       const res = await axios.get(`/api/employees/search`, {
-      // EmployeeSearch.jsx ke handleSearch mein:
         params: { 
-          query: fullName.trim().toUpperCase(), // .toUpperCase() add kar dein
+          query: fullName.trim().toUpperCase(), 
           dob: dob || undefined 
         }
       });
@@ -49,7 +46,7 @@ const EmployeeSearch = () => {
 
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
         
-        {/* Search Header */}
+        {/* Header Section */}
         <div className="text-center mb-16 animate-in fade-in duration-700">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-6 border border-[#4c8051]/20">
             <i className="fas fa-fingerprint"></i> Identity Verification Node
@@ -60,8 +57,8 @@ const EmployeeSearch = () => {
           <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">Query the global professional integrity ledger</p>
         </div>
 
-        {/* Input Terminal */}
-        <div className="relative max-w-3xl mx-auto mb-20 animate-in slide-in-from-bottom-4 duration-700">
+        {/* Search Input Terminal */}
+        <div className="relative max-w-3xl mx-auto mb-20">
           <div className="absolute -inset-1 bg-gradient-to-r from-[#4c8051]/20 to-[#496279]/20 rounded-[2.5rem] blur-xl opacity-50"></div>
           <div className="relative grid md:grid-cols-2 gap-4 bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100">
             <div className="flex items-center gap-3 px-4 border-r border-slate-50">
@@ -87,7 +84,7 @@ const EmployeeSearch = () => {
               <button 
                 onClick={handleSearch}
                 disabled={loading}
-                className="bg-[#496279] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-[#3a4e61] transition-all shadow-xl active:scale-95 disabled:opacity-50"
+                className="bg-[#496279] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-[#3a4e61] transition-all shadow-xl disabled:opacity-50"
               >
                 {loading ? <i className="fas fa-circle-notch fa-spin"></i> : 'Verify Node'}
               </button>
@@ -104,7 +101,7 @@ const EmployeeSearch = () => {
              </div>
           ) : results.length > 0 ? (
             results.map((emp) => (
-              <div key={emp._id} className="bg-white p-6 md:p-8 rounded-[3rem] border border-slate-100 flex flex-col md:flex-row justify-between items-center group hover:border-[#4c8051] transition-all duration-500 shadow-sm hover:shadow-xl animate-in zoom-in-95 duration-500">
+              <div key={emp._id} className="bg-white p-6 md:p-8 rounded-[3rem] border border-slate-100 flex flex-col md:flex-row justify-between items-center group hover:border-[#4c8051] transition-all duration-500 shadow-sm hover:shadow-xl">
                 <div className="flex items-center gap-8 mb-6 md:mb-0">
                   <div className="h-20 w-20 bg-[#496279]/5 rounded-[2rem] flex items-center justify-center text-3xl font-black text-[#496279] border-2 border-white shadow-inner group-hover:bg-[#4c8051] group-hover:text-white transition-all duration-500 uppercase">
                     {emp.firstName?.charAt(0)}
@@ -130,7 +127,7 @@ const EmployeeSearch = () => {
               </div>
             ))
           ) : searched && !loading && (
-            <div className="text-center py-24 bg-white rounded-[4rem] border border-dashed border-slate-200 opacity-60 animate-in fade-in duration-500">
+            <div className="text-center py-24 bg-white rounded-[4rem] border border-dashed border-slate-200 opacity-60">
               <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-xl">🚫</div>
               <p className="text-[#496279] font-black uppercase tracking-[0.2em] text-sm leading-none">No Authorized Node Found</p>
               <p className="text-slate-400 text-[10px] font-bold uppercase mt-2">Verify spelling or official date of birth</p>
