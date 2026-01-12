@@ -104,7 +104,7 @@ const Home = () => {
                     <span className="text-[10px] font-black text-[#4c8051] bg-[#4c8051]/5 px-3 py-1 rounded-full border border-[#4c8051]/10 tracking-widest uppercase">Verified System</span>
                   </div>
                   <div className="flex items-center gap-5 mb-10">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden border border-slate-100 shadow-lg shadow-[#496279]/10 bg-white">
+                    <div className="w-24 h-24 rounded-2xl overflow-hidden border border-slate-100 shadow-lg shadow-[#496279]/10 bg-white">
                         <img 
                           src="/logo.jpg" 
                           alt="HireShield Logo" 
