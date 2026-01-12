@@ -29,6 +29,7 @@ const getDeviceInfo = (req) => {
 export const registerCompany = async (req, res) => {
   try {
     console.log('Registration request received');
+    console.log('Full request body:', JSON.stringify(req.body, null, 2));
     console.log('Request body keys:', Object.keys(req.body));
     
     const { companyName, email, password, contactPerson } = req.body;
@@ -39,12 +40,16 @@ export const registerCompany = async (req, res) => {
     }
 
     // Check if user exists
+    console.log('Checking if user exists with email:', email);
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log('User already exists:', existingUser._id);
       return res.status(400).json({ success: false, message: 'Email already registered' });
     }
+    console.log('User does not exist, proceeding with creation');
 
     // Create user
+    console.log('Creating user with data:', { email, role: 'company', isActive: true, emailVerified: true });
     const user = new User({ 
       email, 
       password, 
@@ -52,10 +57,24 @@ export const registerCompany = async (req, res) => {
       isActive: true,
       emailVerified: true
     });
+    console.log('Saving user...');
     await user.save();
-    console.log('User created:', user._id);
+    console.log('User created successfully:', user._id);
 
     // Create minimal company
+    console.log('Creating company with data:', {
+      userId: user._id,
+      companyName,
+      email,
+      industry: req.body.industry || 'Other',
+      companySize: req.body.companySize || '1-10',
+      contactPerson: {
+        name: contactPerson?.name || 'Contact',
+        designation: contactPerson?.designation || 'Manager',
+        phone: contactPerson?.phone || '0000000000',
+        email: contactPerson?.email || email
+      }
+    });
     const company = new Company({
       userId: user._id,
       companyName,
@@ -69,15 +88,36 @@ export const registerCompany = async (req, res) => {
         email: contactPerson?.email || email
       }
     });
+    console.log('Saving company...');
     await company.save();
-    console.log('Company created:', company._id);
+    console.log('Company created successfully:', company._id);
 
     user.profileId = company._id;
     await user.save();
 
     res.status(201).json({ success: true, message: 'Company registered successfully!' });
   } catch (error) {
-    console.error('Registration error:', error);
+    console.error('Registration error details:', error);
+    console.error('Error stack:', error.stack);
+    
+    // Handle Mongoose validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({ 
+        success: false, 
+        message: `Validation Error: ${messages.join(', ')}` 
+      });
+    }
+    
+    // Handle duplicate key errors
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue)[0];
+      return res.status(400).json({ 
+        success: false, 
+        message: `${field} already exists` 
+      });
+    }
+    
     res.status(500).json({ success: false, message: `Registration failed: ${error.message}` });
   }
 };

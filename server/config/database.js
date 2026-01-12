@@ -11,8 +11,11 @@ const connectDB = async () => {
 
     const options = {
       maxPoolSize: 10, // Connection pooling for better performance
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 30000, // Increased from 5000 to 30000
       socketTimeoutMS: 45000,
+      maxIdleTimeMS: 30000,
+      bufferMaxEntries: 0,
+      bufferCommands: false,
     };
 
     const conn = await mongoose.connect(process.env.MONGODB_URI, options);
@@ -28,6 +31,13 @@ const connectDB = async () => {
 
     mongoose.connection.on('disconnected', () => {
       console.warn('⚠️ Mongoose disconnected from MongoDB. Attempting to reconnect...');
+      setTimeout(() => {
+        connectDB();
+      }, 5000);
+    });
+
+    mongoose.connection.on('reconnected', () => {
+      console.log('✅ Mongoose reconnected to MongoDB');
     });
 
     // --- GRACEFUL SHUTDOWN HANDLERS ---

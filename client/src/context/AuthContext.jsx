@@ -103,7 +103,17 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/register/company', companyData);
       return { success: true, message: response.data.message };
     } catch (error) {
-      return { success: false, error: error.response?.data?.message || 'Registration failed' };
+      console.error('Registration error:', error.response?.data);
+      
+      // Handle validation errors (array of errors)
+      if (error.response?.data?.errors) {
+        const errorMessages = error.response.data.errors.map(err => err.message).join(', ');
+        return { success: false, error: errorMessages };
+      }
+      
+      // Handle single error message
+      const errorMessage = error.response?.data?.message || 'Registration failed';
+      return { success: false, error: errorMessage };
     }
   };
 
