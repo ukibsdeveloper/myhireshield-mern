@@ -9,10 +9,9 @@ const Footer = () => {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-20">
           
-          {/* 1. Brand & Value Prop (4 Columns) */}
+          {/* 1. Brand & Value Prop */}
           <div className="lg:col-span-4 flex flex-col items-center lg:items-start">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              {/* Original Logo Implementation */}
               <div className="h-12 w-12 overflow-hidden rounded-xl border border-slate-200 shadow-sm transition-transform group-hover:scale-105 bg-white">
                 <img 
                   src="/logo.jpg" 
@@ -47,10 +46,9 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 2. Navigation Links (6 Columns) */}
+          {/* 2. Navigation Links */}
           <div className="lg:col-span-6 grid grid-cols-2 gap-8">
-            
-            {/* For Employees - (Previously For Candidates) */}
+            {/* For Employees */}
             <div>
               <h4 className="font-black text-[#496279] text-[11px] uppercase tracking-[0.2em] mb-7 border-b border-slate-50 pb-2">
                 For Employees
@@ -63,7 +61,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* For Companies - (Previously For Employers) */}
+            {/* For Companies */}
             <div>
               <h4 className="font-black text-[#496279] text-[11px] uppercase tracking-[0.2em] mb-7 border-b border-slate-50 pb-2">
                 For Companies
@@ -78,16 +76,17 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 3. Support & Legal (2 Columns) */}
+          {/* 3. Support & Contact - PHONE UPDATED HERE */}
           <div className="lg:col-span-2 flex flex-col">
             <h4 className="font-black text-[#496279] text-[11px] uppercase tracking-[0.2em] mb-7 border-b border-slate-50 pb-2">
               Resolution Hub
             </h4>
             <div className="space-y-6">
               <div className="flex flex-col gap-1">
-                <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Support</span>
-                <a href="mailto:contact@myhireshield.com" className="text-sm font-bold text-[#496279] hover:text-[#4c8051] transition-colors break-words">
-                  contact@myhireshield.com
+                <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Call Support</span>
+                <a href="tel:+919910048130" className="text-sm font-bold text-[#496279] hover:text-[#4c8051] transition-colors flex items-center gap-2">
+                  <i className="fas fa-phone-alt text-[10px]"></i>
+                  +91 9910048130
                 </a>
               </div>
               <div className="flex flex-col gap-1">
