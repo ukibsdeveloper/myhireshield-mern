@@ -97,7 +97,7 @@ const Home = () => {
                 <div className="relative bg-white border border-slate-200 rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.08)] overflow-hidden p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02] flex flex-col items-center">
                   
                   {/* Top: Logo (Doubled Size) */}
-                  <div className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-slate-50 shadow-xl mb-8 transition-transform duration-500 group-hover:rotate-3 bg-white">
+                  <div className="w-64 h-64 rounded-3xl overflow-hidden border-2 border-slate-50 shadow-xl mb-8 transition-transform duration-500 group-hover:rotate-3 bg-white">
                     <img 
                       src="/logo.jpg" 
                       alt="HireShield Logo" 
