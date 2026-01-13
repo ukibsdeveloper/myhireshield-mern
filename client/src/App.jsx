@@ -15,7 +15,6 @@ import EmployeeSearch from './pages/EmployeeSearch';
 import EmployeeProfile from './pages/EmployeeProfile';
 import SubmitReview from './pages/SubmitReview';
 import ManageReviews from './pages/ManageReviews';
-import UploadDocuments from './pages/UploadDocuments';
 import VerifyDocuments from './pages/VerifyDocuments';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
@@ -84,7 +83,6 @@ function App() {
         <Route path="/reputation-report" element={<ProtectedRoute allowedRoles={['employee']}><ReputationReport /></ProtectedRoute>} />
         <Route path="/checkout" element={<ProtectedRoute allowedRoles={['employee']}><Checkout /></ProtectedRoute>} />
         <Route path="/employee/profile" element={<ProtectedRoute allowedRoles={['employee']}><EmployeeProfile /></ProtectedRoute>} />
-        <Route path="/upload/documents" element={<ProtectedRoute allowedRoles={['employee']}><UploadDocuments /></ProtectedRoute>} />
 
         {/* Shared Routes */}
         <Route path="/employee/:id" element={<ProtectedRoute><EmployeeProfile /></ProtectedRoute>} />

@@ -103,12 +103,6 @@ const EmployeeDashboard = () => {
              <p className="text-[10px] font-bold text-slate-400 uppercase leading-relaxed tracking-tight mb-6">
                Enterprise nodes are responsible for asset validation. Your current profile has {employeeData?.verified ? 'Verified' : 'Pending'} status.
              </p>
-             <Link 
-               to="/upload/documents" 
-               className="w-full bg-[#4c8051] text-center py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg text-white hover:bg-[#3a8e41] transition-all"
-             >
-               Upload Documents
-             </Link>
           </div>
         </div>
 

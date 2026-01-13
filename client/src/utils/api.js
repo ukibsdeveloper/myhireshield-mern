@@ -88,9 +88,6 @@ export const reviewAPI = {
 
 // Document APIs
 export const documentAPI = {
-  upload: (formData) => api.post('/documents/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
   getByEmployee: (employeeId) => api.get(`/documents/employee/${employeeId}`),
   getMyDocuments: () => api.get('/documents/my'),
   verify: (id, status, notes) => api.put(`/documents/${id}/verify`, { status, notes }),
