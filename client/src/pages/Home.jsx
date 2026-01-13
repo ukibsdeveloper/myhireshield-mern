@@ -55,19 +55,19 @@ const Home = () => {
             <div className="animate-on-scroll z-10 text-center lg:text-left w-full lg:w-3/5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-[#dd8d88]/20 text-[#dd8d88] text-[10px] md:text-[11px] font-black uppercase tracking-[0.25em] mb-8 shadow-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#dd8d88] animate-pulse"></span>
-                Trust Your Team. Build Your Future.
+                Verify. Score. Decide. Hire.
               </div>
 
               <h1 className="text-[36px] sm:text-6xl lg:text-[76px] font-black text-[#496279] mb-8 leading-[1.1] tracking-[-0.03em]">
-                Better Hiring with <br className="hidden md:block" />
+                Smarter Hiring Starts with<br className="hidden md:block" />
                 <span className="text-[#4c8051] relative">
-                  Verified Honest People.
+                  Verified Employee.
                   <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#4c8051]/20" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 25 0, 50 5 T 100 5" stroke="currentColor" strokeWidth="4" fill="none" /></svg>
                 </span>
               </h1>
 
               <p className="text-base md:text-xl text-slate-500/90 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-bold border-l-4 border-[#4c8051]/20 pl-6">
-                Check employment history and build trust with your team. Use real data to see who you are hiring. Fair for employees, safe for companies.
+                Verify employees' history, measure trustworthiness, and track past employment patterns using HR verified data. These insights help employers to gain clarity on candidate credibility, and hire a responsible person that product their company’s reputation.
               </p>
 
               {/* New Action Buttons & Stats Wrapper */}
@@ -93,9 +93,9 @@ const Home = () => {
                 {/* Updated Structured Stats */}
                 <div className="inline-grid grid-cols-3 gap-4 md:gap-10 py-8 px-2 border-t border-slate-100 max-w-lg mx-auto lg:mx-0">
                   {[
-                    { n: '100%', l: 'Real Data', color: '#4c8051' },
-                    { n: 'Fast', l: 'Result Time', color: '#dd8d88' },
-                    { n: '24/7', l: 'Help Desk', color: '#496279' }
+                    { n: '98%', l: 'Accuracy Rate', color: '#4c8051' },
+                    { n: '<2 Min', l: 'Avg. Check Time', color: '#dd8d88' },
+                    { n: '24/7', l: 'Support', color: '#496279' }
                   ].map((stat, idx) => (
                     <div key={stat.l} className={`relative ${idx !== 0 ? 'pl-4 md:pl-8' : ''}`}>
                       {idx !== 0 && (
@@ -166,10 +166,10 @@ const Home = () => {
         <div className="container mx-auto px-5 max-w-5xl text-center animate-on-scroll">
           <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-8 tracking-tight">Everything You Need to Hire With Confidence</h2>
           <p className="text-slate-500 font-bold leading-relaxed mb-6">
-            Most companies face problems when employees leave suddenly. This causes loss of money and time. Resumes don't always tell the whole truth.
+            In today’s challenging era, every company faces attrition and sudden exits by their employees that cause financial loss, reduced productivity, and damage to the company’s reputation. Therefore, before hiring, the employer must conduct a record check. Traditional methods to check credibility are very limited or outdated.
           </p>
           <p className="text-slate-500 font-bold leading-relaxed italic border-t pt-6 border-slate-100">
-            MyHireShield gives you simple, verified reports on work history and behavior. We make hiring easy and safe.
+            Thus, MyHireShield contributes to giving you an authentic and HR-verified employment history, credibility insight, and a structured trust score.
           </p>
         </div>
       </section>
@@ -189,12 +189,12 @@ const Home = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: 'fa-history', title: 'Work History', d: 'Check past work records verified by previous HR managers.', color: '#4c8051' },
-              { icon: 'fa-magnifying-glass-chart', title: 'Spot Problems', d: 'Find gaps in dates or any misleading information quickly.', color: '#dd8d88' },
-              { icon: 'fa-star-half-stroke', title: 'Honesty Score', d: 'A simple score that tells you how reliable a candidate is.', color: '#496279' },
-              { icon: 'fa-shield-heart', title: 'Lower Your Risk', d: 'Avoid hiring the wrong person and protect your company.', color: '#4c8051' },
-              { icon: 'fa-bolt', title: 'Fast Results', d: 'Get the details you need in minutes, not days.', color: '#dd8d88' },
-              { icon: 'fa-users-gear', title: 'Trusted Team', d: 'Build a team of honest people who care about their work.', color: '#496279' }
+              { icon: 'fa-history', title: 'Employee History', d: 'Get the HR-Verified history and workplace performance of an employee that helps to get hired the right person for your company.', color: '#4c8051' },
+              { icon: 'fa-magnifying-glass-chart', title: 'Spot Caps, Flags, & Inconsistencies', d: "Identify employee gaps, mismatched data, and the red flag behavior might cause the company's reputation in the future.", color: '#dd8d88' },
+              { icon: 'fa-star-half-stroke', title: 'Employee Trust Score', d: 'Measure the credibility of an employee with a structured trust score based on a varied history.', color: '#496279' },
+              { icon: 'fa-shield-heart', title: 'Reduce Hiring Risk', d: 'Protect your company from uncertainty, fraud, and misrepresentation that strengthens hiring confidence.', color: '#4c8051' },
+              { icon: 'fa-bolt', title: 'Hire Faster, Hire Smarter', d: 'Convert insight into instant and trusted decisions, simplify screening.', color: '#dd8d88' },
+              { icon: 'fa-users-gear', title: 'Build a Trusted Workforce', d: 'Stronger team trust helps to build transparency and accountability by hiring professionals.', color: '#496279' }
             ].map((f, i) => (
               <div key={i} className="group p-8 rounded-2xl bg-white border border-slate-100 hover:border-[#496279] transition-all duration-300 animate-on-scroll hover:shadow-[0_10px_40px_rgba(0,0,0,0.04)]">
                 <div className="w-12 h-12 mb-8 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-[#496279] group-hover:text-white" style={{ backgroundColor: `${f.color}10`, color: f.color }}>
@@ -212,15 +212,15 @@ const Home = () => {
       <section id="process" className="py-24 md:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-5 max-w-7xl text-center">
           <div className="max-w-3xl mx-auto mb-24 animate-on-scroll">
-            <h2 className="text-4xl md:text-5xl font-black text-[#496279] tracking-tighter mb-6">How it Works</h2>
+            <h2 className="text-4xl md:text-5xl font-black text-[#496279] tracking-tighter mb-6">How MyHire Shield Works?</h2>
             <div className="w-16 h-1.5 bg-[#4c8051] mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-16">
             {[
-              { step: 'STEP 1', title: 'Add Details', color: '#dd8d88', d: 'Company adds simple employee details to our safe platform.' },
-              { step: 'STEP 2', title: 'Check & Verify', color: '#4c8051', d: 'Our system checks for any gaps or mistakes in the history.' },
-              { step: 'STEP 3', title: 'Get Report', color: '#496279', d: 'You get a clear trust score and report to make your decision.' }
+              { step: 'Level 1', title: 'Integration', color: '#dd8d88', d: 'Intergate Doirect HR verified data of the employee to the portal MyHireShield by the Employer.' },
+              { step: 'Level 2', title: 'Verification', color: '#4c8051', d: 'Uploaded data goes under a multi-layer verification process to identify employee year gap, credibility, and inconsistencies.' },
+              { step: 'Level 3', title: 'Finalization', color: '#496279', d: 'Once the verification is complete, the data is turned into a structured employee trust score and actionable hiring insights.' }
             ].map((s, i) => (
               <div key={i} className="group text-center animate-on-scroll">
                 <p className="text-[10px] font-black tracking-[0.4em] mb-8" style={{ color: s.color }}>{s.step}</p>
@@ -244,12 +244,16 @@ const Home = () => {
           <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-12 text-center">Common Questions</h2>
           <div className="space-y-4">
             {[
-              { q: "How does My Hireshield help me hire?", a: "We give you simple, verified data about an employee's past work. It's much deeper than just a resume." },
-              { q: "What kind of information can I see?", a: "You can see verified work history, roles they had, and even feedback on their performance. All data is checked and safe." },
-              { q: "What is the Employee Trust Score?", a: "It's a simple number that shows how credible an employee is. Above 60 means they are very reliable." },
-              { q: "How long does it take?", a: "It's super fast. Most checks take less than 2 minutes." },
-              { q: "Why should my company use this?", a: "To make sure you are hiring honest people and to protect your company's time and money." },
-              { q: "Can I check my own score as an employee?", a: "Yes. Just put your Name and Date of Birth to see your own record and score." }
+              { q: "How does My Hireshield help in hiring decisions?", a: "My Hireshield helps in hiring decisions by offering Hr-verified data, insight, tenure, and other relevant information required by a recruiter that is beyond resumes and traditional background checks." },
+              { q: "What kind of employee information does My Hireshield provide?", a: "Information mainly required by the recruiter, such as identity, employment history, education, last company role & responsibilities, criminal records, and references provided by My Hireshield. This information helps recruiters to hire the appropriate person for the company." },
+              { q: "What is Employee Trust Score?", a: "According to MyHireshield, the employee trust score is >60. This score shows that the employee is credible." },
+              { q: "How long does the verification process take?", a: "At MyHire Shield ths verification process takes <2 min to gather the right and authentic data after submitting the employee's details, such as the employee's name and DOB." },
+              { q: "Why should employers use My Hireshield?", a: "To hire credible and trustworthy employees for their company, employers must use MyHireShield." },
+              { q: "How is an employee's history collected by the My Hiresheild?", a: "An employee’s history is collected through the HR-verified employer records, especially from the official database. This is a reliable & structured data history that helps with accurate hiring decisions." },
+              { q: "What does the employee trust reflect?", a: "Via credibility score on the basis of the employee background history, consistency records, and HR-vlaidation the employee trust score reflects." },
+              { q: "How does My Hireshield ensure fairness?", a: "By using a standardized verification procedure, consent-based data collection, an unbiased trust score, and HR-verified data assure every candidate is evaluated transparently." },
+              { q: "Can My Hireshield identify fake experience or inconsistencies?", a: "Yes, My Hireshield is a structured & high-tech platform that easily identifies fake experiences or inconsistencies by thoroughly checking employment records and helps in making trustworthy hiring decisions." },
+              { q: "Can I view or request my employment data?", a: "Yes, of course. If you are an employee and want to check your employment data and score, you can easily do so from My Hireshield. You need to put your name and DOB, and you will get your score and data in front of you." }
             ].map((faq, idx) => (
               <div key={idx} className="bg-white border border-slate-200 rounded-xl overflow-hidden animate-on-scroll">
                 <button
