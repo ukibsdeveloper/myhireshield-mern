@@ -9,12 +9,16 @@ const ConsentForm = () => {
   return (
     <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-      
+
       <Navbar scrolled={true} isAuthenticated={true} />
 
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-3xl">
         <div className="bg-white border border-slate-100 rounded-[3.5rem] shadow-2xl p-10 md:p-16 relative overflow-hidden animate-on-scroll">
-          
+
+          <div className="flex items-center gap-4 mb-12">
+            <div className="w-14 h-14 bg-[#4c8051]/10 rounded-2xl flex items-center justify-center text-[#4c8051]">
+              <i className="fas fa-file-signature text-2xl"></i>
+            </div>
             <div>
               <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Safe Hiring Consent.</h1>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Form ID: HS-CONSENT-2026</p>
@@ -43,26 +47,25 @@ const ConsentForm = () => {
 
             <div className="mt-12 p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100">
               <div className="flex items-start gap-4">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   id="consent-check"
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
                   className="mt-1 w-5 h-5 accent-[#4c8051] rounded cursor-pointer"
                 />
                 <label htmlFor="consent-check" className="text-[11px] font-black text-[#496279] leading-relaxed cursor-pointer">
-                  I AGREE TO THESE TERMS AND CONFIRM THAT I HAVE READ THE 
-                  <Link to="/privacy" className="text-[#4c8051] underline mx-1">PRIVACY POLICY</Link> 
+                  I AGREE TO THESE TERMS AND CONFIRM THAT I HAVE READ THE
+                  <Link to="/privacy" className="text-[#4c8051] underline mx-1">PRIVACY POLICY</Link>
                   AND <Link to="/terms" className="text-[#4c8051] underline mx-1">TERMS OF SERVICE</Link>.
                 </label>
               </div>
             </div>
 
-            <button 
+            <button
               disabled={!agreed}
-              className={`w-full py-6 rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-xl transition-all active:scale-95 ${
-                agreed ? 'bg-[#496279] text-white hover:bg-[#3a4e61]' : 'bg-slate-100 text-slate-300 cursor-not-allowed'
-              }`}
+              className={`w-full py-6 rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-xl transition-all active:scale-95 ${agreed ? 'bg-[#496279] text-white hover:bg-[#3a4e61]' : 'bg-slate-100 text-slate-300 cursor-not-allowed'
+                }`}
             >
               Join the Verified Network
             </button>

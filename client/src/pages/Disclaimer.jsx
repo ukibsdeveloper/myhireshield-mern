@@ -6,12 +6,16 @@ const Disclaimer = () => {
   return (
     <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#496279]/20">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-      
+
       <Navbar scrolled={true} />
 
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-4xl">
         <div className="bg-white border border-slate-100 rounded-[3.5rem] shadow-2xl p-10 md:p-16 relative overflow-hidden animate-on-scroll">
-          
+
+          <div className="flex items-center gap-4 mb-12">
+            <div className="w-14 h-14 bg-[#496279]/10 rounded-2xl flex items-center justify-center text-[#496279]">
+              <i className="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
             <div>
               <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Disclaimer.</h1>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Legal Notice ID: HS-DISCLAIMER-2026</p>
@@ -19,7 +23,7 @@ const Disclaimer = () => {
           </div>
 
           <div className="space-y-12 text-[#496279]/80 font-medium leading-relaxed text-sm uppercase tracking-tight">
-            
+
             {/* Clause 1 */}
             <section className="space-y-4">
               <h3 className="text-sm font-black text-[#496279] flex items-center gap-3">
