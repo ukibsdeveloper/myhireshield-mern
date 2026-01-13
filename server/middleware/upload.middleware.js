@@ -18,16 +18,18 @@ const ensureDirectoryExists = (dir) => {
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let uploadPath = 'uploads/';
-    
+
     // Dynamic path selection based on fieldname
     const folderMap = {
       'document': 'uploads/documents/',
+      'govId': 'uploads/documents/',
+      'expCert': 'uploads/documents/',
       'profilePicture': 'uploads/profile_pictures/',
       'companyLogo': 'uploads/company_logos/'
     };
 
     uploadPath = folderMap[file.fieldname] || 'uploads/misc/';
-    
+
     ensureDirectoryExists(uploadPath);
     cb(null, uploadPath);
   },
@@ -36,7 +38,7 @@ const storage = multer.diskStorage({
     const nameWithoutExt = path.parse(file.originalname).name.replace(/\s/g, '_');
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
     const extension = path.extname(file.originalname).toLowerCase();
-    
+
     cb(null, `${nameWithoutExt}-${uniqueSuffix}${extension}`);
   }
 });
@@ -74,7 +76,7 @@ export const upload = multer({
 export const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     let message = 'File upload error.';
-    
+
     if (err.code === 'LIMIT_FILE_SIZE') {
       const size = process.env.MAX_FILE_SIZE ? 'config ke mutabiq' : '5MB';
       message = `File bohot badi hai! Maximum size ${size} allowed hai.`;

@@ -31,20 +31,6 @@ const EmployeeDashboard = () => {
   const shieldScore = stats?.overallScore || 0;
   const verificationPercent = stats?.verificationPercentage || 0;
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#fcfaf9] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-6 animate-pulse">
-          <div className="relative">
-            <i className="fas fa-fingerprint text-6xl text-[#496279]"></i>
-            <div className="absolute inset-0 border-4 border-[#4c8051]/20 rounded-full animate-ping"></div>
-          </div>
-          <p className="font-black uppercase tracking-[0.4em] text-[10px] text-slate-400">Decoding Career Identity...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden tracking-tight font-sans antialiased uppercase">
       {/* Background Noise Overlay */}
@@ -74,9 +60,13 @@ const EmployeeDashboard = () => {
                   <p className="text-white/40 font-bold text-xs tracking-[0.3em] uppercase">{user?.firstName} {user?.lastName} // Subject Node</p>
                 </div>
 
-                <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] border border-white/10 text-center">
+                <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] border border-white/10 text-center min-w-[200px]">
                   <p className="text-[10px] font-black opacity-50 mb-2 uppercase">Integrity Index</p>
-                  <p className="text-7xl font-black text-[#4c8051] tracking-tighter leading-none">{shieldScore}%</p>
+                  {loading ? (
+                    <div className="h-16 w-32 bg-white/10 animate-pulse rounded-2xl mx-auto"></div>
+                  ) : (
+                    <p className="text-7xl font-black text-[#4c8051] tracking-tighter leading-none">{shieldScore}%</p>
+                  )}
                 </div>
               </div>
 
@@ -84,7 +74,7 @@ const EmployeeDashboard = () => {
                 <Link to="/reputation-report" className="group relative items-center justify-center bg-[#4c8051] text-white px-8 py-5 rounded-3xl font-black text-[10px] tracking-widest shadow-24 hover:scale-105 transition-all overflow-hidden flex whitespace-nowrap">
                   <span className="relative z-10">{hasPaidForReport ? 'Analyze Full Report' : 'Unlock Report (₹99)'}</span>
                 </Link>
-                <Link to="/update-profile" className="bg-white/10 backdrop-blur-md text-white border border-white/10 px-8 py-5 rounded-3xl font-black text-[10px] tracking-widest shadow-xl hover:bg-white hover:text-[#496279] transition-all flex items-center justify-center gap-3 whitespace-nowrap">
+                <Link to="/settings" className="bg-white/10 backdrop-blur-md text-white border border-white/10 px-8 py-5 rounded-3xl font-black text-[10px] tracking-widest shadow-xl hover:bg-white hover:text-[#496279] transition-all flex items-center justify-center gap-3 whitespace-nowrap">
                   Update Node
                 </Link>
               </div>
@@ -141,10 +131,14 @@ const EmployeeDashboard = () => {
                 <div key={i} className="space-y-3">
                   <div className="flex justify-between items-end">
                     <span className="text-[9px] font-black text-[#496279] uppercase tracking-widest">{metric.label}</span>
-                    <span className="text-[10px] font-black text-[#4c8051] tracking-tighter">{(stats?.scoreBreakdown?.[metric.key] || 0) / 10} / 10</span>
+                    {loading ? (
+                      <div className="h-3 w-10 bg-slate-100 animate-pulse rounded"></div>
+                    ) : (
+                      <span className="text-[10px] font-black text-[#4c8051] tracking-tighter">{(stats?.scoreBreakdown?.[metric.key] || 0) / 10} / 10</span>
+                    )}
                   </div>
                   <div className="h-1 w-full bg-slate-50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-slate-200 to-[#4c8051] rounded-full transition-all duration-1000" style={{ width: `${stats?.scoreBreakdown?.[metric.key] || 0}%` }}></div>
+                    <div className="h-full bg-gradient-to-r from-slate-200 to-[#4c8051] rounded-full transition-all duration-1000" style={{ width: loading ? '0%' : `${stats?.scoreBreakdown?.[metric.key] || 0}%` }}></div>
                   </div>
                 </div>
               ))}

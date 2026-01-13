@@ -164,7 +164,9 @@ const employeeSchema = new mongoose.Schema({
     default: true
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
 // Fix: Robust Indexing for EmployeeSearch.jsx logic
@@ -175,15 +177,26 @@ employeeSchema.index({ firstName: 'text', lastName: 'text' });
 employeeSchema.index({ overallScore: -1 });
 
 // Virtual for full name
-employeeSchema.virtual('fullName').get(function() {
+employeeSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 
+// Virtual for verification percentage (profile completeness)
+employeeSchema.virtual('verificationPercentage').get(function () {
+  let score = 0;
+  if (this.verified) score += 40; // Base verification status
+  if (this.profilePicture) score += 10;
+  if (this.bio) score += 10;
+  if (this.workHistory?.length > 0) score += 20;
+  if (this.education?.length > 0) score += 20;
+  return Math.min(score, 100);
+});
+
 // Update overall score based on reviews
-employeeSchema.methods.updateScore = async function() {
+employeeSchema.methods.updateScore = async function () {
   const Review = mongoose.model('Review');
   const reviews = await Review.find({ employeeId: this._id });
-  
+
   if (reviews.length === 0) {
     this.overallScore = 0;
     this.totalReviews = 0;
@@ -193,11 +206,11 @@ employeeSchema.methods.updateScore = async function() {
       const avgRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
       return sum + avgRating;
     }, 0);
-    
-    this.overallScore = Math.round((totalScore / reviews.length) * 10); 
+
+    this.overallScore = Math.round((totalScore / reviews.length) * 10);
     this.totalReviews = reviews.length;
   }
-  
+
   await this.save();
   return this.overallScore;
 };

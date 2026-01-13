@@ -1,0 +1,64 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+const NotFound = () => {
+    return (
+        <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+            <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+            <Navbar scrolled={true} isAuthenticated={false} />
+
+            <div className="container mx-auto px-6 py-40 flex flex-col items-center justify-center text-center">
+                <div className="relative mb-20 animate-in fade-in zoom-in duration-1000">
+                    <h1 className="text-[15rem] md:text-[25rem] font-black tracking-tighter leading-none opacity-[0.03] select-none">404</h1>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-40 h-40 bg-[#dd8d88] blur-[100px] opacity-20 animate-pulse"></div>
+                        <div className="relative z-10 space-y-8">
+                            <div className="inline-flex items-center gap-4 px-6 py-3 bg-white border border-slate-100 rounded-full text-[12px] font-black tracking-[0.4em] shadow-2xl">
+                                <i className="fas fa-satellite-dish text-[#dd8d88]"></i>
+                                Signal Lost
+                            </div>
+                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight">Node Not <span className="text-[#dd8d88]">Found.</span></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <p className="max-w-xl text-slate-400 font-bold text-xs tracking-[0.4em] leading-relaxed mb-16 animate-in slide-in-from-bottom-8 duration-700 delay-300">
+                    The requested trajectory does not exist in the sovereign registry. Your current navigation coordinates are outside the authorized neural link.
+                </p>
+
+                <Link to="/" className="group relative px-12 py-6 bg-[#496279] text-white rounded-[2.5rem] font-black text-[11px] tracking-[0.6em] shadow-2xl hover:bg-[#4c8051] transition-all overflow-hidden animate-in slide-in-from-bottom-12 duration-1000 delay-500">
+                    <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    <span className="relative z-10 flex items-center gap-4">
+                        Return to Inception
+                        <i className="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+                    </span>
+                </Link>
+            </div>
+
+            <Footer />
+
+            <style dangerouslySetInnerHTML={{
+                __html: `
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoom-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slide-in-bottom { from { transform: translateY(3rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .animate-in {
+          animation-duration: 0.8s;
+          animation-fill-mode: both;
+          animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .fade-in { animation-name: fade-in; }
+        .zoom-in { animation-name: zoom-in; }
+        .slide-in-from-bottom-8 { animation-name: slide-in-bottom; }
+        .slide-in-from-bottom-12 { animation-name: slide-in-bottom; }
+      `}} />
+        </div>
+    );
+};
+
+export default NotFound;

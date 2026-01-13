@@ -81,6 +81,7 @@ export const reviewAPI = {
   create: (data) => api.post('/reviews', data),
   getByEmployee: (employeeId) => api.get(`/reviews/employee/${employeeId}`),
   getByCompany: () => api.get('/reviews/company'),
+  getById: (id) => api.get(`/reviews/${id}`),
   update: (id, data) => api.put(`/reviews/${id}`, data),
   delete: (id) => api.delete(`/reviews/${id}`),
   getStats: (employeeId) => api.get(`/reviews/stats/${employeeId}`),
@@ -89,8 +90,15 @@ export const reviewAPI = {
 // Document APIs
 export const documentAPI = {
   getByEmployee: (employeeId) => api.get(`/documents/employee/${employeeId}`),
+  companyUpload: (formData, onProgress) => api.post('/documents/company-upload', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    onUploadProgress: onProgress
+  }),
+  getEmployeesForUpload: () => api.get('/documents/employees'),
+  getPendingVerifications: () => api.get('/documents/pending-verification'),
+  performBackgroundCheck: (id, data) => api.post(`/documents/${id}/background-check`, data),
   getMyDocuments: () => api.get('/documents/my'),
-  verify: (id, status, notes) => api.put(`/documents/${id}/verify`, { status, notes }),
+  verify: (id, status, notes) => api.put(`/documents/${id}/verify`, { status, rejectionReason: notes }),
   delete: (id) => api.delete(`/documents/${id}`),
   download: (id) => api.get(`/documents/${id}/download`, { responseType: 'blob' }),
 };

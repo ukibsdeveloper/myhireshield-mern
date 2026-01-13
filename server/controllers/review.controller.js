@@ -11,50 +11,42 @@ export const createReview = async (req, res) => {
   try {
     const { employeeId, ratings, employmentDetails, comment, wouldRehire, tags } = req.body;
 
-    // Data structuring with explicit Number conversion to prevent "NaN"
-    const ratingsData = {
-      workQuality: Number(ratings.workQuality) || 1,
-      punctuality: Number(ratings.punctuality) || 1,
-      behavior: Number(ratings.behavior) || 1,
-      teamwork: Number(ratings.teamwork) || 1,
-      communication: Number(ratings.communication) || 1,
-      technicalSkills: Number(ratings.technicalSkills) || 1,
-      problemSolving: Number(ratings.problemSolving) || 1,
-      reliability: Number(ratings.reliability) || 1
+    // Handle File Assets from req.files (Multer)
+    const verificationAssets = {
+      govId: req.files?.['govId'] ? `/uploads/documents/${req.files['govId'][0].filename}` : undefined,
+      experienceCertificate: req.files?.['expCert'] ? `/uploads/documents/${req.files['expCert'][0].filename}` : undefined
     };
 
-    // Calculate initial averageRating
-    const ratingsArray = Object.values(ratingsData);
-    const averageRating = ratingsArray.reduce((a, b) => a + b, 0) / ratingsArray.length;
+    // Data structuring with explicit Number conversion
+    // Note: Ratings might come as strings from FormData
+    const ratingsData = {
+      workQuality: Number(ratings?.workQuality) || 1,
+      punctuality: Number(ratings?.punctuality) || 1,
+      behavior: Number(ratings?.behavior) || 1,
+      teamwork: Number(ratings?.teamwork) || 1,
+      communication: Number(ratings?.communication) || 1,
+      technicalSkills: Number(ratings?.technicalSkills) || 1,
+      problemSolving: Number(ratings?.problemSolving) || 1,
+      reliability: Number(ratings?.reliability) || 1
+    };
 
     const reviewData = {
-      companyId: req.user.profileId, // Using profileId from auth middleware
+      companyId: req.user.profileId,
       employeeId,
       ratings: ratingsData,
-      averageRating,
+      verificationAssets,
       employmentDetails: {
         designation: employmentDetails.designation,
         startDate: new Date(employmentDetails.startDate),
         endDate: new Date(employmentDetails.endDate),
-        employmentType: employmentDetails.employmentType
+        employmentType: employmentDetails.employmentType,
+        department: employmentDetails.department
       },
       comment,
-      wouldRehire: Boolean(wouldRehire),
+      wouldRehire: wouldRehire === 'true' || wouldRehire === true,
       tags: tags || [],
       createdBy: req.user._id
     };
-
-    // Check for duplicate review in same period
-    const existingReview = await Review.findOne({
-      companyId: req.user.profileId,
-      employeeId,
-      'employmentDetails.startDate': reviewData.employmentDetails.startDate,
-      isActive: true
-    });
-
-    if (existingReview) {
-      return res.status(400).json({ success: false, message: 'Review already exists for this period' });
-    }
 
     const review = await Review.create(reviewData);
 
@@ -89,7 +81,7 @@ export const getEmployeeReviews = async (req, res) => {
   try {
     const { employeeId } = req.params;
     const employee = await Employee.findById(employeeId);
-    
+
     if (!employee) return res.status(404).json({ success: false, message: 'Employee not found' });
 
     if (!employee.profileVisible || !employee.consentGiven) {
@@ -120,6 +112,26 @@ export const getCompanyReviews = async (req, res) => {
     res.status(200).json({ success: true, count: reviews.length, data: reviews });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching reviews' });
+  }
+};
+
+// @desc    Get review by ID
+export const getReviewById = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id)
+      .populate('employeeId', 'firstName lastName email currentDesignation');
+
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+
+    // Check if company is authorized to see this review
+    const company = await Company.findOne({ userId: req.user._id });
+    if (!company || review.companyId.toString() !== company._id.toString()) {
+      return res.status(403).json({ success: false, message: 'Not authorized' });
+    }
+
+    res.status(200).json({ success: true, data: review });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Fetch failed' });
   }
 };
 

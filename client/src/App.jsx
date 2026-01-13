@@ -26,6 +26,7 @@ import ReputationReport from './pages/ReputationReport';
 import Checkout from './pages/Checkout';
 import UpdateProfile from './pages/UpdateProfile';
 import CompanyUploadDocuments from './pages/CompanyUploadDocuments';
+import NotFound from './pages/NotFound';
 
 /* CONFIGURATION */
 const isLocalhost = window.location.hostname === 'localhost';
@@ -101,6 +102,7 @@ function App() {
         <Route path="/company/upload-documents" element={<ProtectedRoute allowedRoles={['company']}><CompanyUploadDocuments /></ProtectedRoute>} />
         <Route path="/dashboard/company" element={<ProtectedRoute allowedRoles={['company']}><CompanyDashboard /></ProtectedRoute>} />
         <Route path="/review/submit" element={<ProtectedRoute allowedRoles={['company']}><SubmitReview /></ProtectedRoute>} />
+        <Route path="/review/edit/:id" element={<ProtectedRoute allowedRoles={['company']}><SubmitReview /></ProtectedRoute>} />
         <Route path="/review/manage" element={<ProtectedRoute allowedRoles={['company']}><ManageReviews /></ProtectedRoute>} />
         <Route path="/verify/documents" element={<ProtectedRoute allowedRoles={['company']}><VerifyDocuments /></ProtectedRoute>} />
         <Route path="/employee/search" element={<ProtectedRoute allowedRoles={['company']}><EmployeeSearch /></ProtectedRoute>} />
@@ -120,7 +122,7 @@ function App() {
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

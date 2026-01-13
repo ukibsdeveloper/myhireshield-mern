@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { reviewAPI, employeeAPI } from '../utils/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Breadcrumb from '../components/Breadcrumb';
+import toast from 'react-hot-toast';
 
 const SubmitReview = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const isEditMode = !!id;
 
   // Identification States
   const [searchName, setSearchName] = useState('');
@@ -20,7 +23,7 @@ const SubmitReview = () => {
     expCert: null
   });
 
-  // Form State - Backend Schema Matching
+  // Form State
   const [formData, setFormData] = useState({
     ratings: {
       workQuality: 8, punctuality: 8, behavior: 8, teamwork: 8,
@@ -34,20 +37,56 @@ const SubmitReview = () => {
     wouldRehire: true
   });
 
-  // Find Employee Logic
-  const findEmployee = async () => {
-    if (!searchName.trim() || !searchDob) return alert("Subject Name and DOB are required.");
+  // Load Review (for Edit Mode)
+  useEffect(() => {
+    if (isEditMode) {
+      loadReview();
+    }
+  }, [id]);
+
+  const loadReview = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      // Sync with search backend: req.query.name & req.query.dob
-      const res = await employeeAPI.search({ name: searchName, dob: searchDob });
-      if (res.data.success && res.data.data.length > 0) {
-        setEmployee(res.data.data[0]);
-      } else {
-        alert("Authorized Node not found. Verify details.");
+      const res = await reviewAPI.getById(id);
+      if (res.data.success) {
+        const review = res.data.data;
+        setEmployee(review.employeeId);
+        setFormData({
+          ratings: review.ratings,
+          employmentDetails: {
+            ...review.employmentDetails,
+            startDate: review.employmentDetails.startDate?.split('T')[0],
+            endDate: review.employmentDetails.endDate?.split('T')[0]
+          },
+          comment: review.comment,
+          wouldRehire: review.wouldRehire
+        });
+        toast.success("Existing Audit Node Loaded.");
       }
     } catch (err) {
-      alert("Encryption mismatch or network error.");
+      toast.error("Audit Ledger accessibility failure.");
+      navigate('/review/manage');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const findEmployee = async () => {
+    if (!searchName.trim() || !searchDob) {
+      return toast.error("Deployment requires Subject Name and DOB.");
+    }
+
+    setLoading(true);
+    try {
+      const res = await employeeAPI.search({ query: searchName.toUpperCase(), dob: searchDob });
+      if (res.data.success && res.data.data.length > 0) {
+        setEmployee(res.data.data[0]);
+        toast.success("Node Identified. Accessing Core Parameters.");
+      } else {
+        toast.error("Authorized Node not found. Verify credentials.");
+      }
+    } catch (err) {
+      toast.error("Registry connection failed.");
     } finally {
       setLoading(false);
     }
@@ -67,230 +106,313 @@ const SubmitReview = () => {
     }));
   };
 
-  // SUBMIT LOGIC - SYNCED WITH BACKEND MULTIPART/FORM-DATA
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.comment.length < 50) return alert("Professional testimony must be at least 50 characters.");
+    if (formData.comment.length < 50) {
+      return toast.error("Testimony requires at least 50 chars of proof.");
+    }
 
     setLoading(true);
+    const toastId = toast.loading(isEditMode ? "Synchronizing Audit Changes..." : "Deploying Integrity Report...");
+
     try {
       const submissionData = new FormData();
-
-      // Mandatory ID
       submissionData.append('employeeId', employee._id);
 
-      // Flattened Payload for Multer/Express-Validator Compatibility
-      // Ratings serialization
-      Object.keys(formData.ratings).forEach(key => {
-        submissionData.append(`ratings[${key}]`, formData.ratings[key]);
-      });
-
-      // Employment Details serialization
-      Object.keys(formData.employmentDetails).forEach(key => {
-        submissionData.append(`employmentDetails[${key}]`, formData.employmentDetails[key]);
-      });
+      // Send nested objects as JSON strings for Backend Parser
+      submissionData.append('ratings', JSON.stringify(formData.ratings));
+      submissionData.append('employmentDetails', JSON.stringify(formData.employmentDetails));
 
       submissionData.append('comment', formData.comment);
       submissionData.append('wouldRehire', formData.wouldRehire);
 
-      // Files attachment
       if (files.govId) submissionData.append('govId', files.govId);
       if (files.expCert) submissionData.append('expCert', files.expCert);
 
-      const res = await reviewAPI.create(submissionData);
+      let res;
+      if (isEditMode) {
+        res = await reviewAPI.update(id, submissionData);
+      } else {
+        res = await reviewAPI.create(submissionData);
+      }
 
       if (res.data.success) {
-        alert('Integrity Report Published Successfully ✅');
-        navigate('/dashboard/company');
+        toast.success(isEditMode ? 'Audit Node Synchronized ✅' : 'Integrity Report Published ✅', { id: toastId });
+        setTimeout(() => navigate('/review/manage'), 1500);
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Review Submission Failed.');
+      toast.error(err.response?.data?.message || 'Deployment Failure.', { id: toastId });
     } finally {
       setLoading(false);
     }
   };
 
-  const inputClass = "w-full p-4 bg-white border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-[#4c8051] transition-all font-bold text-[#496279] shadow-sm";
+  const inputClass = "w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl outline-none focus:border-[#4c8051] transition-all font-black text-[11px] tracking-widest text-[#496279] shadow-sm uppercase placeholder:text-slate-300";
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#dd8d88]/30 font-sans antialiased">
-      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
       <Navbar scrolled={true} isAuthenticated={true} />
 
-      <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
-        <div className="flex justify-between items-center mb-6">
+      <div className="container mx-auto px-6 pt-32 pb-24 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <Breadcrumb />
-          <Link to="/dashboard/company" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#4c8051] transition-all">
-            <i className="fas fa-arrow-left"></i>
-            Back to Dashboard
+          <Link to="/review/manage" className="group flex items-center gap-4 text-[10px] font-black tracking-[0.3em] text-slate-400 hover:text-[#496279] transition-all">
+            <i className="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            Return to Ledger
           </Link>
         </div>
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 animate-in fade-in duration-700">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-4">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4c8051] animate-pulse"></span>
-              Review Form 2026
+        {/* HEADER SECTION */}
+        <div className="relative mb-20">
+          <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#4c8051] opacity-[0.03] rounded-full blur-[100px]"></div>
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white border border-slate-100 rounded-2xl text-[10px] font-black tracking-[0.3em] mb-8 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#4c8051] animate-pulse"></span>
+              {isEditMode ? 'Edit Mode Protocol' : 'Initial Audit Protocol'}
             </div>
-            <h1 className="text-4xl font-black text-[#496279] uppercase tracking-tighter leading-none">
-              Talent <span className="text-[#4c8051]">Assessment.</span>
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none mb-6">
+              {isEditMode ? 'Modify' : 'Submit'} <span className="text-[#4c8051]">Audit.</span>
             </h1>
+            <p className="text-slate-400 font-bold text-xs tracking-[0.4em] max-w-lg leading-relaxed">
+              Vault entry protocol initialized. Secure handling of professional trajectories and metrics mandated.
+            </p>
           </div>
-          {employee && (
-            <button type="button" onClick={() => setEmployee(null)} className="text-[10px] font-black uppercase tracking-widest text-[#dd8d88] border-b-2 border-[#dd8d88]/20 hover:border-[#dd8d88] transition-all">
-              Switch Subject Node
-            </button>
-          )}
         </div>
 
         {!employee ? (
-          /* SEARCH PHASE */
-          <div className="bg-white p-12 rounded-[3.5rem] shadow-xl border border-slate-100 text-center animate-in zoom-in-95 duration-500">
-            <div className="w-20 h-20 bg-[#496279]/5 rounded-[2rem] flex items-center justify-center mx-auto mb-8">
-              <i className="fas fa-fingerprint text-3xl text-[#496279]/30"></i>
-            </div>
-            <h2 className="text-2xl font-black text-[#496279] uppercase tracking-tight mb-4">Identify Subject Node</h2>
-            <p className="text-slate-400 font-bold text-[11px] uppercase tracking-widest mb-10">Credentials required for audit initialization</p>
-            <div className="grid md:grid-cols-2 gap-4 max-w-lg mx-auto">
-              <input
-                type="text" placeholder="Full Name (Aadhar)"
-                className="p-5 bg-[#fcfaf9] border border-slate-200 rounded-[1.5rem] outline-none font-bold text-[#496279] focus:ring-2 ring-[#496279]/10"
-                value={searchName}
-                onChange={(e) => setSearchName(e.target.value)}
-              />
-              <input
-                type="date"
-                className="p-5 bg-[#fcfaf9] border border-slate-200 rounded-[1.5rem] outline-none font-bold text-[#496279] focus:ring-2 ring-[#496279]/10"
-                value={searchDob}
-                onChange={(e) => setSearchDob(e.target.value)}
-              />
-              <button
-                onClick={findEmployee}
-                className="md:col-span-2 bg-[#496279] text-white px-10 py-5 rounded-[1.5rem] font-black uppercase text-xs tracking-widest hover:bg-[#3a4e61] transition-all active:scale-95"
-              >
-                {loading ? <i className="fas fa-spinner fa-spin"></i> : 'Verify & Initialize'}
-              </button>
+          /* IDENTIFICATION TERMINAL */
+          <div className="relative max-w-4xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="absolute -inset-4 bg-gradient-to-r from-[#4c8051]/10 via-[#496279]/10 to-[#dd8d88]/10 rounded-[4rem] blur-2xl opacity-50"></div>
+            <div className="relative bg-white border border-slate-100 p-10 md:p-16 rounded-[4rem] shadow-2xl flex flex-col items-center text-center">
+              <div className="w-24 h-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center mb-10 border border-slate-100 shadow-inner">
+                <i className="fas fa-shield-halved text-3xl text-[#496279]/20"></i>
+              </div>
+              <h2 className="text-3xl font-black tracking-tighter mb-4">Initialize Analysis</h2>
+              <p className="text-slate-400 font-bold text-[10px] tracking-[0.4em] mb-12">Identification parameters required</p>
+
+              <div className="grid md:grid-cols-2 gap-6 w-full max-w-xl">
+                <div className="space-y-2 text-left">
+                  <label className="text-[9px] font-black text-slate-300 tracking-[0.3em] ml-4">Subject Name</label>
+                  <input
+                    type="text"
+                    placeholder="FULL LEGAL NAME"
+                    className={inputClass}
+                    value={searchName}
+                    onChange={(e) => setSearchName(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && findEmployee()}
+                  />
+                </div>
+                <div className="space-y-2 text-left">
+                  <label className="text-[9px] font-black text-slate-300 tracking-[0.3em] ml-4">Date of Birth</label>
+                  <input
+                    type="date"
+                    className={inputClass}
+                    value={searchDob}
+                    onChange={(e) => setSearchDob(e.target.value)}
+                  />
+                </div>
+                <button
+                  onClick={findEmployee}
+                  disabled={loading}
+                  className="md:col-span-2 group bg-[#496279] text-white py-6 rounded-[2.5rem] font-black text-[11px] tracking-[0.5em] shadow-2xl hover:bg-[#4c8051] transition-all disabled:opacity-30 relative overflow-hidden mt-4"
+                >
+                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                  <span className="relative z-10">
+                    {loading ? <i className="fas fa-circle-notch fa-spin"></i> : 'Authenticate & Open Ledger'}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         ) : (
           /* ASSESSMENT PHASE */
-          <form onSubmit={handleSubmit} className="space-y-8 animate-in slide-in-from-bottom-6 duration-700">
+          <form onSubmit={handleSubmit} className="space-y-12 animate-in slide-in-from-bottom-12 duration-1000">
 
-            <div className="bg-[#496279] rounded-[3rem] p-8 md:p-10 text-white flex items-center gap-8 shadow-2xl relative overflow-hidden border border-white/5">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#4c8051] opacity-20 rounded-full blur-[100px] -mr-32 -mt-32"></div>
-              <div className="h-24 w-24 bg-white rounded-[2rem] flex items-center justify-center text-4xl font-black text-[#496279] shadow-inner shrink-0 uppercase">
-                {employee.firstName?.charAt(0)}
+            {/* TARGET NODE PROFILE */}
+            <div className="bg-[#496279] border-4 border-white/5 rounded-[4rem] p-10 md:p-14 text-white flex flex-col md:flex-row items-center gap-12 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-[#4c8051] opacity-10 rounded-full blur-[150px] -mr-48 -mt-48 transition-transform duration-1000 group-hover:scale-110"></div>
+              <div className="relative">
+                <div className="h-32 w-32 bg-white/10 backdrop-blur-3xl rounded-[3rem] border border-white/20 flex items-center justify-center text-5xl font-black text-white shadow-2xl uppercase">
+                  {employee.firstName?.charAt(0)}
+                </div>
+                <div className="absolute -bottom-2 -right-2 h-10 w-10 bg-[#4c8051] rounded-2xl shadow-lg flex items-center justify-center text-xs animate-pulse">
+                  <i className="fas fa-check"></i>
+                </div>
               </div>
-              <div>
-                <p className="text-[10px] font-black text-[#4c8051] uppercase tracking-[0.3em] mb-2">Authenticated Node</p>
-                <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter leading-none">{employee.firstName} {employee.lastName}</h3>
-                <p className="text-white/40 font-bold text-[10px] uppercase tracking-widest mt-2">Node ID: {employee._id.slice(-8).toUpperCase()}</p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-[3.5rem] p-10 md:p-12 shadow-sm border border-slate-100">
-              <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] mb-12 flex items-center gap-4">
-                <span className="w-8 h-[2px] bg-[#4c8051]"></span> Performance Matrix
-              </h3>
-              <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
-                {Object.keys(formData.ratings).map(key => (
-                  <div key={key} className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <label className="text-[10px] font-black text-[#496279] uppercase tracking-widest">{key.replace(/([A-Z])/g, ' $1')}</label>
-                      <span className={`text-xl font-black ${formData.ratings[key] > 7 ? 'text-[#4c8051]' : formData.ratings[key] > 4 ? 'text-[#496279]' : 'text-[#dd8d88]'}`}>
-                        {formData.ratings[key]}/10
-                      </span>
-                    </div>
-                    <input
-                      type="range" min="1" max="10" step="1"
-                      value={formData.ratings[key]}
-                      onChange={(e) => handleRatingChange(key, e.target.value)}
-                      className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-[#4c8051]"
-                    />
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[9px] font-black tracking-[0.4em] mb-4 text-[#4c8051]">
+                  Identity Verified
+                </div>
+                <h3 className="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-2">{employee.firstName} {employee.lastName}</h3>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 mt-6 opacity-60">
+                  <div className="flex items-center gap-2">
+                    <i className="fas fa-fingerprint text-[10px]"></i>
+                    <span className="text-[10px] font-black tracking-[0.2em]">{employee._id.slice(-12).toUpperCase()}</span>
                   </div>
-                ))}
+                  <div className="flex items-center gap-2">
+                    <i className="fas fa-envelope text-[10px]"></i>
+                    <span className="text-[10px] font-black tracking-[0.2em]">{employee.email}</span>
+                  </div>
+                </div>
               </div>
+              {!isEditMode && (
+                <button type="button" onClick={() => setEmployee(null)} className="text-[10px] font-black tracking-[0.4em] text-white/20 hover:text-[#dd8d88] transition-colors uppercase py-4 border-b border-white/5">
+                  Abort Session
+                </button>
+              )}
             </div>
 
-            <div className="space-y-6">
-              <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-3 ml-4">
-                <span className="w-8 h-px bg-slate-200"></span> Proof of Tenure Documents
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-white border border-dashed border-slate-200 rounded-[2.5rem]">
-                <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group">
-                  <i className={`fas ${files.govId ? 'fa-check-circle text-[#4c8051]' : 'fa-id-card text-slate-200'} text-2xl group-hover:text-[#4c8051] mb-2`}></i>
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                    {files.govId ? files.govId.name : 'Gov ID Proof (Optional)'}
-                  </p>
-                  <input type="file" className="hidden" onChange={(e) => setFiles({ ...files, govId: e.target.files[0] })} />
-                </label>
-                <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group">
-                  <i className={`fas ${files.expCert ? 'fa-check-circle text-[#4c8051]' : 'fa-file-alt text-slate-200'} text-2xl group-hover:text-[#4c8051] mb-2`}></i>
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                    {files.expCert ? files.expCert.name : 'Exp Letter (Highly Rec.)'}
-                  </p>
-                  <input type="file" className="hidden" onChange={(e) => setFiles({ ...files, expCert: e.target.files[0] })} />
-                </label>
+            <div className="grid lg:grid-cols-3 gap-12">
+              {/* PERFORMANCE GRID */}
+              <div className="lg:col-span-2 bg-white border border-slate-100 rounded-[4rem] p-10 md:p-14 shadow-sm hover:shadow-2xl transition-all duration-700">
+                <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-12 flex items-center gap-4">
+                  <span className="h-px w-12 bg-slate-100"></span> Behavioral Spectrum
+                </h3>
+                <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
+                  {Object.keys(formData.ratings).map(key => (
+                    <div key={key} className="group">
+                      <div className="flex justify-between items-center mb-6">
+                        <label className="text-[10px] font-black tracking-[0.3em] group-hover:text-[#4c8051] transition-colors uppercase">
+                          {key.replace(/([A-Z])/g, ' $1')}
+                        </label>
+                        <span className="text-2xl font-black tracking-tighter text-[#4c8051]">{formData.ratings[key]}</span>
+                      </div>
+                      <div className="relative h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+                        <div
+                          className="absolute inset-y-0 left-0 bg-[#4c8051] transition-all duration-500 rounded-full"
+                          style={{ width: `${formData.ratings[key] * 10}%` }}
+                        ></div>
+                        <input
+                          type="range" min="1" max="10" step="1"
+                          value={formData.ratings[key]}
+                          onChange={(e) => handleRatingChange(key, e.target.value)}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="grid lg:grid-cols-5 gap-8">
-              <div className="lg:col-span-2 bg-white rounded-[3rem] p-10 shadow-sm border border-slate-100 space-y-8">
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] mb-6">Logistics Node</h3>
-                <div className="space-y-6">
-                  <input type="text" placeholder="Designation at Termination" required className={inputClass}
-                    onChange={(e) => handleEmploymentChange('designation', e.target.value)} />
+              {/* LOGISTICS & ASSETS */}
+              <div className="space-y-12">
+                <div className="bg-white border border-slate-100 rounded-[4rem] p-10 shadow-sm">
+                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8 uppercase">Node Parameters</h3>
+                  <div className="space-y-6">
+                    <input type="text" placeholder="Designation" required className={inputClass}
+                      value={formData.employmentDetails.designation}
+                      onChange={(e) => handleEmploymentChange('designation', e.target.value)} />
 
-                  <select className={inputClass} onChange={(e) => handleEmploymentChange('employmentType', e.target.value)}>
-                    <option value="full-time">Full-Time (Fixed)</option>
-                    <option value="part-time">Part-Time (Flex)</option>
-                    <option value="contract">Contract (Node)</option>
-                  </select>
+                    <input type="text" placeholder="Department (Optional)" className={inputClass}
+                      value={formData.employmentDetails.department}
+                      onChange={(e) => handleEmploymentChange('department', e.target.value)} />
 
+                    <select className={inputClass} value={formData.employmentDetails.employmentType} onChange={(e) => handleEmploymentChange('employmentType', e.target.value)}>
+                      <option value="full-time">Standard Full-Time</option>
+                      <option value="part-time">Flexible Part-Time</option>
+                      <option value="contract">Fixed-Term Contract</option>
+                      <option value="internship">Apprentice Node</option>
+                    </select>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 uppercase text-center">Inception</p>
+                        <input type="date" required className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] font-black text-slate-400 outline-none focus:border-[#4c8051]"
+                          value={formData.employmentDetails.startDate}
+                          onChange={(e) => handleEmploymentChange('startDate', e.target.value)} />
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 uppercase text-center">Termination</p>
+                        <input type="date" required className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] font-black text-slate-400 outline-none focus:border-[#4c8051]"
+                          value={formData.employmentDetails.endDate}
+                          onChange={(e) => handleEmploymentChange('endDate', e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-slate-100 rounded-[4rem] p-10 shadow-sm">
+                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8 uppercase">Evidence Assets</h3>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-black text-slate-400 uppercase ml-2 text-center">Join</p>
-                      <input type="date" required className="w-full p-4 bg-[#fcfaf9] border border-slate-200 rounded-2xl text-[10px] font-bold text-[#496279]"
-                        onChange={(e) => handleEmploymentChange('startDate', e.target.value)} />
-                    </div>
-                    <div className="space-y-1">
-                      <p className="text-[9px] font-black text-slate-400 uppercase ml-2 text-center">Exit</p>
-                      <input type="date" required className="w-full p-4 bg-[#fcfaf9] border border-slate-200 rounded-2xl text-[10px] font-bold text-[#496279]"
-                        onChange={(e) => handleEmploymentChange('endDate', e.target.value)} />
-                    </div>
+                    <label className="flex flex-col items-center justify-center p-6 bg-slate-50 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group text-center">
+                      <i className={`fas ${files.govId ? 'fa-check text-[#4c8051]' : 'fa-fingerprint text-slate-200'} text-xl mb-3`}></i>
+                      <span className="text-[8px] font-black tracking-widest leading-tight">
+                        {files.govId ? 'SECURED' : 'GOV ID'}
+                      </span>
+                      <input type="file" className="hidden" onChange={(e) => setFiles({ ...files, govId: e.target.files[0] })} />
+                    </label>
+                    <label className="flex flex-col items-center justify-center p-6 bg-slate-50 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group text-center">
+                      <i className={`fas ${files.expCert ? 'fa-check text-[#4c8051]' : 'fa-file-invoice text-slate-200'} text-xl mb-3`}></i>
+                      <span className="text-[8px] font-black tracking-widest leading-tight">
+                        {files.expCert ? 'SECURED' : 'EXP LETTER'}
+                      </span>
+                      <input type="file" className="hidden" onChange={(e) => setFiles({ ...files, expCert: e.target.files[0] })} />
+                    </label>
+                  </div>
+                  <p className="text-[8px] font-black text-slate-300 text-center mt-4">Note: Uploading new files will overwrite existing assets.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white border border-slate-100 rounded-[4rem] p-10 md:p-14 shadow-sm flex flex-col">
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] uppercase">Testimonial Matrix</h3>
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] font-black tracking-[0.2em]">Eligible for Re-Hire</span>
+                  <div
+                    onClick={() => setFormData({ ...formData, wouldRehire: !formData.wouldRehire })}
+                    className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-colors duration-500 ${formData.wouldRehire ? 'bg-[#4c8051]' : 'bg-slate-100'}`}
+                  >
+                    <div className={`h-6 w-6 bg-white rounded-full shadow-md transition-transform duration-500 ${formData.wouldRehire ? 'translate-x-6' : 'translate-x-0'}`}></div>
                   </div>
                 </div>
               </div>
-
-              <div className="lg:col-span-3 bg-white rounded-[3.5rem] p-10 shadow-sm border border-slate-100 flex flex-col">
-                <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] mb-8">Audit Testimony</h3>
-                <textarea
-                  placeholder="Enter detailed encrypted professional assessment..."
-                  className="flex-1 w-full p-8 bg-[#fcfaf9] border border-slate-100 rounded-[2.5rem] h-56 outline-none focus:ring-2 ring-[#4c8051]/10 transition font-bold text-[#496279] placeholder:text-slate-300 shadow-inner resize-none"
-                  onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                />
-                <div className="mt-8 flex justify-between items-center">
-                  <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={formData.wouldRehire} onChange={(e) => setFormData({ ...formData, wouldRehire: e.target.checked })} className="w-5 h-5 accent-[#4c8051] rounded-lg cursor-pointer" />
-                    <span className="text-[10px] font-black text-[#496279] uppercase tracking-widest">Re-hire Recommendation</span>
-                  </div>
-                  <p className={`text-[10px] font-black px-3 py-1 rounded-full uppercase ${formData.comment.length < 50 ? 'bg-red-50 text-[#dd8d88]' : 'bg-green-50 text-[#4c8051]'}`}>
-                    Proof: {formData.comment.length}/50
-                  </p>
-                </div>
+              <textarea
+                placeholder="DEPLOY PROFESSIONAL DECRYPTED TESTIMONY..."
+                className="w-full p-10 bg-slate-50 border border-slate-100 rounded-[3rem] h-64 outline-none focus:border-[#4c8051] transition-all font-black text-xs tracking-widest text-[#496279] placeholder:text-slate-200 shadow-inner resize-none"
+                value={formData.comment}
+                onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+              />
+              <div className="mt-8 flex justify-between items-center opacity-40">
+                <p className="text-[9px] font-black tracking-[0.4em]">Entropy Required: {formData.comment.length}/50 Min</p>
+                <i className="fas fa-lock text-xs"></i>
               </div>
             </div>
 
             <div className="pt-8">
-              <button type="submit" disabled={loading} className="w-full bg-[#496279] text-white py-8 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#3a4e61] shadow-2xl active:scale-95 disabled:opacity-50 transition-all">
-                {loading ? <><i className="fas fa-circle-notch fa-spin mr-2"></i> Submitting Review...</> : 'Deploy Final Integrity Audit'}
+              <button
+                type="submit"
+                disabled={loading || formData.comment.length < 50}
+                className="w-full group bg-[#496279] text-white py-10 rounded-[3rem] font-black text-[11px] tracking-[0.6em] shadow-2xl hover:bg-[#4c8051] active:scale-95 disabled:opacity-20 transition-all overflow-hidden relative"
+              >
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span className="relative z-10">
+                  {loading ? <i className="fas fa-circle-notch fa-spin"></i> : isEditMode ? 'Synchronize Persistent Record' : 'Publish Integrity Audit to Registry'}
+                </span>
               </button>
             </div>
           </form>
         )}
       </div>
       <Footer />
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slide-in-bottom { from { transform: translateY(3rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .animate-in {
+          animation-duration: 0.8s;
+          animation-fill-mode: both;
+          animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .fade-in { animation-name: fade-in; }
+        .slide-in-from-bottom-12 { animation-name: slide-in-bottom; }
+        .slide-in-from-bottom-8 { animation-name: slide-in-bottom; }
+      `}} />
     </div>
   );
 };

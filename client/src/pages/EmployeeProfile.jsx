@@ -74,72 +74,107 @@ const EmployeeProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30">
-      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       <Navbar scrolled={true} isAuthenticated={true} user={user} />
 
-      <div className="container mx-auto px-6 pt-32 pb-20 max-w-4xl">
-        <div className="flex justify-between items-center mb-6">
+      <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
+        <div className="flex justify-between items-center mb-10 opacity-60">
           <Breadcrumb />
-          <Link to={user?.role === 'company' ? '/dashboard/company' : '/dashboard/employee'} className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#4c8051] transition-all">
+          <Link to={user?.role === 'company' ? '/dashboard/company' : '/dashboard/employee'} className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest hover:text-[#4c8051] transition-all">
             <i className="fas fa-arrow-left"></i>
-            Back to Dashboard
+            Return to Command Center
           </Link>
         </div>
 
-        {/* Certificate Card Header */}
-        <div className="bg-white border border-slate-100 rounded-[4rem] shadow-xl overflow-hidden relative mb-12 animate-in-scroll">
-          <div className="h-40 bg-[#496279] relative overflow-hidden text-white flex items-center px-12 border-b border-white/5">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#4c8051] opacity-20 rounded-full blur-[80px] -mr-32 -mt-32"></div>
+        {/* Dossier Header */}
+        <div className="bg-white border border-slate-100 rounded-[4rem] shadow-2xl overflow-hidden relative mb-12 animate-in slide-in-from-bottom-8 duration-1000">
+          <div className="h-48 bg-gradient-to-r from-[#496279] to-[#3a4e61] relative overflow-hidden text-white flex items-center px-12 md:px-20 border-b border-white/5">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#4c8051] opacity-20 rounded-full blur-[100px] -mr-48 -mt-48"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#dd8d88] opacity-10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
+
             <div className="relative z-10">
-              <p className="text-[9px] font-black uppercase tracking-[0.4em] mb-2 opacity-60">Verified Professional Profile</p>
-              <h2 className="text-2xl font-black uppercase tracking-tighter">Official Shield Certificate</h2>
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl text-[9px] font-black tracking-[0.4em] mb-4 border border-white/10 uppercase">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#4c8051] animate-pulse"></span>
+                Sovereign Registry Certificate
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none">Subject <span className="text-[#4c8051]">Analysis.</span></h2>
             </div>
           </div>
 
-          <div className="px-10 pb-16 text-center">
-            <div className="relative -mt-20 mb-8 inline-block">
-              <div className="h-44 w-44 bg-white rounded-[3rem] p-3 shadow-2xl mx-auto border border-slate-50">
-                <div className="h-full w-full bg-[#fcfaf9] rounded-[2.5rem] flex items-center justify-center text-7xl font-black text-[#496279]">
-                  {profile?.firstName?.charAt(0) || 'U'}
+          <div className="px-10 md:px-20 pb-20">
+            <div className="relative -mt-24 mb-12 flex flex-col md:flex-row items-end gap-10">
+              <div className="relative shrink-0">
+                <div className="h-48 w-48 bg-white rounded-[3.5rem] p-4 shadow-24 mx-auto md:mx-0 border border-slate-100 relative z-10">
+                  <div className="h-full w-full bg-[#fcfaf9] rounded-[3rem] flex items-center justify-center text-7xl font-black text-[#496279] shadow-inner group overflow-hidden">
+                    {profile?.firstName?.charAt(0) || 'U'}
+                  </div>
+                </div>
+                <div className="absolute -bottom-4 -right-4 bg-white p-2 rounded-2xl shadow-xl z-20">
+                  <div className="bg-[#4c8051] text-white h-12 w-12 rounded-xl flex items-center justify-center border-4 border-white">
+                    <i className="fas fa-check-double"></i>
+                  </div>
                 </div>
               </div>
-              {profile?.verified && (
-                <div className="absolute -bottom-2 -right-2 bg-[#4c8051] text-white h-10 w-10 rounded-xl flex items-center justify-center border-4 border-white shadow-lg">
-                  <i className="fas fa-check"></i>
+
+              <div className="flex-1 pb-4 text-center md:text-left">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-3">
+                  <h1 className="text-4xl md:text-6xl font-black text-[#496279] tracking-tighter leading-none">
+                    {profile?.firstName} <span className="text-slate-300">{profile?.lastName}</span>
+                  </h1>
+                  <span className="px-4 py-1.5 bg-[#4c8051]/10 text-[#4c8051] text-[9px] font-black rounded-full tracking-[0.2em] uppercase border border-[#4c8051]/10">Elite Node Status</span>
                 </div>
-              )}
+                <p className="text-slate-400 font-bold text-xs tracking-[0.4em] uppercase mb-4">{profile?.email} // REF: {profile?._id?.substr(-6).toUpperCase()}</p>
+                <div className="flex flex-wrap justify-center md:justify-start gap-8 opacity-40">
+                  <div className="flex items-center gap-2"><i className="fas fa-satellite text-[10px]"></i> <span className="text-[8px] font-black tracking-widest uppercase">Asia Central Node</span></div>
+                  <div className="flex items-center gap-2"><i className="fas fa-shield-alt text-[10px]"></i> <span className="text-[8px] font-black tracking-widest uppercase">Verified Trajectory</span></div>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-5xl font-black text-[#496279] uppercase tracking-tighter leading-none mb-2">
-              {profile?.firstName} <span className="text-[#4c8051]">{profile?.lastName}</span>
-            </h1>
-            <p className="text-[#dd8d88] font-black text-[10px] uppercase tracking-[0.3em] mb-12">{profile?.email}</p>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { label: 'Mobile Node', val: profile?.phone || 'Private', icon: 'fa-phone' },
-                { label: 'Tenure Years', val: `${profile?.totalExperience || 0} Exp`, icon: 'fa-briefcase' },
-                { label: 'ID Status', val: profile?.verified ? 'Verified' : 'Pending', icon: 'fa-id-card', color: profile?.verified ? '#4c8051' : '#dd8d88' },
-                { label: 'Shield Rank', val: `${profile?.overallScore || 0}%`, icon: 'fa-bolt', color: '#496279' }
+                { label: 'Neural Link (ID)', val: profile?.phone || 'PRIVATE', icon: 'fa-phone', color: '#496279' },
+                { label: 'Trajectory (EXP)', val: `${profile?.totalExperience || 0} Cycles`, icon: 'fa-briefcase', color: '#496279' },
+                { label: 'Registry Status', val: profile?.verified ? 'Synchronized' : 'Authenticating', icon: 'fa-id-card', color: profile?.verified ? '#4c8051' : '#dd8d88' },
+                { label: 'Shield Aggregate', val: `${profile?.overallScore || 0}%`, icon: 'fa-bolt', color: '#4c8051' }
               ].map((item, i) => (
-                <div key={i} className="p-6 bg-[#fcfaf9] rounded-[2rem] border border-slate-50 flex flex-col items-center group hover:bg-white hover:shadow-xl transition-all">
-                  <i className={`fas ${item.icon} text-lg mb-4`} style={{ color: item.color || '#496279' }}></i>
-                  <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">{item.label}</span>
-                  <p className="text-xs font-black text-[#496279] uppercase tracking-tighter">{item.val}</p>
+                <div key={i} className="p-8 bg-[#fcfaf9] rounded-[3rem] border border-slate-50 flex flex-col items-center group hover:bg-white hover:shadow-24 transition-all duration-500 hover:-translate-y-2">
+                  <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-slate-100 group-hover:bg-[#496279] group-hover:text-white transition-colors">
+                    <i className={`fas ${item.icon} text-lg`} style={{ color: i === 3 ? '#4c8051' : 'inherit' }}></i>
+                  </div>
+                  <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] mb-2">{item.label}</span>
+                  <p className="text-sm font-black text-[#496279] uppercase tracking-tighter leading-none" style={{ color: item.color }}>{item.val}</p>
                 </div>
               ))}
             </div>
+
+            <div className="mt-16 bg-slate-50/50 p-10 rounded-[3.5rem] border border-slate-50 text-center">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] mb-4">Verification Audit Summary</p>
+              <h4 className="text-xl font-black tracking-tighter mb-6 uppercase text-[#496279]">Employment Integrity Score is based on {profile?.overallScore > 0 ? 'active' : 'historical'} enterprise audit signals.</h4>
+              <Link to="/reputation-report" className="inline-flex items-center gap-4 px-10 py-5 bg-[#496279] text-white rounded-[2rem] font-black text-[10px] tracking-[0.3em] shadow-xl hover:bg-[#4c8051] transition-all active:scale-95">
+                Execute Dynamic Audit
+                <i className="fas fa-microchip"></i>
+              </Link>
+            </div>
           </div>
         </div>
 
-        <div className="text-center opacity-30">
-          <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.4em]">
-            HireShield Professional Verification v2.4 // Verified Profile ID: {profile?._id?.toUpperCase() || 'DEMO-PROFILE'}
+        <div className="text-center opacity-30 mt-20">
+          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.6em] mb-2">
+            HireShield Sovereign Platform v3.0 // Assessment Node: {profile?._id?.toUpperCase() || 'SUBJECT-ALPHA'}
           </p>
+          <div className="w-12 h-[2px] bg-slate-300 mx-auto"></div>
         </div>
       </div>
       <Footer />
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slide-in-bottom { from { transform: translateY(3rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-in { animation: fade-in 0.8s, slide-in-bottom 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+      `}} />
     </div>
   );
 };

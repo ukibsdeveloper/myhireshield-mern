@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -12,14 +12,18 @@ const EmployeeSearch = () => {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  // Filter & Pagination State
+  const [minScore, setMinScore] = useState(0);
+  const [sortBy, setSortBy] = useState('relevant'); // relevant, score-desc, score-asc
+  const [displayCount, setDisplayCount] = useState(5);
+
   const handleSearch = async () => {
-    // Backend validation sync
-    if (!fullName.trim()) return alert("Node verification requires at least a Name.");
+    if (!fullName.trim()) return;
 
     setLoading(true);
     setSearched(true);
+    setDisplayCount(5); // Reset pagination on new search
     try {
-      // API call with standardized query and dob
       const res = await axios.get(`/api/employees/search`, {
         params: {
           query: fullName.trim().toUpperCase(),
@@ -36,114 +40,241 @@ const EmployeeSearch = () => {
       console.error("Node Scanning Error:", err);
       setResults([]);
     } finally {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 800);
     }
   };
 
+  // Processed Results (Filtered & Sorted)
+  const processedResults = useMemo(() => {
+    let filtered = results.filter(emp => (emp.overallScore || 0) >= minScore);
+
+    if (sortBy === 'score-desc') {
+      filtered.sort((a, b) => (b.overallScore || 0) - (a.overallScore || 0));
+    } else if (sortBy === 'score-asc') {
+      filtered.sort((a, b) => (a.overallScore || 0) - (b.overallScore || 0));
+    }
+
+    return filtered;
+  }, [results, minScore, sortBy]);
+
+  const visibleResults = processedResults.slice(0, displayCount);
+
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#dd8d88]/30 font-sans antialiased">
-      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+      {/* Background Noise Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
       <Navbar scrolled={true} isAuthenticated={true} />
 
-      <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
-        <div className="flex justify-between items-center mb-6">
+      <div className="container mx-auto px-6 pt-32 pb-24 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <Breadcrumb />
-          <Link to="/dashboard/company" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#4c8051] transition-all">
-            <i className="fas fa-arrow-left"></i>
-            Back to Dashboard
+          <Link to="/dashboard/company" className="group flex items-center gap-4 text-[10px] font-black tracking-[0.3em] text-slate-400 hover:text-[#496279] transition-all">
+            <i className="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+            Return to Command Center
           </Link>
         </div>
 
-        {/* Header Section */}
-        <div className="text-center mb-16 animate-in fade-in duration-700">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-6 border border-[#4c8051]/20">
-            <i className="fas fa-fingerprint"></i> Identity Verification Node
+        {/* TERMINAL HEADER */}
+        <div className="relative mb-20">
+          <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#4c8051] opacity-[0.03] rounded-full blur-[100px]"></div>
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-white border border-slate-100 rounded-2xl text-[10px] font-black tracking-[0.3em] mb-8 shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#4c8051] animate-pulse"></span>
+              Registry Scan Active
+            </div>
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none mb-6">
+              Deep <span className="text-[#4c8051]">Search.</span>
+            </h1>
+            <p className="text-slate-400 font-bold text-xs tracking-[0.4em] max-w-lg leading-relaxed">
+              Query the sovereign professional directory for verified identity nodes and behavioral trajectory logs.
+            </p>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-[#496279] uppercase tracking-tighter mb-4 leading-none">
-            Deep <span className="text-[#4c8051]">Search.</span>
-          </h1>
-          <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">Search our professional database</p>
         </div>
 
-        {/* Search Input Terminal */}
-        <div className="relative max-w-3xl mx-auto mb-20">
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#4c8051]/20 to-[#496279]/20 rounded-[2.5rem] blur-xl opacity-50"></div>
-          <div className="relative grid md:grid-cols-2 gap-4 bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100">
-            <div className="flex items-center gap-3 px-4 border-r border-slate-50">
-              <i className="fas fa-user text-slate-300"></i>
-              <input
-                type="text" placeholder="Full Name (Aadhar)"
-                className="w-full py-2 outline-none text-[#496279] font-bold placeholder:text-slate-300 text-sm"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              />
+        {/* SCANNING TERMINAL INPUT */}
+        <div className="relative max-w-4xl mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="absolute -inset-4 bg-gradient-to-r from-[#4c8051]/10 via-[#496279]/10 to-[#dd8d88]/10 rounded-[4rem] blur-2xl opacity-50"></div>
+          <div className="relative bg-white border border-slate-100 p-8 md:p-10 rounded-[4rem] shadow-2xl flex flex-col md:flex-row gap-8 items-center">
+            <div className="flex-1 w-full space-y-2">
+              <label className="text-[9px] font-black text-slate-300 tracking-[0.3em] ml-2">Subject Name</label>
+              <div className="flex items-center gap-4 px-8 py-5 bg-slate-50 border border-slate-100 rounded-3xl focus-within:border-[#4c8051] transition-all group">
+                <i className="fas fa-fingerprint text-slate-300 group-focus-within:text-[#4c8051] transition-colors"></i>
+                <input
+                  type="text"
+                  placeholder="FULL LEGAL NAME"
+                  className="w-full bg-transparent outline-none font-black text-sm tracking-widest placeholder:text-slate-200"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                />
+              </div>
             </div>
-            <div className="flex gap-4 items-center pl-2">
-              <div className="flex items-center gap-3 flex-1">
-                <i className="fas fa-calendar-alt text-slate-300"></i>
+
+            <div className="flex-1 w-full space-y-2">
+              <label className="text-[9px] font-black text-slate-300 tracking-[0.3em] ml-2">Date of Birth</label>
+              <div className="flex items-center gap-4 px-8 py-5 bg-slate-50 border border-slate-100 rounded-3xl focus-within:border-[#4c8051] transition-all group">
+                <i className="fas fa-calendar-day text-slate-300 group-focus-within:text-[#4c8051] transition-colors"></i>
                 <input
                   type="date"
-                  className="w-full py-2 outline-none text-slate-400 font-bold text-sm bg-transparent"
+                  className="w-full bg-transparent outline-none font-black text-sm tracking-widest text-slate-400"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                 />
               </div>
+            </div>
+
+            <div className="md:pt-6">
               <button
                 onClick={handleSearch}
-                disabled={loading}
-                className="bg-[#496279] text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-[#3a4e61] transition-all shadow-xl disabled:opacity-50"
+                disabled={loading || !fullName.trim()}
+                className="relative group bg-[#496279] text-white px-12 py-6 rounded-[2.5rem] font-black text-[10px] tracking-[0.4em] shadow-2xl hover:bg-[#4c8051] transition-all disabled:opacity-30 disabled:grayscale overflow-hidden"
               >
-                {loading ? <i className="fas fa-circle-notch fa-spin"></i> : 'Verify Node'}
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span className="relative z-10 flex items-center gap-3">
+                  {loading ? <i className="fas fa-circle-notch fa-spin"></i> : 'Verify Node'}
+                  <i className="fas fa-bolt text-[8px] opacity-50"></i>
+                </span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Results Stream */}
-        <div className="space-y-6">
-          {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 opacity-40">
-              <i className="fas fa-shield-halved fa-spin text-6xl text-[#496279] mb-4"></i>
-              <p className="font-black uppercase tracking-[0.3em] text-[10px]">Searching Database...</p>
+        {/* FILTERS TOOLBAR */}
+        {results.length > 0 && (
+          <div className="mb-12 flex flex-col md:flex-row gap-8 items-center justify-between p-8 bg-white border border-slate-100 rounded-[3rem] shadow-sm animate-in fade-in duration-1000">
+            <div className="flex items-center gap-8 w-full md:w-auto">
+              <div className="space-y-2 flex-1 md:flex-initial">
+                <label className="text-[8px] font-black text-slate-300 tracking-[0.3em] ml-2">Min Shield Score: {minScore}%</label>
+                <input
+                  type="range" min="0" max="100"
+                  value={minScore}
+                  onChange={(e) => setMinScore(Number(e.target.value))}
+                  className="w-full md:w-48 h-1 bg-slate-100 rounded-full appearance-none accent-[#4c8051] cursor-pointer"
+                />
+              </div>
+              <div className="space-y-2 flex-1 md:flex-initial">
+                <label className="text-[8px] font-black text-slate-300 tracking-[0.3em] ml-2">Sort Order</label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="block w-full bg-slate-50 border border-slate-100 px-4 py-2 rounded-xl text-[9px] font-black tracking-widest outline-none focus:border-[#4c8051]"
+                >
+                  <option value="relevant">Standard Relevance</option>
+                  <option value="score-desc">High Integrity First</option>
+                  <option value="score-asc">Low Integrity Check</option>
+                </select>
+              </div>
             </div>
-          ) : results.length > 0 ? (
-            results.map((emp) => (
-              <div key={emp._id} className="bg-white p-6 md:p-8 rounded-[3rem] border border-slate-100 flex flex-col md:flex-row justify-between items-center group hover:border-[#4c8051] transition-all duration-500 shadow-sm hover:shadow-xl">
-                <div className="flex items-center gap-8 mb-6 md:mb-0">
-                  <div className="h-20 w-20 bg-[#496279]/5 rounded-[2rem] flex items-center justify-center text-3xl font-black text-[#496279] border-2 border-white shadow-inner group-hover:bg-[#4c8051] group-hover:text-white transition-all duration-500 uppercase">
-                    {emp.firstName?.charAt(0)}
+            <div className="text-[9px] font-black text-slate-300 tracking-[0.2em] uppercase">
+              Found {processedResults.length} Verified Subject Nodes
+            </div>
+          </div>
+        )}
+
+        {/* RESULTS FEED */}
+        <div className="space-y-10 min-h-[400px]">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-32 space-y-8 opacity-40">
+              <div className="relative">
+                <div className="w-20 h-20 border-4 border-slate-100 rounded-full"></div>
+                <div className="absolute inset-0 border-t-4 border-[#4c8051] rounded-full animate-spin"></div>
+              </div>
+              <p className="text-[10px] font-black tracking-[0.5em] animate-pulse">Scanning Global Ledgers...</p>
+            </div>
+          ) : visibleResults.length > 0 ? (
+            <div className="grid gap-8 animate-in fade-in slide-in-from-bottom-4">
+              {visibleResults.map((emp, i) => (
+                <div key={emp._id} className="bg-white border border-slate-100 p-8 md:p-12 rounded-[4rem] flex flex-col md:flex-row justify-between items-center group hover:shadow-2xl hover:border-[#4c8051]/20 transition-all duration-700 relative overflow-hidden">
+                  <div className="absolute -top-10 -right-10 opacity-[0.02] group-hover:scale-125 transition-transform duration-1000">
+                    <i className="fas fa-user-shield text-[15rem]"></i>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-black text-[#496279] uppercase tracking-tight group-hover:text-[#4c8051] transition-colors">{emp.firstName} {emp.lastName}</h3>
-                    <div className="flex items-center gap-3 mt-2">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{emp.currentDesignation || 'Verified Professional'}</span>
-                      <span className="h-1 w-1 rounded-full bg-slate-200"></span>
-                      <span className="text-[10px] font-black text-[#dd8d88] uppercase tracking-widest">Identity Secured 🛡️</span>
+
+                  <div className="flex items-center gap-10 relative z-10 w-full md:w-auto mb-8 md:mb-0">
+                    <div className="relative">
+                      <div className="h-24 w-24 bg-slate-50 rounded-[2.5rem] flex items-center justify-center text-3xl font-black text-[#496279] border border-slate-100 shadow-inner group-hover:bg-[#4c8051] group-hover:text-white transition-all duration-500">
+                        {emp.firstName?.charAt(0)}
+                      </div>
+                      <div className="absolute -bottom-2 -right-2 h-8 w-8 bg-white rounded-xl shadow-lg flex items-center justify-center text-[#4c8051] text-xs">
+                        <i className="fas fa-check-circle"></i>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center gap-4 mb-2">
+                        <h4 className="text-3xl font-black tracking-tighter leading-none">{emp.firstName} {emp.lastName}</h4>
+                        <span className="px-3 py-1 bg-[#4c8051]/5 text-[#4c8051] text-[8px] font-black rounded-lg tracking-widest">Active Node</span>
+                      </div>
+                      <p className="text-[10px] font-bold text-slate-400 tracking-[0.2em]">{emp.currentDesignation || 'PROFESSIONAL NODE'}</p>
+                      <div className="mt-6 flex gap-6 opacity-40">
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-map-marker-alt text-[8px]"></i>
+                          <span className="text-[8px] font-black tracking-widest">India Central</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-shield-alt text-[8px]"></i>
+                          <span className="text-[8px] font-black tracking-widest">Aadhar Bound</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-10 w-full md:w-auto border-t md:border-t-0 pt-6 md:pt-0 border-slate-50">
-                  <div className="text-center md:text-right flex-1 md:flex-initial">
-                    <p className="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] mb-1">Shield Score™</p>
-                    <p className="text-4xl font-black text-[#496279] tracking-tighter leading-none">{emp.overallScore || '0'}%</p>
+
+                  <div className="flex items-center gap-12 relative z-10 w-full md:w-auto justify-between md:justify-end">
+                    <div className="text-right">
+                      <p className="text-[10px] font-black text-slate-300 tracking-[0.4em] mb-2">Shield Rank™</p>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-black tracking-tighter text-[#496279] group-hover:text-[#4c8051] transition-colors">{emp.overallScore || '0'}</span>
+                        <span className="text-base font-black opacity-20">%</span>
+                      </div>
+                    </div>
+                    <Link to={`/employee/${emp._id}`} className="bg-[#496279] text-white px-10 py-5 rounded-[2rem] font-black text-[10px] tracking-[0.3em] shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all">
+                      Analyze Node
+                    </Link>
                   </div>
-                  <Link to={`/employee/${emp._id}`} className="bg-[#fcfaf9] text-[#496279] border border-slate-200 px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#496279] hover:text-white transition-all shadow-sm">
-                    Analyze Node
-                  </Link>
                 </div>
-              </div>
-            ))
+              ))}
+
+              {processedResults.length > displayCount && (
+                <div className="text-center pt-10">
+                  <button
+                    onClick={() => setDisplayCount(prev => prev + 5)}
+                    className="bg-white border border-slate-100 px-12 py-5 rounded-3xl text-[10px] font-black tracking-[0.5em] text-slate-400 hover:text-[#496279] hover:border-[#496279]/20 transition-all shadow-sm"
+                  >
+                    Load Secondary Nodes
+                  </button>
+                </div>
+              )}
+            </div>
           ) : searched && !loading && (
-            <div className="text-center py-24 bg-white rounded-[4rem] border border-dashed border-slate-200 opacity-60">
-              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-xl">🚫</div>
-              <p className="text-[#496279] font-black uppercase tracking-[0.2em] text-sm leading-none">No Authorized Node Found</p>
-              <p className="text-slate-400 text-[10px] font-bold uppercase mt-2">Verify spelling or official date of birth</p>
+            <div className="flex flex-col items-center justify-center py-32 bg-white rounded-[5rem] border-2 border-dashed border-slate-100 text-center animate-in fade-in duration-1000">
+              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-8 opacity-30">
+                <i className="fas fa-microscope text-2xl"></i>
+              </div>
+              <h3 className="text-xl font-black tracking-tighter mb-4 opacity-50">Null Identification.</h3>
+              <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] max-w-xs leading-relaxed">
+                The requested identity node does not exist within the sovereign registry or does not meet filter criteria.
+              </p>
             </div>
           )}
         </div>
       </div>
       <Footer />
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slide-in-bottom { from { transform: translateY(2rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .animate-in {
+          animation-duration: 0.8s;
+          animation-fill-mode: both;
+          animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .fade-in { animation-name: fade-in; }
+        .slide-in-from-bottom-8 { animation-name: slide-in-bottom; }
+        .slide-in-from-bottom-4 { animation-name: slide-in-bottom; }
+      `}} />
     </div>
   );
 };

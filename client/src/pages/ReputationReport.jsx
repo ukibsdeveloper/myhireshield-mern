@@ -72,9 +72,20 @@ const ReputationReport = () => {
               Integrity <span className="text-[#4c8051]">Audit Report</span>
             </h1>
           </div>
-          <div className="px-6 py-3 bg-white border border-slate-100 rounded-2xl shadow-sm text-center">
-            <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Node Subject</p>
-            <span className="text-[10px] font-black text-[#496279] uppercase tracking-tighter">{user?.firstName} {user?.lastName}</span>
+          <div className="flex gap-4">
+            {isUnlocked && (
+              <button
+                onClick={() => window.print()}
+                className="flex items-center gap-3 px-6 py-3 bg-[#496279] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-[#4c8051] transition-all"
+              >
+                <i className="fas fa-file-pdf"></i>
+                Export Node PDF
+              </button>
+            )}
+            <div className="px-6 py-3 bg-white border border-slate-100 rounded-2xl shadow-sm text-center">
+              <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Node Subject</p>
+              <span className="text-[10px] font-black text-[#496279] uppercase tracking-tighter">{user?.firstName} {user?.lastName}</span>
+            </div>
           </div>
         </div>
 
@@ -189,6 +200,14 @@ const ReputationReport = () => {
         </div>
       </div>
       <Footer />
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @media print {
+          .navbar, .footer, .breadcrumb-container, button { display: none !important; }
+          .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+          body { background: white !important; }
+        }
+      `}} />
     </div>
   );
 };

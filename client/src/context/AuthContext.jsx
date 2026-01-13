@@ -113,6 +113,29 @@ export const AuthProvider = ({ children }) => {
     if (user) setUser({ ...user, isPaid: status });
   };
 
+  const updateProfile = async (profileData) => {
+    try {
+      const apiMethod = user.role === 'company' ? api.put('/companies/profile', profileData) : api.put('/employees/profile', profileData);
+      const response = await apiMethod;
+      if (response.data.success) {
+        setUser({ ...user, profile: response.data.data });
+        return { success: true };
+      }
+      return { success: false, error: response.data.message };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.message || 'Profile Sync Failed' };
+    }
+  };
+
+  const changePassword = async (passwordData) => {
+    try {
+      const response = await api.put('/auth/change-password', passwordData);
+      return { success: response.data.success, message: response.data.message };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.message || 'Security Protocol Failure' };
+    }
+  };
+
   const value = {
     user,
     token,
@@ -121,6 +144,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     registerCompany,
     registerEmployee,
+    updateProfile,
+    changePassword,
     setPaymentStatus,
     isAuthenticated: !!user,
     isCompany: user?.role === 'company',

@@ -31,20 +31,6 @@ const CompanyDashboard = () => {
   const trustRating = stats?.trustRating || 0;
   const strokeDashoffset = 364.4 - (364.4 * trustRating) / 100;
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#fcfaf9] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-6 animate-pulse">
-          <div className="relative">
-            <i className="fas fa-shield-halved text-6xl text-[#496279]"></i>
-            <div className="absolute inset-0 border-4 border-[#4c8051]/20 rounded-full animate-ping"></div>
-          </div>
-          <p className="font-black uppercase tracking-[0.4em] text-[10px] text-slate-400">Authenticating Account Access...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden uppercase tracking-tight font-sans antialiased">
       {/* Background Noise Overlay */}
@@ -65,7 +51,7 @@ const CompanyDashboard = () => {
               <div className="flex-1">
                 <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 backdrop-blur-xl rounded-2xl text-[10px] font-black tracking-[0.3em] mb-8 border border-white/10 shadow-inner">
                   <span className="h-2 w-2 rounded-full bg-[#4c8051] animate-pulse"></span>
-                  Enterprise System Online
+                  {loading ? 'Accessing Secure Feed...' : 'Enterprise System Online'}
                 </div>
                 <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.85] mb-6">
                   Vault <br /> <span className="text-[#4c8051]">Access.</span>
@@ -74,14 +60,14 @@ const CompanyDashboard = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                <Link to="/review/submit" className="group relative items-center justify-center bg-[#4c8051] text-white px-10 py-6 rounded-3xl font-black text-xs tracking-widest shadow-24 hover:scale-105 active:scale-95 transition-all overflow-hidden flex">
+                <Link to="/review/submit" className="group relative items-center justify-center bg-[#4c8051] text-white px-10 py-6 rounded-3xl font-black text-xs tracking-widest shadow-24 hover:scale-105 active:scale-95 transition-all overflow-hidden flex whitespace-nowrap">
                   <span className="relative z-10 flex items-center gap-3">
                     <i className="fas fa-plus text-xs"></i> Deploy New Audit
                   </span>
                   <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform"></div>
                 </Link>
 
-                <Link to="/add-employee" className="bg-white/10 backdrop-blur-md text-white border border-white/10 px-10 py-6 rounded-3xl font-black text-xs tracking-widest shadow-xl hover:bg-white hover:text-[#496279] transition-all flex items-center justify-center gap-3">
+                <Link to="/add-employee" className="bg-white/10 backdrop-blur-md text-white border border-white/10 px-10 py-6 rounded-3xl font-black text-xs tracking-widest shadow-xl hover:bg-white hover:text-[#496279] transition-all flex items-center justify-center gap-3 whitespace-nowrap">
                   <i className="fas fa-user-plus text-xs"></i>
                   <span>Register Node</span>
                 </Link>
@@ -138,8 +124,12 @@ const CompanyDashboard = () => {
                 </div>
                 <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] mb-1 uppercase">{stat.label}</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-6xl font-black text-[#496279] tracking-tighter">{stat.value}</p>
-                  {i === 1 && <span className="text-[10px] font-black text-[#4c8051] uppercase mb-2">Nodes</span>}
+                  {loading ? (
+                    <div className="h-16 w-16 bg-slate-50 animate-pulse rounded-2xl"></div>
+                  ) : (
+                    <p className="text-6xl font-black text-[#496279] tracking-tighter">{stat.value}</p>
+                  )}
+                  {i === 1 && !loading && <span className="text-[10px] font-black text-[#4c8051] uppercase mb-2">Nodes</span>}
                 </div>
                 <p className="text-[9px] text-slate-400 font-bold tracking-widest mt-4 uppercase border-t border-slate-50 pt-4">{stat.desc}</p>
               </div>
