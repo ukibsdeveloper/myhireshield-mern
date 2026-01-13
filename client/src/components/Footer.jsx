@@ -24,7 +24,7 @@ const Footer = () => {
                   Hire<span className="text-[#4c8051]">Shield</span>
                 </span>
                 <span className="text-[9px] font-bold tracking-[0.2em] text-slate-400 uppercase mt-1">
-                  Verification Bureau
+                  Verification Platform
                 </span>
               </div>
             </Link>
@@ -44,7 +44,7 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li><Link to="/register/employee" className="footer-link">Claim My Profile</Link></li>
                 <li><Link to="/dashboard/employee" className="footer-link">View Trust Score</Link></li>
-                <li><Link to="/verify/documents" className="footer-link">Document Vault</Link></li>
+                <li><Link to="/verify/documents" className="footer-link">Document Center</Link></li>
                 <li><Link to="/consent" className="footer-link">Privacy Settings</Link></li>
               </ul>
             </div>
@@ -67,7 +67,7 @@ const Footer = () => {
           {/* 3. Support & Contact - PHONE UPDATED HERE */}
           <div className="lg:col-span-2 flex flex-col">
             <h4 className="font-black text-[#496279] text-[11px] uppercase tracking-[0.2em] mb-7 border-b border-slate-50 pb-2">
-              Resolution Hub
+              Support Center
             </h4>
             <div className="space-y-6">
               <div className="flex flex-col gap-1">
@@ -106,14 +106,14 @@ const Footer = () => {
         <div className="pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-4">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              © 2026 MyHireShield Bureau. Secure Protocol Integration.
+              © 2026 MyHireShield Platform. Professional Verification Service.
             </p>
           </div>
           
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4c8051] animate-pulse"></div>
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Infrastructure Active</span>
+                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">System Active</span>
             </div>
             <Link to="/terms" className="text-[9px] font-black text-slate-400 hover:text-[#496279] uppercase tracking-widest">Terms & Conditions</Link>
             <Link to="/privacy" className="text-[9px] font-black text-slate-400 hover:text-[#496279] uppercase tracking-widest">Privacy Policy</Link>

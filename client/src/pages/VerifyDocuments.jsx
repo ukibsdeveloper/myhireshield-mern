@@ -110,10 +110,10 @@ const VerifyDocuments = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-4 border border-[#4c8051]/20">
-              <i className="fas fa-file-shield"></i> Compliance Node Terminal
+              <i className="fas fa-file-shield"></i> Document Verification Center
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-[#496279] uppercase tracking-tighter leading-none">
-              Asset <span className="text-[#4c8051]">Verification.</span>
+              Document <span className="text-[#4c8051]">Verification.</span>
             </h1>
           </div>
         </div>
@@ -137,8 +137,8 @@ const VerifyDocuments = () => {
               <thead>
                 <tr className="border-b border-slate-50">
                   <th className="pb-6 px-4 text-[9px] font-black text-slate-300 uppercase tracking-widest">Target Subject</th>
-                  <th className="pb-6 px-4 text-[9px] font-black text-slate-300 uppercase tracking-widest">Asset Node</th>
-                  <th className="pb-6 px-4 text-[9px] font-black text-slate-300 uppercase tracking-widest text-right">Clearance Protocol</th>
+                  <th className="pb-6 px-4 text-[9px] font-black text-slate-300 uppercase tracking-widest">Document Type</th>
+                  <th className="pb-6 px-4 text-[9px] font-black text-slate-300 uppercase tracking-widest text-right">Verification Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">

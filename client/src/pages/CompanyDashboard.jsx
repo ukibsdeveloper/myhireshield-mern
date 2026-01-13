@@ -35,7 +35,7 @@ const CompanyDashboard = () => {
       <div className="min-h-screen bg-[#fcfaf9] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <i className="fas fa-shield-halved fa-spin text-5xl text-[#496279]"></i>
-          <p className="font-black uppercase tracking-widest text-[10px] text-slate-400">Authenticating Node Access...</p>
+          <p className="font-black uppercase tracking-widest text-[10px] text-slate-400">Authenticating Account Access...</p>
         </div>
       </div>
     );
@@ -57,7 +57,7 @@ const CompanyDashboard = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[9px] font-black tracking-[0.2em] mb-6 border border-white/10">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#4c8051] animate-pulse"></span>
-                  Secure Enterprise Node
+                  Secure Company Dashboard
                 </div>
                 <h1 className="text-4xl md:text-5xl font-black tracking-tighter leading-none mb-4">
                   System <br /> <span className="text-[#4c8051]">Authorized.</span>
@@ -102,7 +102,7 @@ const CompanyDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {[
             { label: 'Integrity Logs', value: stats?.totalReviews || 0, icon: 'fa-star', color: '#4c8051' },
-            { label: 'Staff Nodes', value: stats?.staffNodesCount || 0, icon: 'fa-users', color: '#496279' },
+            { label: 'Team Members', value: stats?.staffNodesCount || 0, icon: 'fa-users', color: '#496279' },
             { label: 'Clearance Rate', value: '98%', icon: 'fa-bolt', color: '#dd8d88' }
           ].map((stat, i) => (
             <div key={i} className="bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-sm hover:shadow-xl transition-all relative group overflow-hidden">
@@ -120,8 +120,8 @@ const CompanyDashboard = () => {
           <div className="lg:col-span-3 bg-white border border-slate-100 rounded-[3rem] p-10 shadow-sm overflow-hidden">
             <div className="flex justify-between items-center mb-10">
               <div>
-                <h2 className="text-sm font-black text-[#496279] tracking-[0.3em]">Recent Audit Ledger</h2>
-                <p className="text-[10px] text-slate-400 font-bold mt-1">Real-time Node Verification Logs</p>
+                <h2 className="text-sm font-black text-[#496279] tracking-[0.3em]">Recent Verification History</h2>
+                  <p className="text-[10px] text-slate-400 font-bold mt-1">Live Verification Activity</p>
               </div>
               <button className="text-[9px] font-black text-white bg-[#496279] px-6 py-2.5 rounded-full tracking-widest hover:bg-[#3a4e61] transition-all shadow-lg">Export Report</button>
             </div>
@@ -130,7 +130,7 @@ const CompanyDashboard = () => {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-slate-100">
-                    <th className="pb-6 text-[9px] font-black text-slate-300 tracking-[0.2em]">Node Identifier</th>
+                    <th className="pb-6 text-[9px] font-black text-slate-300 tracking-[0.2em]">Employee ID</th>
                     <th className="pb-6 text-[9px] font-black text-slate-300 tracking-[0.2em]">Clearance Level</th>
                     <th className="pb-6 text-[9px] font-black text-slate-300 tracking-[0.2em] text-right">Shield Score™</th>
                   </tr>
@@ -179,7 +179,7 @@ const CompanyDashboard = () => {
                </h3>
                <div className="border-l-2 border-[#dd8d88] pl-4">
                   <p className="text-[10px] font-black text-[#496279] leading-tight">System Operational</p>
-                  <p className="text-[9px] font-bold text-slate-400 mt-1">Audit Ledger Syncing Complete</p>
+                  <p className="text-[9px] font-bold text-slate-400 mt-1">Verification System Updated</p>
                </div>
             </div>
 
@@ -200,9 +200,9 @@ const CompanyDashboard = () => {
           </div>
         </div>
 
-        {/* System Node Footer */}
+        {/* Dashboard Footer */}
         <div className="mt-20 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-6 opacity-40">
-          <p className="text-[9px] font-bold text-slate-400 tracking-[0.4em]">HireShield Secure Terminal // Company ID: {user?._id?.slice(-6).toUpperCase()}</p>
+          <p className="text-[9px] font-bold text-slate-400 tracking-[0.4em]">HireShield Company Dashboard // Company ID: {user?._id?.slice(-6).toUpperCase()}</p>
           <button onClick={logout} className="text-[9px] font-black tracking-widest hover:text-[#dd8d88] transition-all">
             <i className="fas fa-power-off mr-2"></i> Terminate Session
           </button>

@@ -19,7 +19,7 @@ const Checkout = () => {
       // 1. Update Global State: Report ko instantly unlock karne ke liye
       setPaymentStatus(true); 
       
-      alert("Payment Successful! Your Integrity Ledger is now decrypted.");
+      alert("Payment Successful! Your complete history is now available.");
       
       // 2. Redirect to Report
       navigate('/reputation-report'); 
@@ -41,18 +41,18 @@ const Checkout = () => {
             <i className="fas fa-credit-card text-3xl text-[#496279] group-hover:scale-110 transition-transform"></i>
           </div>
 
-          <h2 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">Secure Terminal</h2>
+          <h2 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">Payment Portal</h2>
           <h3 className="text-3xl font-black text-[#496279] uppercase tracking-tighter mb-2">Audit Unlock</h3>
           
           <div className="my-10">
             <p className="text-6xl font-black text-[#4c8051] tracking-tighter leading-none">₹99</p>
-            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-4">One-time node decryption fee</p>
+            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-4">One-time access fee</p>
           </div>
 
           {/* Benefits List */}
           <div className="space-y-4 mb-12 text-left bg-slate-50/50 p-6 rounded-3xl border border-slate-50">
             <div className="flex justify-between items-center text-[9px] font-black uppercase text-[#496279]/70 tracking-widest">
-              <span>Full Historical Ledger</span> 
+              <span>Complete History Report</span> 
               <i className="fas fa-check-circle text-[#4c8051]"></i>
             </div>
             <div className="flex justify-between items-center text-[9px] font-black uppercase text-[#496279]/70 tracking-widest">

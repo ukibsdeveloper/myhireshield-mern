@@ -54,7 +54,7 @@ const EmployeeSearch = () => {
           <h1 className="text-4xl md:text-6xl font-black text-[#496279] uppercase tracking-tighter mb-4 leading-none">
             Deep <span className="text-[#4c8051]">Search.</span>
           </h1>
-          <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">Query the global professional integrity ledger</p>
+          <p className="text-slate-400 font-bold text-xs uppercase tracking-[0.3em]">Search our professional database</p>
         </div>
 
         {/* Search Input Terminal */}
@@ -97,7 +97,7 @@ const EmployeeSearch = () => {
           {loading ? (
              <div className="flex flex-col items-center justify-center py-20 opacity-40">
                 <i className="fas fa-shield-halved fa-spin text-6xl text-[#496279] mb-4"></i>
-                <p className="font-black uppercase tracking-[0.3em] text-[10px]">Scanning Data Ledger...</p>
+                <p className="font-black uppercase tracking-[0.3em] text-[10px]">Searching Database...</p>
              </div>
           ) : results.length > 0 ? (
             results.map((emp) => (

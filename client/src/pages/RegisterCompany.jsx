@@ -151,7 +151,7 @@ const handleSubmit = async (e) => {
             </div>
             <div className="text-left">
                 <p className="text-2xl font-black text-white uppercase tracking-tighter leading-none">Hire<span className="text-[#4c8051]">Shield</span></p>
-                <p className="text-[10px] font-black text-[#dd8d88] uppercase tracking-[0.3em] mt-1">Enterprise Hub</p>
+                <p className="text-[10px] font-black text-[#dd8d88] uppercase tracking-[0.3em] mt-1">Company Headquarters</p>
             </div>
           </Link>
           
@@ -165,7 +165,7 @@ const handleSubmit = async (e) => {
           <div className="space-y-10">
             {[
               { s: 1, l: 'Entity Detail', d: 'Enterprise identity setup' },
-              { s: 2, l: 'Operational Hub', d: 'Headquarters verification' },
+              { s: 2, l: 'Head Office', d: 'Headquarters verification' },
               { s: 3, l: 'Compliance Node', d: 'Legal authorization stage' }
             ].map((item) => (
               <div key={item.s} className={`flex items-start gap-6 transition-all duration-700 ${step >= item.s ? 'opacity-100' : 'opacity-30'}`}>
@@ -189,7 +189,7 @@ const handleSubmit = async (e) => {
         <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-20 py-16">
           <div className="w-full max-w-lg">
             <div className="mb-10 text-center lg:text-left">
-              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Protocol Onboarding</h2>
+              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Company Registration</h2>
               <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Deploy your enterprise audit node</p>
             </div>
 
@@ -308,7 +308,7 @@ const handleSubmit = async (e) => {
                   <div className="flex gap-4">
                     <button type="button" onClick={handleBack} className="w-1/3 border-2 border-slate-200 text-[#496279] py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-white">Return</button>
                     <button type="button" onClick={handleSubmit} disabled={loading} className="w-2/3 bg-[#4c8051] text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.25em] shadow-xl hover:bg-[#3d6641] transition-all disabled:opacity-50 active:scale-95">
-                      {loading ? 'Deploying Node...' : 'Deploy Hub Account'}
+                      {loading ? 'Creating Account...' : 'Create Company Account'}
                     </button>
                   </div>
                 </div>

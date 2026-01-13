@@ -50,7 +50,7 @@ const Navbar = ({ scrolled }) => {
                 <span className={`text-lg md:text-xl font-black transition-colors duration-500 ${isMobileMenuOpen ? 'text-white' : 'text-[#496279]'}`}>
                   Hire<span className={isMobileMenuOpen ? 'text-white/80' : 'text-[#4c8051]'}>Shield</span>
                 </span>
-                <span className="text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-[#dd8d88]">Integrity Bureau</span>
+                <span className="text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-[#dd8d88]">Professional Platform</span>
               </div>
             </Link>
 
@@ -81,7 +81,7 @@ const Navbar = ({ scrolled }) => {
                       to={user?.role === 'company' ? "/dashboard/company" : "/dashboard/employee"} 
                       className="px-6 py-2.5 bg-[#496279] text-white text-[11px] font-black uppercase tracking-widest rounded-xl active:scale-95 transition-all shadow-lg shadow-[#496279]/20"
                     >
-                      Terminal
+                      Dashboard
                     </Link>
                     <button 
                       onClick={handleLogout}

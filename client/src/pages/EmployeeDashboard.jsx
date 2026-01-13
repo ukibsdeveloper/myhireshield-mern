@@ -40,7 +40,7 @@ const EmployeeDashboard = () => {
     return '#dd8d88'; // Red/Risk
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Scanning Node...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Profile...</div>;
 
   return (
     <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#496279]/30">
@@ -63,7 +63,7 @@ const EmployeeDashboard = () => {
                {shieldScore}%
              </h1>
              <p className="text-[10px] font-black uppercase tracking-[0.3em] mt-2" style={{ color: getScoreColor(shieldScore) }}>
-               Current Status: {shieldScore >= 75 ? 'Elite Member' : 'Stable Node'}
+               Current Status: {shieldScore >= 75 ? 'Elite Member' : 'Good Standing'}
              </p>
           </div>
 
@@ -78,15 +78,15 @@ const EmployeeDashboard = () => {
         {/* SECTION 2: ACCESS CONTROL */}
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-[#496279] rounded-[3rem] p-10 text-white shadow-xl relative overflow-hidden border border-white/5">
-            <h3 className="text-2xl font-black uppercase tracking-tight mb-4">Historical Ledger</h3>
+            <h3 className="text-2xl font-black uppercase tracking-tight mb-4">Complete History</h3>
             <p className="text-white/50 text-[11px] font-bold uppercase leading-relaxed mb-10">
-              Access full cross-enterprise behavioral trajectory, specific HR testimonies, and re-hire eligibility nodes.
+              Access full cross-enterprise behavioral trajectory, specific HR testimonies, and re-hire recommendations.
             </p>
             <Link 
               to={hasPaidForReport ? "/reputation-report" : "/checkout"} 
               className="block w-full bg-[#4c8051] text-center py-5 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-lg"
             >
-              {hasPaidForReport ? "Open Full Ledger" : "Unlock History (₹99)"}
+              {hasPaidForReport ? "View Complete History" : "Unlock History (₹99)"}
             </Link>
           </div>
 
@@ -97,18 +97,18 @@ const EmployeeDashboard = () => {
                 </div>
                 <div>
                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-2">Compliance Check</p>
-                   <p className="text-sm font-black text-[#496279] uppercase">Verified Asset: Aadhar</p>
+                   <p className="text-sm font-black text-[#496279] uppercase">Verified Document: Aadhar</p>
                 </div>
              </div>
              <p className="text-[10px] font-bold text-slate-400 uppercase leading-relaxed tracking-tight mb-6">
-               Enterprise nodes are responsible for asset validation. Your current profile has {employeeData?.verified ? 'Verified' : 'Pending'} status.
+               Companies are responsible for asset validation. Your current profile has {employeeData?.verified ? 'Verified' : 'Pending'} status.
              </p>
           </div>
         </div>
 
         <div className="mt-16 text-center opacity-30">
             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">
-               HireShield Integrity Terminal // Verified Subject ID: {user?._id?.slice(-8).toUpperCase()}
+               HireShield Employee Dashboard // Verified Subject ID: {user?._id?.slice(-8).toUpperCase()}
             </p>
         </div>
       </div>

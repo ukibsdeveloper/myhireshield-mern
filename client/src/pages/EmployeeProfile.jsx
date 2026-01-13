@@ -16,7 +16,7 @@ const EmployeeProfile = () => {
   const mockProfile = {
     firstName: "Verified",
     lastName: "Professional",
-    email: "node.ledger@hireshield.com",
+    email: "support@hireshield.com",
     phone: "91-XXXX-XXXX",
     totalExperience: 5,
     verified: true,
@@ -37,7 +37,7 @@ const EmployeeProfile = () => {
         const targetId = id || user?._id;
         
         if (!targetId && window.location.hostname !== 'localhost') {
-           setError("Identify Node missing.");
+           setError("Profile information missing.");
            return;
         }
 
@@ -83,7 +83,7 @@ const EmployeeProfile = () => {
           <div className="h-40 bg-[#496279] relative overflow-hidden text-white flex items-center px-12 border-b border-white/5">
              <div className="absolute top-0 right-0 w-64 h-64 bg-[#4c8051] opacity-20 rounded-full blur-[80px] -mr-32 -mt-32"></div>
              <div className="relative z-10">
-                <p className="text-[9px] font-black uppercase tracking-[0.4em] mb-2 opacity-60">Verified Integrity Node</p>
+                <p className="text-[9px] font-black uppercase tracking-[0.4em] mb-2 opacity-60">Verified Professional Profile</p>
                 <h2 className="text-2xl font-black uppercase tracking-tighter">Official Shield Certificate</h2>
              </div>
           </div>
@@ -126,7 +126,7 @@ const EmployeeProfile = () => {
 
         <div className="text-center opacity-30">
             <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.4em]">
-               HireShield Audit Protocol v2.4 // Verified Node Serial: {profile?._id?.toUpperCase() || 'MOCK-NODE'}
+               HireShield Professional Verification v2.4 // Verified Profile ID: {profile?._id?.toUpperCase() || 'DEMO-PROFILE'}
             </p>
         </div>
       </div>

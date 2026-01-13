@@ -103,7 +103,7 @@ const SubmitReview = () => {
         navigate('/dashboard/company');
       }
     } catch (err) {
-      alert(err.response?.data?.message || 'Protocol Submission Failed.');
+      alert(err.response?.data?.message || 'Review Submission Failed.');
     } finally {
       setLoading(false);
     }
@@ -123,7 +123,7 @@ const SubmitReview = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-4">
               <span className="h-1.5 w-1.5 rounded-full bg-[#4c8051] animate-pulse"></span>
-              Audit Protocol HS-2026
+              Review Form 2026
             </div>
             <h1 className="text-4xl font-black text-[#496279] uppercase tracking-tighter leading-none">
               Talent <span className="text-[#4c8051]">Assessment.</span>
@@ -207,7 +207,7 @@ const SubmitReview = () => {
 
             <div className="space-y-6">
               <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] flex items-center gap-3 ml-4">
-                <span className="w-8 h-px bg-slate-200"></span> Proof of Tenure Assets
+                <span className="w-8 h-px bg-slate-200"></span> Proof of Tenure Documents
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-white border border-dashed border-slate-200 rounded-[2.5rem]">
                 <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group">
@@ -265,7 +265,7 @@ const SubmitReview = () => {
                   <div className="mt-8 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                       <input type="checkbox" checked={formData.wouldRehire} onChange={(e) => setFormData({...formData, wouldRehire: e.target.checked})} className="w-5 h-5 accent-[#4c8051] rounded-lg cursor-pointer" />
-                      <span className="text-[10px] font-black text-[#496279] uppercase tracking-widest">Safe for Re-hire Protocol</span>
+                      <span className="text-[10px] font-black text-[#496279] uppercase tracking-widest">Re-hire Recommendation</span>
                     </div>
                     <p className={`text-[10px] font-black px-3 py-1 rounded-full uppercase ${formData.comment.length < 50 ? 'bg-red-50 text-[#dd8d88]' : 'bg-green-50 text-[#4c8051]'}`}>
                       Proof: {formData.comment.length}/50
@@ -276,7 +276,7 @@ const SubmitReview = () => {
 
             <div className="pt-8">
               <button type="submit" disabled={loading} className="w-full bg-[#496279] text-white py-8 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#3a4e61] shadow-2xl active:scale-95 disabled:opacity-50 transition-all">
-                {loading ? <><i className="fas fa-circle-notch fa-spin mr-2"></i> Initializing Ledger Sync...</> : 'Deploy Final Integrity Audit'}
+                {loading ? <><i className="fas fa-circle-notch fa-spin mr-2"></i> Submitting Review...</> : 'Deploy Final Integrity Audit'}
               </button>
             </div>
           </form>

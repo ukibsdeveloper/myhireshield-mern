@@ -38,10 +38,10 @@ const ManageReviews = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 animate-on-scroll">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#496279]/10 rounded-lg text-[#496279] text-[10px] font-black uppercase tracking-widest mb-4 border border-[#496279]/10">
-              <i className="fas fa-database"></i> Decentralized Ledger Node
+              <i className="fas fa-database"></i> Review Management
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-[#496279] uppercase tracking-tighter leading-none">
-              Audit <span className="text-[#4c8051]">Ledger.</span>
+              Audit <span className="text-[#4c8051]">History.</span>
             </h1>
             <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.3em] mt-4 leading-relaxed">Immutable historical record of professional integrity entries</p>
           </div>
@@ -107,7 +107,7 @@ const ManageReviews = () => {
               <div className="text-center py-32 bg-white rounded-[4rem] border-2 border-dashed border-slate-100 opacity-60">
                 <i className="fas fa-folder-open text-4xl text-slate-200 mb-6"></i>
                 <p className="text-[#496279] font-black uppercase tracking-[0.2em] text-sm">No historical data nodes found</p>
-                <Link to="/review/submit" className="text-[#4c8051] text-[10px] font-black uppercase tracking-widest mt-4 inline-block border-b-2 border-[#4c8051]/20 hover:border-[#4c8051]">Initialize Audit Terminal →</Link>
+                <Link to="/review/submit" className="text-[#4c8051] text-[10px] font-black uppercase tracking-widest mt-4 inline-block border-b-2 border-[#4c8051]/20 hover:border-[#4c8051]">Add New Review →</Link>
               </div>
             )}
           </div>

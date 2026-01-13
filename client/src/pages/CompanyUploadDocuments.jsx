@@ -89,7 +89,7 @@ const CompanyUploadDocuments = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 animate-on-scroll">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[10px] font-black uppercase tracking-widest mb-4 border border-[#4c8051]/20">
-              <i className="fas fa-upload"></i> Document Upload Terminal
+              <i className="fas fa-upload"></i> Document Upload Center
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-[#496279] uppercase tracking-tighter leading-none">
               Upload <span className="text-[#4c8051]">Documents.</span>

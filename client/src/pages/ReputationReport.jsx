@@ -58,7 +58,7 @@ const ReputationReport = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[9px] font-black uppercase tracking-widest mb-3">
-              Certified Professional Ledger
+              Certified Professional Report
             </div>
             <h1 className="text-4xl font-black text-[#496279] uppercase tracking-tighter">
               Integrity <span className="text-[#4c8051]">Audit Report</span>
@@ -123,7 +123,7 @@ const ReputationReport = () => {
            </div>
         </div>
 
-        {/* Detailed Ledger - REAL REVIEWS FROM DATABASE */}
+        {/* Complete History - All Reviews */}
         <div className="relative">
             <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] mb-8 ml-4">Employment Audit Logs</h3>
 
@@ -176,7 +176,7 @@ const ReputationReport = () => {
 
         <div className="mt-20 text-center opacity-30">
             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.5em]">
-               HireShield Integrity Bureau // Node ID: {user?._id?.toUpperCase()}
+               HireShield Professional Platform // Node ID: {user?._id?.toUpperCase()}
             </p>
         </div>
       </div>
