@@ -115,23 +115,23 @@ const RegisterEmployee = () => {
               <img src="/logo.jpg" alt="HireShield" className="h-full w-full object-contain" />
             </div>
           </Link>
-          <h1 className="text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+          <h1 className="text-5xl font-black text-white mb-6 tracking-tighter leading-tight uppercase">
             Create Your <br /> <span className="text-[#dd8d88]">Professional Profile.</span>
           </h1>
-          <p className="text-white/60 text-lg font-bold uppercase tracking-widest leading-relaxed mb-12">
+          <p className="text-white/60 text-lg font-bold tracking-widest leading-relaxed mb-12">
             Build your profile and see your honesty score.
           </p>
 
           <div className="grid grid-cols-2 gap-8 pt-12 border-t border-white/10">
             <div className="text-left group cursor-default">
               <i className="fas fa-id-card text-[#4c8051] text-2xl mb-4 transition-transform group-hover:scale-110"></i>
-              <h4 className="text-white font-black uppercase text-xs tracking-widest">Verified Account</h4>
-              <p className="text-white/40 text-[10px] mt-1 uppercase tracking-tighter">Secure & Trusted</p>
+              <h4 className="text-white font-black text-xs tracking-widest">Verified Account</h4>
+              <p className="text-white/40 text-[10px] mt-1 tracking-tighter">Secure & Trusted</p>
             </div>
             <div className="text-left group cursor-default">
               <i className="fas fa-chart-line text-[#dd8d88] text-2xl mb-4 transition-transform group-hover:scale-110"></i>
-              <h4 className="text-white font-black uppercase text-xs tracking-widest">Trust Score</h4>
-              <p className="text-white/40 text-[10px] mt-1 uppercase tracking-tighter">Standard Honesty</p>
+              <h4 className="text-white font-black text-xs tracking-widest">Trust Score</h4>
+              <p className="text-white/40 text-[10px] mt-1 tracking-tighter">Standard Honesty</p>
             </div>
           </div>
         </div>
@@ -144,14 +144,14 @@ const RegisterEmployee = () => {
             <img src="/logo.jpg" className="h-8 w-8 rounded-lg" alt="logo" />
             <span className="text-sm font-black text-[#496279] uppercase tracking-tighter">HireShield</span>
           </Link>
-          <Link to="/login" className="text-[10px] font-black uppercase text-[#4c8051]">Sign In</Link>
+          <Link to="/login" className="text-[10px] font-black text-[#4c8051]">Sign In</Link>
         </div>
 
         <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-20 py-16">
           <div className="w-full max-w-xl">
             <div className="mb-10 text-center lg:text-left">
-              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Employee Sign Up</h2>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Join HireShield and show your work history</p>
+              <h2 className="text-3xl font-black text-[#496279] tracking-tight mb-2 uppercase">Employee Sign Up</h2>
+              <p className="text-xs font-bold text-slate-400 tracking-[0.2em]">Join HireShield and show your work history</p>
             </div>
 
             {error && (
@@ -163,40 +163,40 @@ const RegisterEmployee = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">First Name *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">First Name *</label>
                   <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={inputClass} placeholder="First Name" required />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Last Name *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Last Name *</label>
                   <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={inputClass} placeholder="Last Name" required />
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Email Address *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Email Address *</label>
                   <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="name@email.com" required />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Phone Number *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Phone Number *</label>
                   <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="10 Digits" required maxLength="10" />
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Password *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Password *</label>
                   <input type="password" name="password" value={formData.password} onChange={handleChange} className={inputClass} placeholder="6+ Characters" required />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Confirm Password *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Confirm Password *</label>
                   <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={inputClass} placeholder="Verify Password" required />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Date of Birth *</label>
+                  <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Date of Birth *</label>
                   <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClass} required />
                 </div>
                 <div>
@@ -228,7 +228,7 @@ const RegisterEmployee = () => {
               <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-inner">
                 <div className="flex items-start gap-3">
                   <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} className="mt-1 w-4 h-4 accent-[#496279] cursor-pointer" required />
-                  <label className="text-[10px] font-black text-slate-500 uppercase leading-relaxed tracking-wider">
+                  <label className="text-[10px] font-black text-slate-500 leading-relaxed tracking-wider">
                     I agree to the <Link to="/terms" className="text-[#496279] underline">Terms of Service</Link> and <Link to="/privacy" className="text-[#496279] underline">Privacy Policy</Link>
                   </label>
                 </div>
@@ -241,7 +241,7 @@ const RegisterEmployee = () => {
             </form>
 
             <div className="mt-10 text-center border-t border-slate-100 pt-8">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <p className="text-[10px] font-black text-slate-400 tracking-widest">
                 Already have an account? <Link to="/login" className="text-[#4c8051] ml-2 hover:underline underline-offset-4">Login Here</Link>
               </p>
             </div>
@@ -249,7 +249,7 @@ const RegisterEmployee = () => {
         </div>
 
         <div className="p-8 text-center lg:text-left opacity-30">
-          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">© 2026 HireShield Network</p>
+          <p className="text-[9px] font-bold text-slate-400 tracking-[0.3em]">© 2026 HireShield Network</p>
         </div>
       </div>
     </div>

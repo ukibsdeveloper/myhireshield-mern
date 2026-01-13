@@ -32,7 +32,7 @@ const EmployeeDashboard = () => {
   const verificationPercent = stats?.verificationPercentage || 0;
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden tracking-tight font-sans antialiased uppercase">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden tracking-tight font-sans antialiased">
       {/* Background Noise Overlay */}
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 

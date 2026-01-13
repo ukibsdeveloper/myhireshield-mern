@@ -72,11 +72,11 @@ const AddEmployee = () => {
     }
   };
 
-  const inputClass = "w-full p-5 bg-white border border-slate-100 rounded-2xl font-black text-[10px] uppercase tracking-widest outline-none focus:border-[#4c8051] focus:ring-4 ring-[#4c8051]/5 transition-all shadow-sm";
-  const labelClass = "text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] ml-4 mb-2 block";
+  const inputClass = "w-full p-5 bg-white border border-slate-100 rounded-2xl font-black text-[10px] tracking-widest outline-none focus:border-[#4c8051] focus:ring-4 ring-[#4c8051]/5 transition-all shadow-sm";
+  const labelClass = "text-[9px] font-black text-slate-400 tracking-[0.3em] ml-4 mb-2 block";
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       <Navbar scrolled={true} isAuthenticated={true} />
 
@@ -90,7 +90,7 @@ const AddEmployee = () => {
                 <i className="fas fa-user-plus text-3xl group-hover:scale-110 transition-transform"></i>
               </div>
               <div>
-                <h2 className="text-4xl font-black tracking-tighter leading-none mb-3">Add <span className="text-[#4c8051]">Employee.</span></h2>
+                <h2 className="text-4xl font-black tracking-tighter leading-none mb-3 uppercase">Add <span className="text-[#4c8051]">Employee.</span></h2>
                 <p className="text-[10px] font-black text-slate-400 tracking-[0.4em]">Create a new employee profile</p>
               </div>
             </div>
@@ -143,7 +143,7 @@ const AddEmployee = () => {
             </div>
 
             <div className="pt-8">
-              <button type="submit" disabled={loading} className="group relative w-full bg-[#496279] text-white py-8 rounded-[2.5rem] font-black text-xs uppercase tracking-[0.5em] shadow-24 hover:bg-[#4c8051] transition-all overflow-hidden active:scale-95 disabled:opacity-50">
+              <button type="submit" disabled={loading} className="group relative w-full bg-[#496279] text-white py-8 rounded-[2.5rem] font-black text-xs tracking-[0.5em] shadow-2xl hover:bg-[#4c8051] transition-all overflow-hidden active:scale-95 disabled:opacity-50 uppercase">
                 <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 <span className="relative z-10 flex items-center justify-center gap-4">
                   {loading ? (

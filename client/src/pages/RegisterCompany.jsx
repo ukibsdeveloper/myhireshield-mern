@@ -155,15 +155,15 @@ const RegisterCompany = () => {
               <img src="/logo.jpg" alt="HireShield" className="h-full w-full object-contain" />
             </div>
             <div className="text-left">
-              <p className="text-2xl font-black text-white uppercase tracking-tighter leading-none">Hire<span className="text-[#4c8051]">Shield</span></p>
-              <p className="text-[10px] font-black text-[#dd8d88] uppercase tracking-[0.3em] mt-1">Company Headquarters</p>
+              <p className="text-2xl font-black text-white tracking-tighter leading-none uppercase">Hire<span className="text-[#4c8051]">Shield</span></p>
+              <p className="text-[10px] font-black text-[#dd8d88] tracking-[0.3em] mt-1">Company Headquarters</p>
             </div>
           </Link>
 
           <h1 className="text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
             The Gateway to <br /> <span className="text-[#4c8051]">Trusted Teams.</span>
           </h1>
-          <p className="text-white/60 text-lg font-bold uppercase tracking-widest leading-relaxed mb-16">
+          <p className="text-white/60 text-lg font-bold tracking-widest leading-relaxed mb-16">
             Join our network of trusted companies.
           </p>
 
@@ -179,8 +179,8 @@ const RegisterCompany = () => {
                   {step > item.s ? <i className="fas fa-check text-xs"></i> : item.s}
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-widest">{item.l}</h3>
-                  <p className="text-[10px] font-bold text-white/50 uppercase mt-1 tracking-wider">{item.d}</p>
+                  <h3 className="text-sm font-black text-white tracking-widest uppercase">{item.l}</h3>
+                  <p className="text-[10px] font-bold text-white/50 mt-1 tracking-wider">{item.d}</p>
                 </div>
               </div>
             ))}
@@ -193,8 +193,8 @@ const RegisterCompany = () => {
         <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-20 py-16">
           <div className="w-full max-w-lg">
             <div className="mb-10 text-center lg:text-left">
-              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Company Registration</h2>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Create your company account</p>
+              <h2 className="text-3xl font-black text-[#496279] tracking-tight mb-2 uppercase">Company Registration</h2>
+              <p className="text-xs font-bold text-slate-400 tracking-[0.2em]">Create your company account</p>
             </div>
 
             {error && (
@@ -208,27 +208,27 @@ const RegisterCompany = () => {
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Company Name *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Company Name *</label>
                       <input type="text" name="companyName" value={formData.companyName} onChange={handleChange} className={inputClass} placeholder="Legal Name" required />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Work Email *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Work Email *</label>
                       <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="hr@company.com" required />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Password *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Password *</label>
                       <input type="password" name="password" value={formData.password} onChange={handleChange} className={inputClass} placeholder="8+ Characters" required />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Confirm Password *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Confirm Password *</label>
                       <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={inputClass} placeholder="Re-type Password" required />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Industry</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Industry</label>
                       <select name="industry" value={formData.industry} onChange={handleChange} className={inputClass} required>
                         <option value="">Select</option>
                         <option value="IT & Software">IT & Software</option>
@@ -239,7 +239,7 @@ const RegisterCompany = () => {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Company Size</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Company Size</label>
                       <select name="companySize" value={formData.companySize} onChange={handleChange} className={inputClass} required>
                         <option value="">Select</option>
                         <option value="1-10">1-10 Members</option>
@@ -259,21 +259,21 @@ const RegisterCompany = () => {
               {step === 2 && (
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Street Address</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Street Address</label>
                     <input type="text" name="street" value={formData.street} onChange={handleChange} className={inputClass} placeholder="Building, Street" />
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">City *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">City *</label>
                       <input type="text" name="city" value={formData.city} onChange={handleChange} className={inputClass} required />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">State *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">State *</label>
                       <input type="text" name="state" value={formData.state} onChange={handleChange} className={inputClass} required />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Pincode *</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Pincode *</label>
                     <input type="text" name="pincode" value={formData.pincode} onChange={handleChange} className={inputClass} required maxLength="6" />
                   </div>
                   <div className="flex gap-4">
@@ -289,23 +289,23 @@ const RegisterCompany = () => {
                 <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-500">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Contact Person *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Contact Person *</label>
                       <input type="text" name="contactName" value={formData.contactName} onChange={handleChange} className={inputClass} required />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Designation *</label>
+                      <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Designation *</label>
                       <input type="text" name="contactDesignation" value={formData.contactDesignation} onChange={handleChange} className={inputClass} placeholder="CEO, HR Manager, etc." required />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Work Phone *</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2">Work Phone *</label>
                     <input type="tel" name="contactPhone" value={formData.contactPhone} onChange={handleChange} className={inputClass} required maxLength="10" />
                   </div>
                   <div className="p-5 bg-[#4c8051]/5 rounded-2xl border border-[#4c8051]/10">
                     <div className="flex items-start gap-3">
                       <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} className="mt-1 w-4 h-4 accent-[#4c8051] rounded cursor-pointer" required />
-                      <label className="text-[10px] font-black text-slate-500 uppercase leading-relaxed tracking-wider">
-                        I AGREE TO THE <Link to="/terms" className="text-[#4c8051] underline">TERMS OF SERVICE</Link> AND <Link to="/privacy" className="text-[#4c8051] underline">PRIVACY POLICY</Link>
+                      <label className="text-[10px] font-black text-slate-500 leading-relaxed tracking-wider">
+                        I agree to the <Link to="/terms" className="text-[#4c8051] underline">Terms of Service</Link> and <Link to="/privacy" className="text-[#4c8051] underline">Privacy Policy</Link>
                       </label>
                     </div>
                   </div>
@@ -321,7 +321,7 @@ const RegisterCompany = () => {
             </form>
 
             <div className="mt-12 text-center border-t border-slate-100 pt-8">
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              <p className="text-[10px] font-black text-slate-400 tracking-widest">
                 Already have an account? <Link to="/login" className="text-[#496279] ml-2 hover:underline underline-offset-4">Login Here</Link>
               </p>
             </div>
@@ -329,7 +329,7 @@ const RegisterCompany = () => {
         </div>
 
         <div className="p-8 text-center lg:text-left opacity-30">
-          <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em]">© 2026 HireShield Intelligence Network</p>
+          <p className="text-[9px] font-bold text-slate-400 tracking-[0.3em]">© 2026 HireShield Intelligence Network</p>
         </div>
       </div>
     </div>

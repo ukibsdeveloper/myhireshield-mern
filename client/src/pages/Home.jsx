@@ -76,7 +76,7 @@ const Home = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
                   <Link
                     to="/register/company"
-                    className="group w-full sm:w-auto px-10 py-5 bg-[#496279] text-white rounded-2xl font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-[#3a4e61] transition-all shadow-[0_20px_40px_rgba(73,98,121,0.2)] hover:-translate-y-1 active:scale-95"
+                    className="group w-full sm:w-auto px-10 py-5 bg-[#496279] text-white rounded-2xl font-bold text-xs tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-[#3a4e61] transition-all shadow-[0_20px_40px_rgba(73,98,121,0.2)] hover:-translate-y-1 active:scale-95"
                   >
                     I am a Company
                     <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
@@ -84,7 +84,7 @@ const Home = () => {
 
                   <Link
                     to="/register/employee"
-                    className="w-full sm:w-auto px-10 py-5 bg-white text-[#496279] border border-slate-200 rounded-2xl font-bold text-xs uppercase tracking-[0.2em] hover:bg-slate-50 transition-all shadow-sm hover:shadow-md active:scale-95"
+                    className="w-full sm:w-auto px-10 py-5 bg-white text-[#496279] border border-slate-200 rounded-2xl font-bold text-xs tracking-[0.2em] hover:bg-slate-50 transition-all shadow-sm hover:shadow-md active:scale-95"
                   >
                     I am an Employee
                   </Link>
@@ -164,7 +164,7 @@ const Home = () => {
       {/* About/Value Section */}
       <section className="py-20 bg-white border-y border-slate-100">
         <div className="container mx-auto px-5 max-w-5xl text-center animate-on-scroll">
-          <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-8 uppercase tracking-tight">Everything You Need to Hire With Confidence</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-8 tracking-tight">Everything You Need to Hire With Confidence</h2>
           <p className="text-slate-500 font-bold leading-relaxed mb-6">
             Most companies face problems when employees leave suddenly. This causes loss of money and time. Resumes don't always tell the whole truth.
           </p>
@@ -200,7 +200,7 @@ const Home = () => {
                 <div className="w-12 h-12 mb-8 rounded-xl flex items-center justify-center transition-all duration-500 group-hover:bg-[#496279] group-hover:text-white" style={{ backgroundColor: `${f.color}10`, color: f.color }}>
                   <i className={`fas ${f.icon} text-lg`}></i>
                 </div>
-                <h3 className="text-lg font-black text-[#496279] mb-4 tracking-tight uppercase">{f.title}</h3>
+                <h3 className="text-lg font-black text-[#496279] mb-4 tracking-tight">{f.title}</h3>
                 <p className="text-slate-500 text-sm font-bold leading-relaxed opacity-75">{f.d}</p>
               </div>
             ))}
@@ -212,7 +212,7 @@ const Home = () => {
       <section id="process" className="py-24 md:py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-5 max-w-7xl text-center">
           <div className="max-w-3xl mx-auto mb-24 animate-on-scroll">
-            <h2 className="text-4xl md:text-5xl font-black text-[#496279] tracking-tighter mb-6 uppercase">How it Works</h2>
+            <h2 className="text-4xl md:text-5xl font-black text-[#496279] tracking-tighter mb-6">How it Works</h2>
             <div className="w-16 h-1.5 bg-[#4c8051] mx-auto rounded-full"></div>
           </div>
 
@@ -230,8 +230,8 @@ const Home = () => {
                     {i + 1}
                   </div>
                 </div>
-                <h3 className="text-xl font-black text-[#496279] mb-4 tracking-tight uppercase">{s.title}</h3>
-                <p className="text-slate-500 text-xs font-bold leading-relaxed max-w-[250px] mx-auto uppercase tracking-wide opacity-70">{s.d}</p>
+                <h3 className="text-xl font-black text-[#496279] mb-4 tracking-tight">{s.title}</h3>
+                <p className="text-slate-500 text-xs font-bold leading-relaxed max-w-[250px] mx-auto tracking-wide opacity-70">{s.d}</p>
               </div>
             ))}
           </div>
@@ -241,7 +241,7 @@ const Home = () => {
       {/* FAQ Section */}
       <section id="faq" className="py-24 bg-[#fcfaf9]">
         <div className="container mx-auto px-5 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-12 text-center uppercase">Common Questions</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-[#496279] mb-12 text-center">Common Questions</h2>
           <div className="space-y-4">
             {[
               { q: "How does My Hireshield help me hire?", a: "We give you simple, verified data about an employee's past work. It's much deeper than just a resume." },
@@ -256,7 +256,7 @@ const Home = () => {
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                   className="w-full p-6 text-left flex justify-between items-center hover:bg-slate-50 transition-colors"
                 >
-                  <span className="font-black text-[#496279] text-sm uppercase tracking-tight">{faq.q}</span>
+                  <span className="font-black text-[#496279] text-sm tracking-tight">{faq.q}</span>
                   <i className={`fas fa-chevron-${activeFaq === idx ? 'up' : 'down'} text-[#dd8d88] text-xs`}></i>
                 </button>
                 {activeFaq === idx && (
@@ -276,15 +276,15 @@ const Home = () => {
           <div className="relative bg-[#496279] rounded-[2.5rem] p-12 md:p-24 text-center overflow-hidden border-[12px] border-slate-50 shadow-2xl">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
             <div className="relative z-10 animate-on-scroll">
-              <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter uppercase leading-none">
+              <h2 className="text-4xl md:text-7xl font-black text-white mb-8 tracking-tighter leading-none">
                 Hire Faster. <br /> Check Easier.
               </h2>
-              <p className="text-white/60 text-sm md:text-lg mb-12 max-w-xl mx-auto font-black uppercase tracking-[0.2em]">
+              <p className="text-white/60 text-sm md:text-lg mb-12 max-w-xl mx-auto font-black tracking-[0.2em]">
                 Simplified hiring for everyone.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link to="/register/company" className="px-12 py-5 bg-[#4c8051] text-white rounded-xl font-black text-xs uppercase tracking-[0.2em] shadow-xl hover:-translate-y-1 transition-all active:scale-95">Get Started</Link>
-                <a href="mailto:contact@hireshield.com" className="px-12 py-5 border-2 border-white/20 text-white rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">Contact Us</a>
+                <Link to="/register/company" className="px-12 py-5 bg-[#4c8051] text-white rounded-xl font-black text-xs tracking-[0.2em] shadow-xl hover:-translate-y-1 transition-all active:scale-95">Get Started</Link>
+                <a href="mailto:contact@hireshield.com" className="px-12 py-5 border-2 border-white/20 text-white rounded-xl font-black text-xs tracking-[0.2em] hover:bg-white/10 transition-all active:scale-95">Contact Us</a>
               </div>
             </div>
           </div>

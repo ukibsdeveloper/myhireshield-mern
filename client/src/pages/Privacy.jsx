@@ -18,12 +18,12 @@ const Privacy = () => {
               <i className="fas fa-user-lock text-2xl"></i>
             </div>
             <div>
-              <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Privacy Policy.</h1>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Data Protection ID: HS-DP-2026</p>
+              <h1 className="text-3xl font-black text-[#496279] tracking-tighter leading-none">Privacy Policy.</h1>
+              <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] mt-2">Data Protection ID: HS-DP-2026</p>
             </div>
           </div>
 
-          <div className="prose prose-slate max-w-none space-y-10 text-[#496279]/80 font-medium leading-relaxed text-sm uppercase tracking-tight">
+          <div className="prose prose-slate max-w-none space-y-10 text-[#496279]/80 font-medium leading-relaxed text-sm tracking-tight">
 
             {/* Section 1 */}
             <section className="space-y-4">
@@ -60,7 +60,7 @@ const Privacy = () => {
             {/* Footer Note */}
             <div className="mt-16 p-8 bg-[#fcfaf9] rounded-[2.5rem] border border-slate-100 text-center">
               <i className="fas fa-shield-halved text-[#4c8051] text-3xl mb-4 opacity-40"></i>
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">
+              <p className="text-[10px] font-bold text-slate-400 tracking-widest leading-relaxed">
                 By using HireShield, you allow the platform to manage and display your verification records to authorized companies.
               </p>
             </div>

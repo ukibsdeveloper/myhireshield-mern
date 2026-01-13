@@ -60,7 +60,7 @@ const EmployeeSearch = () => {
   const visibleResults = processedResults.slice(0, displayCount);
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] overflow-x-hidden">
       {/* Background Noise Overlay */}
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
@@ -102,7 +102,7 @@ const EmployeeSearch = () => {
                 <i className="fas fa-search text-slate-300 group-focus-within:text-[#4c8051] transition-colors"></i>
                 <input
                   type="text"
-                  placeholder="FULL LEGAL NAME"
+                  placeholder="Full Legal Name"
                   className="w-full bg-transparent outline-none font-black text-sm tracking-widest placeholder:text-slate-200"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
@@ -166,7 +166,7 @@ const EmployeeSearch = () => {
                 </select>
               </div>
             </div>
-            <div className="text-[9px] font-black text-slate-300 tracking-[0.2em] uppercase">
+            <div className="text-[9px] font-black text-slate-300 tracking-[0.2em]">
               Found {processedResults.length} Employees
             </div>
           </div>

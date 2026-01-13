@@ -20,12 +20,12 @@ const ConsentForm = () => {
               <i className="fas fa-file-signature text-2xl"></i>
             </div>
             <div>
-              <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Safe Hiring Consent.</h1>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Form ID: HS-CONSENT-2026</p>
+              <h1 className="text-3xl font-black text-[#496279] tracking-tighter leading-none">Safe Hiring Consent.</h1>
+              <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] mt-2">Form ID: HS-CONSENT-2026</p>
             </div>
           </div>
 
-          <div className="space-y-8 text-[#496279]/80 font-medium leading-relaxed text-sm uppercase tracking-tight">
+          <div className="space-y-8 text-[#496279]/80 font-medium leading-relaxed text-sm tracking-tight">
             <p className="border-l-4 border-[#4c8051] pl-6 bg-[#4c8051]/5 py-4 rounded-r-xl">
               I hereby authorize **HireShield Verified Network** to store and manage my professional work history and feedback.
             </p>
@@ -55,9 +55,9 @@ const ConsentForm = () => {
                   className="mt-1 w-5 h-5 accent-[#4c8051] rounded cursor-pointer"
                 />
                 <label htmlFor="consent-check" className="text-[11px] font-black text-[#496279] leading-relaxed cursor-pointer">
-                  I AGREE TO THESE TERMS AND CONFIRM THAT I HAVE READ THE
-                  <Link to="/privacy" className="text-[#4c8051] underline mx-1">PRIVACY POLICY</Link>
-                  AND <Link to="/terms" className="text-[#4c8051] underline mx-1">TERMS OF SERVICE</Link>.
+                  I agree to these terms and confirm that I have read the
+                  <Link to="/privacy" className="text-[#4c8051] underline mx-1">Privacy Policy</Link>
+                  and <Link to="/terms" className="text-[#4c8051] underline mx-1">Terms of Service</Link>.
                 </label>
               </div>
             </div>
@@ -72,7 +72,7 @@ const ConsentForm = () => {
           </div>
 
           <div className="mt-12 pt-8 border-t border-slate-50 text-center opacity-40">
-            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.4em]">
+            <p className="text-[9px] font-bold text-slate-400 tracking-[0.4em]">
               Secure Authorization // HireShield Safe Hiring Platform
             </p>
           </div>

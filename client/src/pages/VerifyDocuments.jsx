@@ -92,10 +92,10 @@ const VerifyDocuments = () => {
     handleBackgroundCheck(selectedDocument.id, checkType, result.toLowerCase(), notes);
   };
 
-  const inputClass = "w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl outline-none focus:border-[#4c8051] transition-all font-black text-[11px] tracking-widest text-[#496279] shadow-sm uppercase placeholder:text-slate-300";
+  const inputClass = "w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl outline-none focus:border-[#4c8051] transition-all font-black text-[11px] tracking-widest text-[#496279] shadow-sm placeholder:text-slate-300";
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
       <Navbar scrolled={true} isAuthenticated={true} />
@@ -129,11 +129,11 @@ const VerifyDocuments = () => {
         {/* QUEUE STATISTICS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
           <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl">
-            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-2">Pending</p>
+            <p className="text-[9px] font-black text-slate-300 tracking-widest mb-2">Pending</p>
             <h4 className="text-5xl font-black tracking-tighter text-[#496279]">{submissions.filter(s => s.status !== 'verified').length}</h4>
           </div>
           <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm transition-all hover:shadow-xl">
-            <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-2">Verified</p>
+            <p className="text-[9px] font-black text-slate-300 tracking-widest mb-2">Verified</p>
             <h4 className="text-5xl font-black tracking-tighter text-[#4c8051]">{submissions.filter(s => s.status === 'verified').length}</h4>
           </div>
         </div>
@@ -158,7 +158,7 @@ const VerifyDocuments = () => {
                     <th className="pb-10 pl-6 text-[10px] font-black text-slate-300 tracking-[0.3em] uppercase">Name</th>
                     <th className="pb-10 px-6 text-[10px] font-black text-slate-300 tracking-[0.3em] uppercase">Document</th>
                     <th className="pb-10 px-6 text-[10px] font-black text-slate-300 tracking-[0.3em] uppercase">Date</th>
-                    <th className="pb-10 pr-6 text-[10px] font-black text-slate-300 tracking-[0.3em] uppercase text-right">Action</th>
+                    <th className="pb-10 pr-6 text-[10px] font-black text-slate-300 tracking-[0.3em] text-right uppercase">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
@@ -170,7 +170,7 @@ const VerifyDocuments = () => {
                             {sub.employeeName?.charAt(0)}
                           </div>
                           <div>
-                            <p className="font-black text-lg tracking-tight uppercase group-hover:text-[#4c8051] transition-colors">{sub.employeeName}</p>
+                            <p className="font-black text-lg tracking-tight group-hover:text-[#4c8051] transition-colors uppercase">{sub.employeeName}</p>
                             <p className="text-[8px] text-slate-300 font-black tracking-widest">{sub.employeeEmail}</p>
                           </div>
                         </div>
@@ -189,9 +189,9 @@ const VerifyDocuments = () => {
                         <div className="flex items-center justify-end gap-4">
                           <button
                             onClick={() => openBackgroundCheckModal(sub)}
-                            className="px-8 py-4 bg-[#496279] text-white text-[10px] font-black tracking-widest rounded-2xl shadow-lg hover:bg-[#4c8051] transition-all active:scale-95"
+                            className="px-8 py-4 bg-[#496279] text-white text-[10px] font-black tracking-widest rounded-2xl shadow-lg hover:bg-[#4c8051] transition-all active:scale-95 uppercase"
                           >
-                            REVIEW
+                            Review
                           </button>
                           <button
                             onClick={() => handleVerify(sub.id, 'rejected')}

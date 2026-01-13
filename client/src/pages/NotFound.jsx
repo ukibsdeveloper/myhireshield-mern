@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 
 const NotFound = () => {
     return (
-        <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+        <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] overflow-x-hidden">
             <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
             <Navbar scrolled={true} isAuthenticated={false} />
@@ -16,11 +16,11 @@ const NotFound = () => {
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-40 h-40 bg-[#dd8d88] blur-[100px] opacity-20 animate-pulse"></div>
                         <div className="relative z-10 space-y-8">
-                            <div className="inline-flex items-center gap-4 px-6 py-3 bg-white border border-slate-100 rounded-full text-[12px] font-black tracking-[0.4em] shadow-2xl">
+                            <div className="inline-flex items-center gap-4 px-6 py-3 bg-white border border-slate-100 rounded-full text-[12px] font-black tracking-[0.4em] shadow-2xl uppercase">
                                 <i className="fas fa-unlink text-[#dd8d88]"></i>
                                 Broken Link
                             </div>
-                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight">Page Not <span className="text-[#dd8d88]">Found.</span></h2>
+                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight uppercase">Page Not <span className="text-[#dd8d88]">Found.</span></h2>
                         </div>
                     </div>
                 </div>

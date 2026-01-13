@@ -13,11 +13,11 @@ const Terms = () => {
         <div className="bg-white border border-slate-100 rounded-[3.5rem] shadow-2xl p-10 md:p-16 relative overflow-hidden animate-on-scroll">
 
           <div>
-            <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Usage Terms.</h1>
-            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Agreement ID: HS-TOS-2026</p>
+            <h1 className="text-3xl font-black text-[#496279] tracking-tighter leading-none">Usage Terms.</h1>
+            <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] mt-2">Agreement ID: HS-TOS-2026</p>
           </div>
 
-          <div className="space-y-12 text-[#496279]/80 font-medium leading-relaxed text-sm uppercase tracking-tight">
+          <div className="space-y-12 text-[#496279]/80 font-medium leading-relaxed text-sm tracking-tight">
 
             {/* Clause 1 */}
             <section className="space-y-4">
@@ -64,7 +64,7 @@ const Terms = () => {
               <div className="w-20 h-20 border-4 border-slate-100 rounded-full flex items-center justify-center mb-4">
                 <i className="fas fa-shield-halved text-slate-200 text-3xl"></i>
               </div>
-              <p className="text-[9px] font-black text-slate-300 uppercase tracking-[0.5em]">HireShield Certified Protocol</p>
+              <p className="text-[9px] font-black text-slate-300 tracking-[0.5em]">HireShield Certified Protocol</p>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ const Terms = () => {
 
         {/* Global Support Link */}
         <div className="mt-12 text-center opacity-40">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+          <p className="text-[10px] font-bold text-slate-500 tracking-widest">
             Have a question? <span className="text-[#496279] underline cursor-pointer">Contact Support</span>
           </p>
         </div>

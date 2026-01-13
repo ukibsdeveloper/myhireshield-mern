@@ -36,7 +36,7 @@ const ReputationReport = () => {
     if (user) fetchReport();
   }, [user, hasPaidForReport]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center uppercase font-black text-[10px] tracking-[0.3em]">Building Trust Report...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-black text-[10px] tracking-[0.3em]">Building Trust Report...</div>;
 
   // Real Score from Database
   const overallScore = reportData?.overallScore || 0;
@@ -57,7 +57,7 @@ const ReputationReport = () => {
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
         <div className="flex justify-between items-center mb-6">
           <Breadcrumb />
-          <Link to="/dashboard/employee" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#4c8051] transition-all">
+          <Link to="/dashboard/employee" className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest text-slate-400 hover:text-[#4c8051] transition-all">
             <i className="fas fa-arrow-left"></i>
             Back to Dashboard
           </Link>
@@ -66,10 +66,10 @@ const ReputationReport = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[9px] font-black uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#4c8051]/10 rounded-lg text-[#4c8051] text-[9px] font-black tracking-widest mb-3">
               Certified Professional Report
             </div>
-            <h1 className="text-4xl font-black text-[#496279] uppercase tracking-tighter">
+            <h1 className="text-4xl font-black text-[#496279] tracking-tighter uppercase">
               Trust <span className="text-[#4c8051]">Verification Report</span>
             </h1>
           </div>
@@ -77,15 +77,15 @@ const ReputationReport = () => {
             {isUnlocked && (
               <button
                 onClick={() => window.print()}
-                className="flex items-center gap-3 px-6 py-3 bg-[#496279] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl hover:bg-[#4c8051] transition-all"
+                className="flex items-center gap-3 px-6 py-3 bg-[#496279] text-white rounded-2xl text-[10px] font-black tracking-widest shadow-xl hover:bg-[#4c8051] transition-all"
               >
                 <i className="fas fa-file-pdf"></i>
                 Download PDF
               </button>
             )}
             <div className="px-6 py-3 bg-white border border-slate-100 rounded-2xl shadow-sm text-center">
-              <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest mb-1">Employee Profile</p>
-              <span className="text-[10px] font-black text-[#496279] uppercase tracking-tighter">{user?.firstName} {user?.lastName}</span>
+              <p className="text-[8px] font-black text-slate-300 tracking-widest mb-1">Employee Profile</p>
+              <span className="text-[10px] font-black text-[#496279] tracking-tighter uppercase">{user?.firstName} {user?.lastName}</span>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ const ReputationReport = () => {
         {isUnlocked && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 animate-in fade-in zoom-in">
             <div className="p-8 bg-white rounded-[3rem] border border-slate-100 shadow-sm">
-              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Performance History (Real-time)</h4>
+              <h4 className="text-[10px] font-black text-slate-400 tracking-widest mb-6">Performance History (Real-time)</h4>
               <div className="flex items-end gap-2 h-32">
                 {[40, 70, overallScore, 60, 85].map((h, i) => (
                   <div key={i} className="flex-1 rounded-t-xl transition-all duration-1000"
@@ -106,11 +106,11 @@ const ReputationReport = () => {
             <div className="p-8 bg-white rounded-[3rem] border border-slate-100 shadow-sm flex flex-col justify-center">
               <div className="flex items-center gap-4 mb-4">
                 <div className={`w-3 h-3 rounded-full ${overallScore > 60 ? 'bg-[#4c8051]' : 'bg-[#dd8d88]'}`}></div>
-                <p className="text-[10px] font-black text-[#496279] uppercase tracking-widest">
+                <p className="text-[10px] font-black text-[#496279] tracking-widest">
                   {overallScore > 60 ? 'Low Risk Profile' : 'Needs Verification'}
                 </p>
               </div>
-              <p className="text-xs text-slate-400 font-bold leading-relaxed uppercase tracking-tight">
+              <p className="text-xs text-slate-400 font-bold leading-relaxed tracking-tight">
                 This report represents an overall score of <span className="text-[#4c8051]">{overallScore}%</span> based on verified feedback from companies.
               </p>
             </div>
@@ -121,16 +121,16 @@ const ReputationReport = () => {
         <div className="bg-white border border-slate-100 rounded-[3.5rem] p-10 shadow-xl mb-12 relative overflow-hidden">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="text-center md:text-left">
-              <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mb-4">Total Trust Score</p>
+              <p className="text-[10px] font-black text-slate-300 tracking-[0.3em] mb-4">Total Trust Score</p>
               <h2 className="text-9xl font-black text-[#496279] tracking-tighter leading-none">{overallScore}</h2>
-              <p className="text-[#4c8051] font-black uppercase text-[10px] tracking-widest mt-4">
+              <p className="text-[#4c8051] font-black text-[10px] tracking-widest mt-4">
                 {overallScore >= 75 ? 'Top Verified Talent' : 'Verified Profile'}
               </p>
             </div>
             <div className="space-y-4">
               {parameters.map((p, i) => (
                 <div key={i} className="space-y-1">
-                  <div className="flex justify-between text-[9px] font-black uppercase tracking-widest text-slate-400">
+                  <div className="flex justify-between text-[9px] font-black tracking-widest text-slate-400">
                     <span>{p.label}</span>
                     <span>{p.score}/10</span>
                   </div>
@@ -145,7 +145,7 @@ const ReputationReport = () => {
 
         {/* Complete History - All Reviews */}
         <div className="relative">
-          <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.4em] mb-8 ml-4">Detailed Work History</h3>
+          <h3 className="text-[11px] font-black text-slate-400 tracking-[0.4em] mb-8 ml-4">Detailed Work History</h3>
 
           <div className={`space-y-6 ${!isUnlocked ? 'filter blur-xl pointer-events-none select-none opacity-40' : 'animate-in fade-in'}`}>
             {reportData?.recentReviews?.length > 0 ? reportData.recentReviews.map((rev, i) => (

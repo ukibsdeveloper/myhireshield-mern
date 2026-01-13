@@ -74,14 +74,14 @@ const EmployeeProfile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30 font-sans antialiased text-[#496279] overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       <Navbar scrolled={true} isAuthenticated={true} user={user} />
 
       <div className="container mx-auto px-6 pt-32 pb-20 max-w-5xl">
         <div className="flex justify-between items-center mb-10 opacity-60">
           <Breadcrumb />
-          <Link to={user?.role === 'company' ? '/dashboard/company' : '/dashboard/employee'} className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest hover:text-[#4c8051] transition-all">
+          <Link to={user?.role === 'company' ? '/dashboard/company' : '/dashboard/employee'} className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest hover:text-[#4c8051] transition-all">
             <i className="fas fa-arrow-left"></i>
             Back to Dashboard
           </Link>
@@ -94,11 +94,11 @@ const EmployeeProfile = () => {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#dd8d88] opacity-10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl text-[9px] font-black tracking-[0.4em] mb-4 border border-white/10 uppercase">
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-2xl text-[9px] font-black tracking-[0.4em] mb-4 border border-white/10">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#4c8051] animate-pulse"></span>
                 Verified Profile Certificate
               </div>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase leading-none">Employee <span className="text-[#4c8051]">Profile.</span></h2>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tighter leading-none">Employee <span className="text-[#4c8051]">Profile.</span></h2>
             </div>
           </div>
 
@@ -124,10 +124,10 @@ const EmployeeProfile = () => {
                   </h1>
                   <span className="px-4 py-1.5 bg-[#4c8051]/10 text-[#4c8051] text-[9px] font-black rounded-full tracking-[0.2em] uppercase border border-[#4c8051]/10">Top Verified User</span>
                 </div>
-                <p className="text-slate-400 font-bold text-xs tracking-[0.4em] uppercase mb-4">{profile?.email} // ID: {profile?._id?.substr(-6).toUpperCase()}</p>
+                <p className="text-slate-400 font-bold text-xs tracking-[0.4em] mb-4">{profile?.email} // ID: {profile?._id?.substr(-6).toUpperCase()}</p>
                 <div className="flex flex-wrap justify-center md:justify-start gap-8 opacity-40">
-                  <div className="flex items-center gap-2"><i className="fas fa-user-check text-[10px]"></i> <span className="text-[8px] font-black tracking-widest uppercase">Identity Verified</span></div>
-                  <div className="flex items-center gap-2"><i className="fas fa-history text-[10px]"></i> <span className="text-[8px] font-black tracking-widest uppercase">Verified Work History</span></div>
+                  <div className="flex items-center gap-2"><i className="fas fa-user-check text-[10px]"></i> <span className="text-[8px] font-black tracking-widest">Identity Verified</span></div>
+                  <div className="flex items-center gap-2"><i className="fas fa-history text-[10px]"></i> <span className="text-[8px] font-black tracking-widest">Verified Work History</span></div>
                 </div>
               </div>
             </div>
@@ -143,8 +143,8 @@ const EmployeeProfile = () => {
                   <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-slate-100 group-hover:bg-[#496279] group-hover:text-white transition-colors">
                     <i className={`fas ${item.icon} text-lg`} style={{ color: i === 3 ? '#4c8051' : 'inherit' }}></i>
                   </div>
-                  <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] mb-2">{item.label}</span>
-                  <p className="text-sm font-black text-[#496279] uppercase tracking-tighter leading-none" style={{ color: item.color }}>{item.val}</p>
+                  <span className="text-[9px] font-black text-slate-300 tracking-[0.3em] mb-2">{item.label}</span>
+                  <p className="text-sm font-black text-[#496279] tracking-tighter leading-none" style={{ color: item.color }}>{item.val}</p>
                 </div>
               ))}
             </div>

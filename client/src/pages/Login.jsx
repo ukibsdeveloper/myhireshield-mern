@@ -102,7 +102,7 @@ const Login = () => {
           <h1 className="text-5xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
             The Gateway to <br /> <span className="text-[#4c8051]">Trusted Teams.</span>
           </h1>
-          <p className="text-white/60 text-lg font-bold uppercase tracking-widest leading-relaxed">
+          <p className="text-white/60 text-lg font-bold tracking-widest leading-relaxed">
             Making hiring simple and safe for everyone.
           </p>
         </div>
@@ -113,8 +113,8 @@ const Login = () => {
         <div className="flex-grow flex items-center justify-center px-6 md:px-12 lg:px-24 py-12">
           <div className="w-full max-w-md">
             <div className="mb-10 text-center lg:text-left">
-              <h2 className="text-3xl font-black text-[#496279] uppercase tracking-tight mb-2">Login</h2>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Please enter your details</p>
+              <h2 className="text-3xl font-black text-[#496279] tracking-tight mb-2 uppercase">Login</h2>
+              <p className="text-xs font-bold text-slate-400 tracking-[0.2em]">Please enter your details</p>
             </div>
 
             {/* Role Switcher */}
@@ -124,7 +124,7 @@ const Login = () => {
                   key={r}
                   type="button"
                   onClick={() => { setRole(r); setError(''); }}
-                  className={`flex-1 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${role === r ? 'bg-white text-[#496279] shadow-md' : 'text-slate-500 hover:text-[#496279]'
+                  className={`flex-1 py-3.5 rounded-xl text-[10px] font-black tracking-[0.2em] transition-all uppercase ${role === r ? 'bg-white text-[#496279] shadow-md' : 'text-slate-500 hover:text-[#496279]'
                     }`}
                 >
                   {r === 'company' ? 'Company' : 'Employee'}
@@ -142,12 +142,12 @@ const Login = () => {
               {role === 'company' ? (
                 <>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Work Email Address</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Work Email Address</label>
                     <input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="example@company.com" required />
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-2 ml-1">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Password</label>
+                      <label className="text-[10px] font-black text-slate-400 tracking-widest">Password</label>
                     </div>
                     <div className="relative">
                       <input type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} className={inputClass} placeholder="••••••••" required />
@@ -160,15 +160,15 @@ const Login = () => {
               ) : (
                 <>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">First Name (As per ID Card)</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">First Name (As per ID Card)</label>
                     <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={inputClass} placeholder="EX: RAHUL" required />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Date of Birth</label>
+                    <label className="block text-[10px] font-black text-slate-400 tracking-widest mb-2 ml-1">Date of Birth</label>
                     <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} className={inputClass} required />
                   </div>
                   <div className="p-4 bg-[#4c8051]/5 rounded-xl border border-[#4c8051]/10">
-                    <p className="text-[9px] font-bold text-[#4c8051] uppercase leading-tight tracking-wider">
+                    <p className="text-[9px] font-bold text-[#4c8051] leading-tight tracking-wider">
                       <i className="fas fa-info-circle mr-1"></i> Employees must be registered by their company to log in.
                     </p>
                   </div>

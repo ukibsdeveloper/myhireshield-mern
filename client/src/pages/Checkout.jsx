@@ -24,14 +24,14 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/30 font-sans antialiased text-[#496279] overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       <Navbar scrolled={true} isAuthenticated={true} />
 
       <div className="container mx-auto px-6 pt-32 pb-20 flex flex-col items-center">
         <div className="max-w-xl w-full mb-12 flex justify-between items-center opacity-60">
           <Breadcrumb />
-          <Link to="/dashboard/employee" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest hover:text-[#4c8051] transition-all">
+          <Link to="/dashboard/employee" className="inline-flex items-center gap-2 text-[10px] font-black tracking-widest hover:text-[#4c8051] transition-all">
             <i className="fas fa-arrow-left"></i>
             Back to Dashboard
           </Link>

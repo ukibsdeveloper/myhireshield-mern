@@ -31,7 +31,7 @@ const Footer = () => {
                 <span className="text-2xl font-black text-[#496279] tracking-tight leading-none">
                   Hire<span className="text-[#4c8051]">Shield</span>
                 </span>
-                <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase mt-1.5">
+                <span className="text-[10px] font-bold tracking-wider text-slate-400 mt-1.5">
                   Trusted Hiring Platform
                 </span>
               </div>
@@ -43,7 +43,7 @@ const Footer = () => {
 
             {/* Social Media Links */}
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Follow Us</span>
+              <span className="text-xs font-bold text-slate-400 tracking-wider">Follow Us</span>
               <div className="flex gap-2">
                 <a href="#" className="social-icon">
                   <i className="fab fa-linkedin-in"></i>
@@ -63,7 +63,7 @@ const Footer = () => {
 
           {/* 2. Quick Links - For Employees */}
           <div className="lg:col-span-2">
-            <h4 className="font-black text-[#496279] text-xs uppercase tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
+            <h4 className="font-black text-[#496279] text-xs tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
               For Employees
             </h4>
             <ul className="space-y-3.5">
@@ -76,7 +76,7 @@ const Footer = () => {
 
           {/* 3. Quick Links - For Companies */}
           <div className="lg:col-span-2">
-            <h4 className="font-black text-[#496279] text-xs uppercase tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
+            <h4 className="font-black text-[#496279] text-xs tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
               For Companies
             </h4>
             <ul className="space-y-3.5">
@@ -90,7 +90,7 @@ const Footer = () => {
 
           {/* 4. Resources & Legal */}
           <div className="lg:col-span-2">
-            <h4 className="font-black text-[#496279] text-xs uppercase tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
+            <h4 className="font-black text-[#496279] text-xs tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
               Resources
             </h4>
             <ul className="space-y-3.5">
@@ -104,13 +104,13 @@ const Footer = () => {
 
           {/* 5. Contact Information */}
           <div className="lg:col-span-2">
-            <h4 className="font-black text-[#496279] text-xs uppercase tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
+            <h4 className="font-black text-[#496279] text-xs tracking-wider mb-6 pb-3 border-b-2 border-[#4c8051]/20">
               Get In Touch
             </h4>
             <div className="space-y-5">
               {/* Phone */}
               <div className="group">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide block mb-2">Phone</span>
+                <span className="text-[11px] font-bold text-slate-400 tracking-wide block mb-2">Phone</span>
                 <a href="tel:+919910048130" className="contact-link">
                   <i className="fas fa-phone-alt text-[#4c8051]"></i>
                   <span>+91 9910048130</span>
@@ -119,7 +119,7 @@ const Footer = () => {
 
               {/* Email */}
               <div className="group">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wide block mb-2">Email</span>
+                <span className="text-[11px] font-bold text-slate-400 tracking-wide block mb-2">Email</span>
                 <a href="mailto:ukibsdeveloper786@gmail.com" className="contact-link">
                   <i className="fas fa-envelope text-[#4c8051]"></i>
                   <span className="break-all">ukibsdeveloper786@gmail.com</span>
@@ -132,7 +132,7 @@ const Footer = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4c8051] opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-[#4c8051]"></span>
                 </div>
-                <span className="text-[10px] font-black text-emerald-700 uppercase tracking-wider">24/7 Active</span>
+                <span className="text-[10px] font-black text-emerald-700 tracking-wider">24/7 Active</span>
               </div>
             </div>
           </div>

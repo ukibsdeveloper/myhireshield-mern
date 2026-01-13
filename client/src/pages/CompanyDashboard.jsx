@@ -32,7 +32,7 @@ const CompanyDashboard = () => {
   const strokeDashoffset = 364.4 - (364.4 * trustRating) / 100;
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden uppercase tracking-tight font-sans antialiased text-[#496279]">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 overflow-x-hidden tracking-tight font-sans antialiased text-[#496279]">
       {/* Background Noise Overlay */}
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
@@ -54,28 +54,28 @@ const CompanyDashboard = () => {
               <div className="flex-1">
                 <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-white/5 backdrop-blur-2xl rounded-2xl text-[10px] font-black tracking-[0.4em] mb-10 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] transition-all group-hover:border-white/20">
                   <span className="h-2 w-2 rounded-full bg-[#4c8051] shadow-[0_0_12px_#4c8051] animate-pulse"></span>
-                  {loading ? 'LOADING...' : 'PORTAL READY'}
+                  {loading ? 'Loading...' : 'Portal Ready'}
                 </div>
-                <h1 className="text-6xl md:text-[5.2rem] font-black tracking-[-0.04em] leading-[0.8] mb-8 drop-shadow-2xl">
-                  COMPANY <br /> <span className="text-[#4c8051] drop-shadow-[0_0_30px_rgba(76,128,81,0.3)]">OVERVIEW.</span>
+                <h1 className="text-6xl md:text-[5.2rem] font-black tracking-[-0.04em] leading-[0.8] mb-8 drop-shadow-2xl uppercase">
+                  Company <br /> <span className="text-[#4c8051] drop-shadow-[0_0_30px_rgba(76,128,81,0.3)]">Overview.</span>
                 </h1>
                 <div className="flex items-center gap-4">
                   <div className="h-px w-8 bg-white/20"></div>
-                  <p className="text-white/50 font-black text-[10px] tracking-[0.5em] uppercase">{user?.companyName || 'HIRESHIELD ENTERPRISE'}</p>
+                  <p className="text-white/50 font-black text-[10px] tracking-[0.5em]">{user?.companyName || 'HireShield Enterprise'}</p>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-5 w-full md:w-auto">
                 <Link to="/review/submit" className="group relative flex items-center justify-center bg-[#4c8051] text-white px-12 py-7 rounded-[2rem] font-black text-xs tracking-[0.2em] shadow-[0_20px_40px_-12px_rgba(76,128,81,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(76,128,81,0.5)] hover:-translate-y-1 active:translate-y-0 transition-all duration-500 overflow-hidden whitespace-nowrap">
                   <span className="relative z-10 flex items-center gap-4">
-                    <i className="fas fa-plus text-[10px]"></i> SUBMIT REVIEW
+                    <i className="fas fa-plus text-[10px]"></i> Submit Review
                   </span>
                   <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 </Link>
 
                 <Link to="/add-employee" className="group flex items-center justify-center gap-4 bg-white/5 backdrop-blur-xl text-white border border-white/10 px-12 py-7 rounded-[2rem] font-black text-xs tracking-[0.2em] hover:bg-white hover:text-[#3a4e61] hover:-translate-y-1 active:translate-y-0 transition-all duration-500 shadow-xl whitespace-nowrap">
                   <i className="fas fa-user-plus text-[10px] transition-transform group-hover:rotate-12"></i>
-                  <span>ADD EMPLOYEE</span>
+                  <span>Add Employee</span>
                 </Link>
               </div>
             </div>
@@ -107,17 +107,17 @@ const CompanyDashboard = () => {
                   <span className="text-2xl font-black text-[#4c8051] ml-0.5">%</span>
                 </div>
                 <div className="px-3 py-1 bg-slate-50 rounded-lg">
-                  <span className="text-[7px] font-black text-slate-400 tracking-[0.4em] uppercase">COMPANY TRUST</span>
+                  <span className="text-[7px] font-black text-slate-400 tracking-[0.4em]">Company Trust</span>
                 </div>
               </div>
             </div>
 
             <div className="relative z-10 flex flex-col items-center mt-2">
-              <h3 className="text-[10px] font-black text-slate-400 tracking-[0.5em] mb-5 uppercase">VERIFICATION SCORE</h3>
+              <h3 className="text-[10px] font-black text-slate-400 tracking-[0.5em] mb-5">Verification Score</h3>
               <div className={`px-8 py-3 rounded-2xl border-2 transition-all duration-500 shadow-sm ${trustRating > 80 ? 'bg-white border-[#4c8051]/20 text-[#4c8051]' : 'bg-white border-slate-100 text-slate-500'}`}>
-                <p className="text-[10px] font-black tracking-[0.2em] uppercase flex items-center gap-3">
+                <p className="text-[10px] font-black tracking-[0.2em] flex items-center gap-3">
                   <span className={`h-2.5 w-2.5 rounded-full ${trustRating > 80 ? 'bg-[#4c8051] shadow-[0_0_10px_#4c8051] animate-pulse' : 'bg-slate-300'}`}></span>
-                  VERIFICATION LEVEL: {trustRating > 80 ? 'EXCELLENT' : 'STANDARD'}
+                  Verification Level: {trustRating > 80 ? 'Excellent' : 'Standard'}
                 </p>
               </div>
             </div>
@@ -127,7 +127,7 @@ const CompanyDashboard = () => {
         {/* SECTION 2: LIVE METRICS */}
         <div className="mb-24">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="text-[11px] font-black text-slate-400 tracking-[0.6em] ml-6 flex items-center gap-6 uppercase">
+            <h2 className="text-[11px] font-black text-slate-400 tracking-[0.6em] ml-6 flex items-center gap-6">
               <span className="h-px w-16 bg-gradient-to-r from-slate-200 to-transparent"></span>
               Activity Summary
             </h2>
@@ -151,7 +151,7 @@ const CompanyDashboard = () => {
                     </div>
                   </div>
 
-                  <p className="text-[10px] font-black text-slate-400 tracking-[0.4em] mb-2 uppercase">{stat.label}</p>
+                  <p className="text-[10px] font-black text-slate-400 tracking-[0.4em] mb-2">{stat.label}</p>
                   <div className="flex items-baseline gap-3">
                     {loading ? (
                       <div className="h-16 w-24 bg-slate-50 animate-pulse rounded-2xl"></div>
@@ -194,8 +194,8 @@ const CompanyDashboard = () => {
                 </div>
 
                 <div>
-                  <h4 className="text-sm font-black text-[#3a4e61] uppercase tracking-[0.2em] mb-3 group-hover:text-[#4c8051] transition-colors">{cmd.title}</h4>
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-relaxed">{cmd.desc}</p>
+                  <h4 className="text-sm font-black text-[#3a4e61] tracking-[0.2em] mb-3 group-hover:text-[#4c8051] transition-colors">{cmd.title}</h4>
+                  <p className="text-[9px] font-bold text-slate-400 tracking-widest leading-relaxed">{cmd.desc}</p>
                 </div>
 
                 <div className="w-full flex justify-end mt-2">
@@ -214,19 +214,19 @@ const CompanyDashboard = () => {
           <div className="lg:col-span-3 bg-white border border-slate-100 rounded-[4rem] p-12 md:p-16 shadow-[0_20px_48px_-12px_rgba(0,0,0,0.05)] overflow-hidden relative">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 mb-16">
               <div>
-                <h2 className="text-2xl font-black text-[#3a4e61] tracking-[-0.03em] uppercase mb-4">Recent Activity</h2>
+                <h2 className="text-2xl font-black text-[#3a4e61] tracking-[-0.03em] mb-4">Recent Activity</h2>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 px-4 py-1.5 bg-[#4c8051]/5 rounded-full border border-[#4c8051]/10">
                     <span className="h-2 w-2 rounded-full bg-[#4c8051] animate-pulse"></span>
-                    <span className="text-[9px] text-[#4c8051] font-black tracking-widest uppercase">Live Updates</span>
+                    <span className="text-[9px] text-[#4c8051] font-black tracking-widest">Live Updates</span>
                   </div>
                   <span className="text-slate-200 text-xs">|</span>
-                  <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">REAL-TIME MONITORING</p>
+                  <p className="text-[9px] text-slate-400 font-bold tracking-widest">Real-time Monitoring</p>
                 </div>
               </div>
-              <button className="group px-8 py-5 bg-[#3a4e61] text-white rounded-[1.5rem] text-[10px] font-black uppercase tracking-[0.3em] hover:bg-[#4c8051] hover:-translate-y-1 hover:shadow-2xl transition-all duration-500 shadow-xl flex items-center gap-4">
+              <button className="group px-8 py-5 bg-[#3a4e61] text-white rounded-[1.5rem] text-[10px] font-black tracking-[0.3em] hover:bg-[#4c8051] hover:-translate-y-1 hover:shadow-2xl transition-all duration-500 shadow-xl flex items-center gap-4">
                 <i className="fas fa-file-export text-[10px]"></i>
-                <span>DOWNLOAD REPORT</span>
+                <span>Download Report</span>
               </button>
             </div>
 
@@ -234,9 +234,9 @@ const CompanyDashboard = () => {
               <table className="w-full text-left whitespace-nowrap">
                 <thead>
                   <tr className="border-b border-slate-100">
-                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">EMPLOYEE NAME</th>
-                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] text-center">STATUS</th>
-                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] text-right">TRUST SCORE</th>
+                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 tracking-[0.4em]">Employee Name</th>
+                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 tracking-[0.4em] text-center">Status</th>
+                    <th className="pb-10 pt-4 px-6 text-[10px] font-black text-slate-300 tracking-[0.4em] text-right">Trust Score</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
@@ -253,9 +253,9 @@ const CompanyDashboard = () => {
                                 {row.employeeId?.firstName} {row.employeeId?.lastName}
                               </p>
                               <div className="flex items-center gap-2">
-                                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{row.employeeId?.currentDesignation || 'PROFILE READY'}</span>
+                                <span className="text-[9px] text-slate-400 font-bold tracking-widest">{row.employeeId?.currentDesignation || 'Profile Ready'}</span>
                                 <span className="text-slate-200">/</span>
-                                <span className="text-[9px] text-[#4c8051] font-black uppercase tracking-widest">VERIFIED</span>
+                                <span className="text-[9px] text-[#4c8051] font-black tracking-widest">Verified</span>
                               </div>
                             </div>
                           </div>
@@ -263,7 +263,7 @@ const CompanyDashboard = () => {
                         <td className="py-10 px-6 text-center">
                           <div className="inline-flex items-center gap-3 px-5 py-2.5 bg-emerald-50 text-[#4c8051] rounded-xl border border-emerald-100/50">
                             <i className="fas fa-check-double text-[10px]"></i>
-                            <span className="text-[9px] font-black tracking-[0.2em] uppercase">VERIFIED</span>
+                            <span className="text-[9px] font-black tracking-[0.2em]">Verified</span>
                           </div>
                         </td>
                         <td className="py-10 px-6 text-right">
@@ -271,7 +271,7 @@ const CompanyDashboard = () => {
                             <span className="text-3xl font-black text-[#3a4e61] tracking-[-0.06em] leading-none mb-1">{row.employeeId?.overallScore || 0}%</span>
                             <div className="flex items-center gap-1.5">
                               <div className="w-2 h-2 rounded-full bg-[#4c8051]"></div>
-                              <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">TRUST SCORE</span>
+                              <span className="text-[8px] font-black text-slate-300 tracking-widest">Trust Score</span>
                             </div>
                           </div>
                         </td>
@@ -282,7 +282,7 @@ const CompanyDashboard = () => {
                       <td colSpan="3" className="py-32 text-center">
                         <div className="flex flex-col items-center gap-4 opacity-20">
                           <i className="fas fa-database text-6xl text-slate-200"></i>
-                          <p className="text-xs font-black text-slate-400 uppercase tracking-[0.6em]">NO RECENT ACTIVITY FOUND</p>
+                          <p className="text-xs font-black text-slate-400 tracking-[0.6em]">No Recent Activity Found</p>
                         </div>
                       </td>
                     </tr>
@@ -297,22 +297,22 @@ const CompanyDashboard = () => {
             <div className="bg-[#3a4e61] rounded-[3.5rem] p-12 text-white shadow-[0_20px_48px_-12px_rgba(58,78,97,0.3)] relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#4c8051] opacity-20 rounded-full blur-[80px] -mr-20 -mt-20"></div>
 
-              <h3 className="text-[10px] font-black text-white/40 tracking-[0.5em] mb-10 flex items-center gap-4 uppercase relative z-10">
+              <h3 className="text-[10px] font-black text-white/40 tracking-[0.5em] mb-10 flex items-center gap-4 relative z-10">
                 <i className="fas fa-bolt-lightning text-[#4c8051] animate-pulse"></i>
-                SYSTEM UPDATES
+                System Updates
               </h3>
 
               <div className="space-y-10 relative z-10">
                 <div className="relative pl-8">
                   <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#4c8051] to-transparent"></div>
-                  <p className="text-xs font-black uppercase tracking-widest mb-2 group-hover:text-[#4c8051] transition-colors">ALL SYSTEMS READY</p>
-                  <p className="text-[10px] font-bold text-white/40 uppercase tracking-wider leading-relaxed">VERIFICATION NETWORK OPERATIONAL (100%)</p>
+                  <p className="text-xs font-black tracking-widest mb-2 group-hover:text-[#4c8051] transition-colors">All Systems Ready</p>
+                  <p className="text-[10px] font-bold text-white/40 tracking-wider leading-relaxed">Verification Network Operational (100%)</p>
                 </div>
 
                 <div className="relative pl-8">
                   <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#dd8d88] to-transparent"></div>
-                  <p className="text-xs font-black uppercase tracking-widest mb-2 group-hover:text-[#dd8d88] transition-colors">NEW GUIDELINES</p>
-                  <p className="text-[10px] font-bold text-white/40 uppercase tracking-wider leading-relaxed">2026 VERIFICATION RULES UPDATED</p>
+                  <p className="text-xs font-black tracking-widest mb-2 group-hover:text-[#dd8d88] transition-colors">New Guidelines</p>
+                  <p className="text-[10px] font-bold text-white/40 tracking-wider leading-relaxed">2026 Verification Rules Updated</p>
                 </div>
               </div>
             </div>
@@ -323,10 +323,10 @@ const CompanyDashboard = () => {
                 <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 flex items-center justify-center text-[#3a4e61] mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500">
                   <i className="fas fa-user-headset text-xl"></i>
                 </div>
-                <h4 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">HELP & SUPPORT</h4>
-                <p className="text-xl font-black text-[#3a4e61] tracking-[-0.02em] leading-tight mb-8 uppercase">NEED HELP WITH <br /> YOUR REVIEWS?</p>
-                <button className="w-full py-5 bg-[#fcfaf9] text-[#3a4e61] border border-slate-100 rounded-[1.5rem] font-black text-[10px] uppercase tracking-[0.3em] hover:bg-[#3a4e61] hover:text-white hover:border-[#3a4e61] hover:-translate-y-1 active:translate-y-0 transition-all duration-500 shadow-sm">
-                  TALK TO AN EXPERT
+                <h4 className="text-[10px] font-black text-slate-300 tracking-[0.4em] mb-4">Help & Support</h4>
+                <p className="text-xl font-black text-[#3a4e61] tracking-[-0.02em] leading-tight mb-8">Need Help With <br /> Your Reviews?</p>
+                <button className="w-full py-5 bg-[#fcfaf9] text-[#3a4e61] border border-slate-100 rounded-[1.5rem] font-black text-[10px] tracking-[0.3em] hover:bg-[#3a4e61] hover:text-white hover:border-[#3a4e61] hover:-translate-y-1 active:translate-y-0 transition-all duration-500 shadow-sm">
+                  Talk To An Expert
                 </button>
               </div>
             </div>
@@ -341,16 +341,16 @@ const CompanyDashboard = () => {
             </div>
             <div className="flex items-center gap-4">
               <span className="h-1 w-1 rounded-full bg-slate-300"></span>
-              <p className="text-[9px] font-bold text-slate-400 tracking-[0.4em] uppercase">HIRESHIELD PORTAL // VERSION 1.0.4</p>
+              <p className="text-[9px] font-bold text-slate-400 tracking-[0.4em]">HireShield Portal // Version 1.0.4</p>
             </div>
           </div>
 
           <button
             onClick={logout}
-            className="group flex items-center gap-5 text-[10px] font-black tracking-[0.4em] text-[#3a4e61] hover:text-[#dd8d88] transition-all duration-500 uppercase"
+            className="group flex items-center gap-5 text-[10px] font-black tracking-[0.4em] text-[#3a4e61] hover:text-[#dd8d88] transition-all duration-500"
           >
             <span className="relative overflow-hidden inline-block group-hover:translate-x-1 transition-transform">
-              LOGOUT FROM PORTAL
+              Logout From Portal
             </span>
             <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center transition-all duration-500 group-hover:bg-[#dd8d88]/10">
               <i className="fas fa-sign-out-alt text-xs"></i>

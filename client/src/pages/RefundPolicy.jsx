@@ -17,12 +17,12 @@ const RefundPolicy = () => {
               <i className="fas fa-undo-alt text-2xl"></i>
             </div>
             <div>
-              <h1 className="text-3xl font-black text-[#496279] uppercase tracking-tighter leading-none">Refund Policy.</h1>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-2">Policy ID: HS-REFUND-2026</p>
+              <h1 className="text-3xl font-black text-[#496279] tracking-tighter leading-none">Refund Policy.</h1>
+              <p className="text-[10px] font-black text-slate-400 tracking-[0.3em] mt-2">Policy ID: HS-REFUND-2026</p>
             </div>
           </div>
 
-          <div className="space-y-12 text-[#496279]/80 font-medium leading-relaxed text-sm uppercase tracking-tight">
+          <div className="space-y-12 text-[#496279]/80 font-medium leading-relaxed text-sm tracking-tight">
 
             {/* Clause 1 */}
             <section className="space-y-4">
@@ -70,12 +70,12 @@ const RefundPolicy = () => {
             <div className="w-20 h-20 border-4 border-slate-100 rounded-full flex items-center justify-center mb-4">
               <i className="fas fa-shield-halved text-slate-200 text-3xl"></i>
             </div>
-            <p className="text-[9px] font-black text-slate-300 uppercase tracking-[0.5em]">HireShield Certified Policy</p>
+            <p className="text-[9px] font-black text-slate-300 tracking-[0.5em]">HireShield Certified Policy</p>
           </div>
         </div>
 
         <div className="mt-12 text-center opacity-40">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+          <p className="text-[10px] font-bold text-slate-500 tracking-widest">
             Questions? Contact our Support Team at +91 9910048130
           </p>
         </div>

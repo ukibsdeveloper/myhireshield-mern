@@ -147,10 +147,10 @@ const SubmitReview = () => {
     }
   };
 
-  const inputClass = "w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl outline-none focus:border-[#4c8051] transition-all font-black text-[11px] tracking-widest text-[#496279] shadow-sm uppercase placeholder:text-slate-300";
+  const inputClass = "w-full p-5 bg-slate-50 border border-slate-100 rounded-3xl outline-none focus:border-[#4c8051] transition-all font-black text-[11px] tracking-widest text-[#496279] shadow-sm placeholder:text-slate-300";
 
   return (
-    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] uppercase overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf9] selection:bg-[#4c8051]/20 font-sans antialiased text-[#496279] overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
       <Navbar scrolled={true} isAuthenticated={true} />
@@ -197,7 +197,7 @@ const SubmitReview = () => {
                   <label className="text-[9px] font-black text-slate-300 tracking-[0.3em] ml-4">Employee Name</label>
                   <input
                     type="text"
-                    placeholder="FULL LEGAL NAME"
+                    placeholder="Full Legal Name"
                     className={inputClass}
                     value={searchName}
                     onChange={(e) => setSearchName(e.target.value)}
@@ -258,7 +258,7 @@ const SubmitReview = () => {
                 </div>
               </div>
               {!isEditMode && (
-                <button type="button" onClick={() => setEmployee(null)} className="text-[10px] font-black tracking-[0.4em] text-white/20 hover:text-[#dd8d88] transition-colors uppercase py-4 border-b border-white/5">
+                <button type="button" onClick={() => setEmployee(null)} className="text-[10px] font-black tracking-[0.4em] text-white/20 hover:text-[#dd8d88] transition-colors py-4 border-b border-white/5">
                   Cancel
                 </button>
               )}
@@ -274,7 +274,7 @@ const SubmitReview = () => {
                   {Object.keys(formData.ratings).map(key => (
                     <div key={key} className="group">
                       <div className="flex justify-between items-center mb-6">
-                        <label className="text-[10px] font-black tracking-[0.3em] group-hover:text-[#4c8051] transition-colors uppercase">
+                        <label className="text-[10px] font-black tracking-[0.3em] group-hover:text-[#4c8051] transition-colors">
                           {key.replace(/([A-Z])/g, ' $1')}
                         </label>
                         <span className="text-2xl font-black tracking-tighter text-[#4c8051]">{formData.ratings[key]}</span>
@@ -299,7 +299,7 @@ const SubmitReview = () => {
               {/* LOGISTICS & ASSETS */}
               <div className="space-y-12">
                 <div className="bg-white border border-slate-100 rounded-[4rem] p-10 shadow-sm">
-                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8 uppercase">Work Details</h3>
+                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8">Work Details</h3>
                   <div className="space-y-6">
                     <input type="text" placeholder="Designation" required className={inputClass}
                       value={formData.employmentDetails.designation}
@@ -318,13 +318,13 @@ const SubmitReview = () => {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 uppercase text-center">Joining Date</p>
+                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 text-center">Joining Date</p>
                         <input type="date" required className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] font-black text-slate-400 outline-none focus:border-[#4c8051]"
                           value={formData.employmentDetails.startDate}
                           onChange={(e) => handleEmploymentChange('startDate', e.target.value)} />
                       </div>
                       <div className="space-y-2">
-                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 uppercase text-center">Relieving Date</p>
+                        <p className="text-[9px] font-black text-slate-300 tracking-widest ml-3 text-center">Relieving Date</p>
                         <input type="date" required className="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] font-black text-slate-400 outline-none focus:border-[#4c8051]"
                           value={formData.employmentDetails.endDate}
                           onChange={(e) => handleEmploymentChange('endDate', e.target.value)} />
@@ -334,7 +334,7 @@ const SubmitReview = () => {
                 </div>
 
                 <div className="bg-white border border-slate-100 rounded-[4rem] p-10 shadow-sm">
-                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8 uppercase">Documents</h3>
+                  <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] mb-8">Documents</h3>
                   <div className="grid grid-cols-2 gap-4">
                     <label className="flex flex-col items-center justify-center p-6 bg-slate-50 border-2 border-dashed border-slate-100 rounded-3xl hover:border-[#4c8051] transition-all cursor-pointer group text-center">
                       <i className={`fas ${files.govId ? 'fa-check text-[#4c8051]' : 'fa-fingerprint text-slate-200'} text-xl mb-3`}></i>
@@ -358,7 +358,7 @@ const SubmitReview = () => {
 
             <div className="bg-white border border-slate-100 rounded-[4rem] p-10 md:p-14 shadow-sm flex flex-col">
               <div className="flex justify-between items-center mb-8">
-                <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em] uppercase">Feedback</h3>
+                <h3 className="text-[11px] font-black text-slate-300 tracking-[0.5em]">Feedback</h3>
                 <div className="flex items-center gap-4">
                   <span className="text-[10px] font-black tracking-[0.2em]">Eligible for Re-Hire</span>
                   <div
